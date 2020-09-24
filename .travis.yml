@@ -1,0 +1,18 @@
+language: c
+dist: bionic
+os: linux
+
+script:
+ - bash -ex deploy.sh
+
+after_success:
+  # uploadtool
+ - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
+ - bash upload.sh ./*.AppImage*
+
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)$/
+    - /^release-[0-9a-z\-]*/
+    - /^(?i:untagged)-.*$/
