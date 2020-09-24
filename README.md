@@ -1,0 +1,1 @@
+# WINE_AppImage
