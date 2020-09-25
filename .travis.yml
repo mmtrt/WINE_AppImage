@@ -7,6 +7,7 @@ script:
  - bash -ex deploy.sh
 
 after_success:
+ - appimage-builder --skip-tests
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
  - bash upload.sh ./*.AppImage*
