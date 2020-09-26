@@ -1,5 +1,9 @@
 version: 1
 
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir appimage-builder-cache/{etc,var} | true
+ 
 AppDir:
   path: ./AppDir
   
