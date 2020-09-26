@@ -8,4 +8,5 @@ sudo pip3 install appimage-builder ;
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage ;
 ./appimagetool-x86_64.AppImage --appimage-extract && mv squashfs-root appimage-tool.AppDir ;
 sudo ln -s appimage-tool.AppDir/AppRun /usr/bin/appimagetool && rm appimagetool-x86_64.AppImage ;
-sudo wget https://github.com/mmtrt/Wine_Appimage_old/raw/master/resource/Wine.png -O /usr/share/pixmaps/wine.png
+sudo mkdir -p /usr/share/icons/hicolor/256x256/apps/ ;
+sudo wget https://github.com/mmtrt/Wine_Appimage_old/raw/master/resource/Wine.png -O /usr/share/icons/hicolor/256x256/apps/wine.png
