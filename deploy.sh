@@ -7,5 +7,4 @@ sudo mkdir -p /usr/share/icons/hicolor/scalable/ ; sudo cp wine.svg /usr/share/i
 sudo pip3 install appimage-builder ;
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage ;
 ./appimagetool-x86_64.AppImage --appimage-extract && mv squashfs-root appimage-tool.AppDir ;
-ln -s ./appimage-tool.AppDir/AppRun ./appimagetool && chmod +x appimagetool && rm appimagetool-x86_64.AppImage  && ls -al ;
-export PATH=$PATH:/home/travis/build/mmtrt/WINE_AppImage ;
+sudo ln -s ./appimage-tool.AppDir/AppRun /usr/local/bin/appimagetool && sudo chmod +x /usr/local/bin/appimagetool && rm appimagetool-x86_64.AppImage  && ls -al ;
