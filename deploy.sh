@@ -7,4 +7,4 @@ sudo mkdir -p /usr/share/icons/hicolor/scalable/ ; sudo cp wine.svg /usr/share/i
 sudo pip3 install appimage-builder ;
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage ;
 ./appimagetool-x86_64.AppImage --appimage-extract && mv squashfs-root appimage-tool.AppDir ;
-export appimagetool="./appimage-tool.AppDir/AppRun" && rm appimagetool-x86_64.AppImage ;
+ln -s ./appimage-tool.AppDir/AppRun ./appimagetool && rm appimagetool-x86_64.AppImage  && ls -al ;
