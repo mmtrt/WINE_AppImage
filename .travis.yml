@@ -13,7 +13,9 @@ script:
  - mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool /home/travis/bin && ls -al && ls -al /home/travis/bin
 
 after_success:
- - appimage-builder --skip-tests --recipe AppImageBuilder.yml
+ - appimage-builder --skip-tests --recipe wine-stable.yml
+ - appimage-builder --skip-tests --recipe wine-devel.yml
+ - appimage-builder --skip-tests --recipe wine-staging.yml
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
  - bash upload.sh ./*.AppImage*
