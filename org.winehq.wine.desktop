@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=wine
-Exec=opt/wine-staging/bin/wine64
-Icon=wine
-Type=Application
-Terminal=false
-Categories=Utility;
-Comment=
