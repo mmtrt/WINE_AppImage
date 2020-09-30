@@ -12,7 +12,7 @@ AppDir:
     name: wine
     icon: wine
     version: stable
-    exec: opt/wine-stable/bin/wine64
+    exec: opt/wine-stable/bin/wine
 
   apt:
     arch: amd64

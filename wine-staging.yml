@@ -12,7 +12,7 @@ AppDir:
     name: wine
     icon: wine
     version: staging
-    exec: opt/wine-staging/bin/wine64
+    exec: opt/wine-staging/bin/wine
 
   apt:
     arch: amd64
