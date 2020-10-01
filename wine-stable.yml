@@ -30,6 +30,7 @@ AppDir:
       - libfontconfig1
       - libfaudio0
       - libvulkan1
+      - libx11-6
     exclude: []
 
   files:
