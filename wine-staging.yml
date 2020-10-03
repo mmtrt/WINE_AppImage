@@ -31,6 +31,7 @@ AppDir:
       - libfaudio0
       - libvulkan1
       - libx11-6
+      - libxcb1
     exclude: []
 
   files:
