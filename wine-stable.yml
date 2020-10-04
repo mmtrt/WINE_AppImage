@@ -3,7 +3,6 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir -p AppDir ; cp AR AppDir
 
 AppDir:
   path: ./AppDir
@@ -55,7 +54,6 @@ AppDir:
   runtime:
     env:
       APPDIR_LIBRARY_PATH: $APPDIR/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/alsa-lib:$APPDIR/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu/pulseaudio:$APPDIR/usr/lib/i386-linux-gnu/alsa-lib
-      EXEC_PATH: $APPDIR/AR
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
