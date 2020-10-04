@@ -32,6 +32,18 @@ AppDir:
       - libvulkan1
       - libx11-6
       - libxcb1
+      - i965-va-driver
+      - intel-media-va-driver
+      - libgl1-mesa-dri
+      - libglapi-mesa
+      - libglu1-mesa
+      - libglvnd0
+      - libglx-mesa0
+      - libglx0
+      - libosmesa6
+      - mesa-va-drivers
+      - mesa-vdpau-drivers
+      - mesa-vulkan-drivers
     exclude: []
 
   files:
