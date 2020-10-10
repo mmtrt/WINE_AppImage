@@ -29,35 +29,47 @@ AppDir:
       - libfreetype6
       - libfontconfig1
       - libfaudio0
+      - libfaudio0:i386
       - libvulkan1
+      - libvulkan1:i386
       - libx11-6
       - libxcb1
+      - libxft2
+      - libxft2:i386
+      - mpg123
+      - libxrandr2
+      - libxrandr2:i386
+      - libldap-2.4-2
+      - libldap-2.4-2:i386
+      - openal-soft
+      - pulseaudio
       - i965-va-driver
-      - intel-media-va-driver
-      - libgl1
-      - libgl1-mesa-dri
-      - libglapi-mesa
-      - libglu1-mesa
-      - libglvnd0
-      - libglx-mesa0
-      - libglx0
-      - libosmesa6
-      - mesa-va-drivers
-      - mesa-vdpau-drivers
-      - mesa-vulkan-drivers
       - i965-va-driver:i386
+      - intel-media-va-driver
       - intel-media-va-driver:i386
+      - libgl1
       - libgl1:i386
+      - libgl1-mesa-dri
       - libgl1-mesa-dri:i386
+      - libglapi-mesa
       - libglapi-mesa:i386
+      - libglu1-mesa
       - libglu1-mesa:i386
+      - libglvnd0
       - libglvnd0:i386
+      - libglx-mesa0
       - libglx-mesa0:i386
+      - libglx0
       - libglx0:i386
+      - libosmesa6
       - libosmesa6:i386
+      - mesa-va-drivers
       - mesa-va-drivers:i386
+      - mesa-vdpau-drivers
       - mesa-vdpau-drivers:i386
+      - mesa-vulkan-drivers
       - mesa-vulkan-drivers:i386
+      - libgl1-mesa-glx:i386
     exclude: []
 
   files:
