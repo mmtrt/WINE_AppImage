@@ -4,6 +4,16 @@ export PATH=$PATH:/bin:/usr/bin
 
 HERE="$(dirname "$(readlink -f "${0}")")"
 
+VENDOR=$(glxinfo -B | grep "OpenGL vendor")
+
+if [[ $VENDOR == *"Intel"* ]]; then
+  export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/intel_icd.i686.json:$HERE/usr/share/vulkan/icd.d/intel_icd.x86_64.json"
+elif [[ $VENDOR == *"NVIDIA"* ]]; then
+  export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/nvidia_icd.json"
+elif [[ $VENDOR == *"Radeon"* ]]; then
+  export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/radeon_icd.i686.json:$HERE/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
+fi
+
 # Load winecfg if no arguments given
 APPLICATION=""
 if [ -z "$*" ] ; then
