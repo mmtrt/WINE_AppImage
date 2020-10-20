@@ -111,7 +111,7 @@ AppDir:
 
 
 AppImage:
-  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-staging*.AppImage.zsync'
+  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-testing|wine-staging*.AppImage.zsync'
   sign-key: None
   arch: x86_64
 
