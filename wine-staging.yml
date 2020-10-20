@@ -3,8 +3,8 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir -p AppDir ; cp wrapper AppDir
- 
+  - mkdir -p AppDir/usr/share/vulkan/icd.d/ ; cp wrapper AppDir ; cp nvidia_icd.json AppDir/usr/share/vulkan/icd.d/
+
 AppDir:
   path: ./AppDir
   
