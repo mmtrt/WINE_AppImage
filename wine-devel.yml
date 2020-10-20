@@ -89,7 +89,7 @@ AppDir:
 
   test:
     debian:
-      image: appimagecrafters/tests-env:debian-devel
+      image: appimagecrafters/tests-env:debian-stable
       command: "./AppRun --version"
       use_host_x: True
     centos:
