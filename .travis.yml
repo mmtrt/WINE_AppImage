@@ -2,6 +2,7 @@ language: c
 sudo: required
 dist: focal
 os: linux
+arch: arm64-graviton2
 
 script:
  - sudo apt-get update
