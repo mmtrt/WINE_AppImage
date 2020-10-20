@@ -5,22 +5,29 @@ os: linux
 arch: arm64-graviton2
 
 script:
- - sudo apt-get update
- - sudo apt-get -y install python3 python3-setuptools python3-pip wget patchelf fakeroot gnupg2 libglib2.0-bin file desktop-file-utils libgdk-pixbuf2.0-dev librsvg2-dev zsync
- - sudo mkdir -p /usr/share/icons/hicolor/scalable/ ; sudo cp wine.svg /usr/share/icons/hicolor/scalable/
- - sudo pip3 install appimage-builder
  - wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
- - wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
- - mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool /home/travis/bin && ls -al && ls -al /home/travis/bin
-
+ - mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool /home/travis/bin
+ #- wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-stable-x86_64.AppImage
+ - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-devel-x86_64.AppImage
+ - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-staging-x86_64.AppImage
+ - ls -al
+ - |- # magic
+ for i in devel staging
+ do
+ ./wine-"${i}"-x86_64.AppImage --appimage-extract ;
+ # Disable winemenubuilder
+ sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-"${i}"/share/wine/wine.inf ;
+ # Disable FileOpenAssociations
+ sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' squashfs-root/opt/wine-"${i}"/share/wine/wine.inf ; rm wine-"${i}"-x86_64.AppImage
+ export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-"${i}"*.AppImage.zsync' wine-"${i}"-x86_64.AppImage
+ done
+ sha512sum *.AppImage* > SHA512 ; ls -al
+ 
 env:
   global:
     - RELEASE_BRANCH="master"
 
 after_success:
- - appimage-builder --skip-tests --recipe wine-stable.yml
- - appimage-builder --skip-tests --recipe wine-devel.yml
- - appimage-builder --skip-tests --recipe wine-staging.yml
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
  - |- # publish
