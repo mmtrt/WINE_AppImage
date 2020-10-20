@@ -24,6 +24,15 @@ script:
  - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-devel*.AppImage.zsync' wine-devel-x86_64.AppImage
  - rm -rf squashfs-root
 
+ #- ./wine-stable-x86_64.AppImage --appimage-extract
+ # Disable winemenubuilder
+ #- sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-stable/share/wine/wine.inf
+ # Disable FileOpenAssociations
+ #- sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' squashfs-root/opt/wine-stable/share/wine/wine.inf
+ #- rm wine-stable-x86_64.AppImage
+ #- export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-stable*.AppImage.zsync' wine-stable-x86_64.AppImage
+ #- rm -rf squashfs-root
+
  - ./wine-staging-x86_64.AppImage --appimage-extract
  # Disable winemenubuilder
  - sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-staging/share/wine/wine.inf
