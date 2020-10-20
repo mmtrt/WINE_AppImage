@@ -12,6 +12,7 @@ script:
  - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-devel-x86_64.AppImage
  - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-staging-x86_64.AppImage
 
+ - chmod +x *.AppImage
  - ls -al
 
  - ./wine-devel-x86_64.AppImage --appimage-extract
