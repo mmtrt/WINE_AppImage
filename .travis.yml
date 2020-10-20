@@ -17,7 +17,21 @@ after_success:
  - appimage-builder --skip-tests --recipe wine-staging.yml
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
- - bash upload.sh ./*.AppImage*
+ - |- # publish
+   if [[ ("$TRAVIS_BRANCH" != "$RELEASE_BRANCH" && "$TRAVIS_BRANCH" != "$TRAVIS_TAG") || "$TRAVIS_EVENT_TYPE" != "push" ]]; then
+     echo 'Publishing release to GitHub...'
+     export UPLOADTOOL_SUFFIX="$TRAVIS_BRANCH"
+     export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***$UPLOADTOOL_SUFFIX experimental build*** for testing new features.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
+     bash upload.sh ./*.AppImage*
+   elif [[ "$TRAVIS_BRANCH" != "$TRAVIS_TAG" ]]; then
+     echo 'Publishing release to GitHub...'
+     export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***latest development build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
+     bash upload.sh ./*.AppImage*
+   else
+     echo 'Publishing release to GitHub...'
+     export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***release $TRAVIS_TAG stable build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
+     bash upload.sh ./*.AppImage*
+   fi
 
 branches:
   except:
