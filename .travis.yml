@@ -8,7 +8,7 @@ script:
  - wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
  - mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool /home/travis/bin
 
- #- wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-stable-x86_64.AppImage
+ - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-stable-x86_64.AppImage
  - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-devel-x86_64.AppImage
  - wget -q https://github.com/mmtrt/WINE_AppImage/releases/download/continuous-testing/wine-staging-x86_64.AppImage
 
@@ -24,14 +24,14 @@ script:
  - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-devel*.AppImage.zsync' wine-devel-x86_64.AppImage
  - rm -rf squashfs-root
 
- #- ./wine-stable-x86_64.AppImage --appimage-extract
+ - ./wine-stable-x86_64.AppImage --appimage-extract
  # Disable winemenubuilder
- #- sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-stable/share/wine/wine.inf
+ - sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-stable/share/wine/wine.inf
  # Disable FileOpenAssociations
- #- sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' squashfs-root/opt/wine-stable/share/wine/wine.inf
- #- rm wine-stable-x86_64.AppImage
- #- export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-stable*.AppImage.zsync' wine-stable-x86_64.AppImage
- #- rm -rf squashfs-root
+ - sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' squashfs-root/opt/wine-stable/share/wine/wine.inf
+ - rm wine-stable-x86_64.AppImage
+ - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-stable*.AppImage.zsync' wine-stable-x86_64.AppImage
+ - rm -rf squashfs-root
 
  - ./wine-staging-x86_64.AppImage --appimage-extract
  # Disable winemenubuilder
