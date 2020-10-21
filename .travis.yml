@@ -51,7 +51,7 @@ script:
  - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-staging*.AppImage.zsync' wine-staging-x86_64.AppImage
  - rm -rf squashfs-root
 
- - sha512sum *.AppImage* > SHA512 ; ls -al
+ - sha256sum *.AppImage* > SHA256 ; ls -al
 
 env:
   global:
@@ -65,15 +65,15 @@ after_success:
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_SUFFIX="$TRAVIS_BRANCH"
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***$UPLOADTOOL_SUFFIX experimental build*** for testing new features.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh *.AppImage* SHA512
+     bash upload.sh *.AppImage* SHA256
    elif [[ "$TRAVIS_BRANCH" != "$TRAVIS_TAG" ]]; then
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***latest development build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh *.AppImage* SHA512
+     bash upload.sh *.AppImage* SHA256
    else
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***release $TRAVIS_TAG stable build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh *.AppImage* SHA512
+     bash upload.sh *.AppImage* SHA256
    fi
 
 branches:
