@@ -15,7 +15,7 @@ script:
  - chmod +x *.AppImage
  - ls -al
 
- - ./wine-devel-x86_64.AppImage --appimage-extract
+ - ./wine-devel-x86_64.AppImage --appimage-extract &>/dev/null
  # Disable winemenubuilder
  - sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-devel/share/wine/wine.inf
  # Disable FileOpenAssociations
@@ -27,7 +27,7 @@ script:
  - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-devel*.AppImage.zsync' wine-devel-x86_64.AppImage
  - rm -rf squashfs-root
 
- - ./wine-stable-x86_64.AppImage --appimage-extract
+ - ./wine-stable-x86_64.AppImage --appimage-extract &>/dev/null
  # Disable winemenubuilder
  - sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-stable/share/wine/wine.inf
  # Disable FileOpenAssociations
@@ -39,7 +39,7 @@ script:
  - export ARCH=x86_64; appimagetool -v squashfs-root -u 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-test|wine-stable*.AppImage.zsync' wine-stable-x86_64.AppImage
  - rm -rf squashfs-root
 
- - ./wine-staging-x86_64.AppImage --appimage-extract
+ - ./wine-staging-x86_64.AppImage --appimage-extract &>/dev/null
  # Disable winemenubuilder
  - sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' squashfs-root/opt/wine-staging/share/wine/wine.inf
  # Disable FileOpenAssociations
