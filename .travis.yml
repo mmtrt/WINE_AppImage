@@ -18,9 +18,7 @@ env:
     - RELEASE_BRANCH="master"
 
 after_success:
- - appimage-builder --skip-tests --recipe wine-stable.yml
- - appimage-builder --skip-tests --recipe wine-devel.yml
- - appimage-builder --skip-tests --recipe wine-staging.yml
+ - appimage-builder --skip-tests --recipe wine-staging-lolp.yml
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
  - |- # publish

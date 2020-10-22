@@ -12,7 +12,7 @@ AppDir:
     id: org.winehq.wine
     name: wine
     icon: wine
-    version: devel
+    version: staging
     exec: wrapper
 
   apt:
@@ -22,15 +22,13 @@ AppDir:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       - sourceline: 'deb http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu focal main'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5ABCE68FF4633EA42E219156957D2708A03A4626'
       - sourceline: 'deb http://ppa.launchpad.net/mmtrt/testing/ubuntu focal main'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x930F86B3746975D4589F196D9C7EC7245F5BC3EA'
 
     include:
-      - winehq-devel
+      - winehq-staging
       - libfreetype6
       - libfontconfig1
       - libfaudio0
@@ -91,7 +89,7 @@ AppDir:
       LIBGL_DRIVERS_PATH: $APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/i386-linux-gnu/dri
       LIBVA_DRIVERS_PATH: $APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/i386-linux-gnu/dri
     path_mappings:
-    - /opt/wine-devel:$APPDIR/opt/wine-devel
+    - /opt/wine-staging:$APPDIR/opt/wine-staging
 
   test:
     debian:
@@ -117,7 +115,7 @@ AppDir:
 
 
 AppImage:
-  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-testing|wine-devel*.AppImage.zsync'
+  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-lolp|wine-staging*.AppImage.zsync'
   sign-key: None
   arch: x86_64
 
