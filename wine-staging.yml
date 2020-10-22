@@ -26,6 +26,8 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       - sourceline: 'deb http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu focal main'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5ABCE68FF4633EA42E219156957D2708A03A4626'
+      - sourceline: 'deb http://ppa.launchpad.net/mmtrt/testing/ubuntu focal main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x930F86B3746975D4589F196D9C7EC7245F5BC3EA'
 
     include:
       - winehq-staging
