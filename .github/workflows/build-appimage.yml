@@ -1,46 +1,60 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
+name: Release
 on:
+  schedule:
+    - cron: "0 * * * */7"
   push:
-    branches: [ tmp ]
+    branches:
+      - "tmp"
   pull_request:
-    branches: [ tmp ]
+    branches:
+      - "tmp"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.commits[0].message, '[skip ci]')"
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  Stable:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        version: ['3.8']
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Prerequisites
-        run: |
-          wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
+    - name: Prerequisites
+      run: |
+        apt-get -y install python3 python3-setuptools python3-pip wget patchelf fakeroot gnupg2 libglib2.0-bin file desktop-file-utils libgdk-pixbuf2.0-dev librsvg2-dev zsync
+        mkdir -p /usr/share/icons/hicolor/scalable/ ; sudo cp wine.svg /usr/share/icons/hicolor/scalable/
+        pip3 install appimage-builder
+        wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
+        mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool $HOME/bin && ls -al && ls -al $HOME/bin
+        wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
 
-      - name: Build AppImage
-        # You may pin to the exact commit or the version.
-        # uses: AppImageCrafters/build-appimage-action@2f48abf7a0e74a879ac316eabd3c0db954515eb3
-        uses: AppImageCrafters/build-appimage-action@v1
-        with:
-          recipe: wine-stable.yml
-      
-      - name: Release
-        uses: marvinpinto/action-automatic-releases@latest
+    - name: Build AppImage
+      run: |
+        appimage-builder --skip-tests --recipe wine-stable.yml
+        chmod +x *.AppImage
 
-        with:
-          title: Continuous build (tmp)
-          automatic_release_tag: 'continuous.tmp'
-          prerelease: true
-          draft: false
-          files: ./*.AppImage*
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: wine-stable-x86_64.AppImage
+        path: './'
+
+  Release:
+    needs: [Stable]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/download-artifact@v1
+      with:
+        name: wine-stable-x86_64.AppImage
+
+    - name: Release
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        title: WINE Stable AppImage Builds
+        automatic_release_tag: stable
+        prerelease: true
+        draft: false
+        files: |
+          wine-stable-x86_64.AppImage
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
