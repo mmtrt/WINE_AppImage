@@ -27,6 +27,7 @@ jobs:
         wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
         mv appimagetool-x86_64.AppImage appimagetool && cp appimagetool $HOME/bin && ls -al && ls -al $HOME/bin
         wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
+        export PATH=$PATH:"$HOME/.local/bin"
 
     - name: Build AppImage
       run: |
