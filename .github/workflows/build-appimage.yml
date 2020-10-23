@@ -6,9 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ tmp ]
   pull_request:
-    branches: [ master ]
+    branches: [ tmp ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,7 +27,7 @@ jobs:
         # uses: AppImageCrafters/build-appimage-action@2f48abf7a0e74a879ac316eabd3c0db954515eb3
         uses: AppImageCrafters/build-appimage-action@v1
         with:
-          recipe: appimage-builder.yml
+          recipe: wine-stable.yml
       
       - name: Release In-Development AppImage
         uses: marvinpinto/action-automatic-releases@latest
