@@ -5,7 +5,7 @@ script:
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir -p AppDir/usr/share/vulkan/icd.d/ ; cp wrapper AppDir ; cp nvidia_icd.json AppDir/usr/share/vulkan/icd.d/
   - mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-  - dpkg --add-architecture i386
+  - sudo dpkg --add-architecture i386
 
 AppDir:
   path: ./AppDir
