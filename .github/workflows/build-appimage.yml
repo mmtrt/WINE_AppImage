@@ -34,12 +34,15 @@ jobs:
       run: |
         appimage-builder --skip-tests --recipe wine-stable.yml
         chmod +x *.AppImage
+        mkdir dist
+        mv wine*.AppImage dist/.
+        mv *zsync dist/.
 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: wine-stable-x86_64.AppImage
-        path: './'
+        path: 'dist'
 
   Release:
     needs: [Stable]
