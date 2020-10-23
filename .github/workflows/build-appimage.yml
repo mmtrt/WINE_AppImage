@@ -27,7 +27,7 @@ jobs:
         # uses: AppImageCrafters/build-appimage-action@2f48abf7a0e74a879ac316eabd3c0db954515eb3
         uses: AppImageCrafters/build-appimage-action@v1
         with:
-          recipe: wine-stable.yml
+          recipe: wine-stable.yml --skip-tests
       
       - name: Release In-Development AppImage
         uses: marvinpinto/action-automatic-releases@latest
