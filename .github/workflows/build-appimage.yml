@@ -23,6 +23,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Prerequisites
+        run: |
+          wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
+          dpkg --add-architecture i386
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+
       - name: Build AppImage
         # You may pin to the exact commit or the version.
         # uses: AppImageCrafters/build-appimage-action@2f48abf7a0e74a879ac316eabd3c0db954515eb3
