@@ -30,12 +30,12 @@ jobs:
         with:
           recipe: wine-stable.yml --skip-tests
       
-      - name: Release In-Development AppImage
+      - name: Release
         uses: marvinpinto/action-automatic-releases@latest
 
         with:
-          title: Latest
-          automatic_release_tag: 'latest'
+          title: Continuous build (tmp)
+          automatic_release_tag: 'continuous.tmp'
           prerelease: true
           draft: false
           files: ./*.AppImage*
