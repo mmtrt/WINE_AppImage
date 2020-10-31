@@ -3,6 +3,8 @@ sudo: required
 dist: focal
 os: linux
 arch: arm64-graviton2
+services:
+  - docker
 
 script:
  - sudo apt-get update
