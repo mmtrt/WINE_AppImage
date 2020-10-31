@@ -39,6 +39,7 @@ mkdir cache
 
 # get glxinfo
 wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
+(cd glxinfo; wget -q ftp://ftp.freedesktop.org/pub/mesa/demos/mesa-demos-8.4.0.tar.bz2)
 chown -R archie glxinfo
 
 # get build deps glxinfo
