@@ -35,6 +35,8 @@ pacman -Syu --noconfirm
 #Add "base-devel multilib-devel" for compile in the list:
 pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip fuse2
 
+modprobe fuse
+
 # Add appimagetool
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
 mv appimagetool-x86_64.AppImage appimagetool && mv appimagetool /usr/bin
@@ -171,8 +173,6 @@ pip3 install appimage-builder
 wget -q https://gist.github.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/0c43ab647a1b9c8b6cabb95ad33c62ab8a2a7367/nvidia_icd.json
 
 appimage-builder --skip-tests --recipe wine-stable.yml
-
-ls -al
 
 tar cvf output.tar *.AppImage *.zsync
 
