@@ -7,6 +7,9 @@ script:
   - cp wrapper AppDir
   - |-
 
+    # extracting *tar.xz...
+    (cd AppDir; find ../cache -type f -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;)
+
     # extracting *tar.zst...
     (cd AppDir; find ../cache -type f -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;)
 
