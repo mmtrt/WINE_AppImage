@@ -37,15 +37,7 @@ pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep
 
 mkdir cache
 
-# get glxinfo
-wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
-(cd glxinfo; wget -q ftp://ftp.freedesktop.org/pub/mesa/demos/mesa-demos-8.4.0.tar.bz2)
-chown -R archie glxinfo
-
-# get build deps glxinfo
-pacman -S --noconfirm libgl glew
-
-(cd glxinfo ;su archie -c "makepkg" ; cp *.tar* ../cache/)
+(cd cache ; wget https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/08d9e4e6c737092693154530a25c448d7987e746/glxinfo-8.4.0-1-x86_64.pkg.tar.zst)
 
 # Add appimagetool
 (wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
