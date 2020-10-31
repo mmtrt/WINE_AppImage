@@ -168,6 +168,11 @@ bash \
 readline \
 lib32-readline
 
+# extra deps
+sudo pacman -Syw --noconfirm --cachedir cache \
+libunwind \
+lib32-libunwind
+
 # install appimage-builder
 pip3 install appimage-builder
 
