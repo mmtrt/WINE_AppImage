@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Initializing the keyring requires entropy
-pacman-key --init
+# pacman-key --init
 
 # Enable Multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
@@ -21,8 +21,8 @@ echo "" >> /etc/pacman.conf
 # workaround one bug: https://bugzilla.redhat.com/show_bug.cgi?id=1773148
 echo "Set disable_coredump false" >> /etc/sudo.conf
 
-echo "DEBUG: updating pacmam keys"
-pacman -Syy --noconfirm && pacman --noconfirm -S archlinuxcn-keyring
+# echo "DEBUG: updating pacmam keys"
+# pacman -Syy --noconfirm && pacman --noconfirm -S archlinuxcn-keyring
 
 echo "DEBUG: pacmam sync"
 pacman -Syy --noconfirm
