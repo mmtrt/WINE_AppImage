@@ -175,12 +175,26 @@ bash \
 readline \
 lib32-readline
 
+# install appimage-builder
 pip3 install appimage-builder
 
+# get nv vk icd
 wget -q https://gist.github.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/0c43ab647a1b9c8b6cabb95ad33c62ab8a2a7367/nvidia_icd.json
 
-appimage-builder --skip-tests --recipe wine-stable.yml
+# build appimage
+appimage-builder --skip-tests --recipe wine-devel.yml
 
+# remove wine cache
+rm ./cache/wine*.tar.zst
+
+# get wine staging
+pacman -Syw --noconfirm --cachedir cache \
+wine-staging
+
+# build appimage
+appimage-builder --skip-tests --recipe wine-staging.yml
+
+# packing appimg* files
 tar cvf output.tar *.AppImage *.zsync
 
 # wineworkdir cleanup
