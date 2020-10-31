@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+
 #Initializing the keyring requires entropy
 pacman-key --init
 
@@ -168,6 +170,7 @@ appimage-builder --skip-tests --recipe wine-stable.yml
 
 ls -al
 
+tar cvf output.tar *.AppImage *.zsync
 
 # wineworkdir cleanup
 # rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale

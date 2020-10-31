@@ -11,6 +11,11 @@ env:
     - RELEASE_BRANCH="master"
 
 after_success:
+ - mkdir apps
+ - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch cp output.tar /tmp/apps
+  # extract output
+ - tar xvf apps/output.tar -C apps
+ - rm -rf apps/output.tar
   # uploadtool
  - wget -c https://raw.githubusercontent.com/probonopd/uploadtool/8142d461aba7b92a058116fe5ee75be438b75fa4/upload.sh
  - |- # publish
@@ -18,15 +23,15 @@ after_success:
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_SUFFIX="$TRAVIS_BRANCH"
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***$UPLOADTOOL_SUFFIX experimental build*** for testing new features.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh ./*.AppImage*
+     bash upload.sh apps/*.AppImage*
    elif [[ "$TRAVIS_BRANCH" != "$TRAVIS_TAG" ]]; then
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***latest development build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh ./*.AppImage*
+     bash upload.sh apps/*.AppImage*
    else
      echo 'Publishing release to GitHub...'
      export UPLOADTOOL_BODY="Instructions on using the AppImage can be found [here](https://github.com/${TRAVIS_REPO_SLUG}/blob/master/README.md)\n\nThis is the ***release $TRAVIS_TAG stable build***.\n\nTravis CI build log: $TRAVIS_BUILD_WEB_URL"
-     bash upload.sh ./*.AppImage*
+     bash upload.sh apps/*.AppImage*
    fi
 
 branches:
