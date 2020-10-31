@@ -37,7 +37,7 @@ pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep
 
 # Add appimagetool
 (wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && cd squashfs-root && ln -s $PWD/AppRun /usr/bin/appimagetool)
+./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && rm *.AppImage && ln -s $PWD/squashfs-root/AppRun /usr/bin/appimagetool)
 
 mkdir cache
 
