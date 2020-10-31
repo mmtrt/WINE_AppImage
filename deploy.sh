@@ -162,6 +162,8 @@ lib32-readline
 
 pip3 install appimage-builder
 
+wget -q https://gist.github.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/0c43ab647a1b9c8b6cabb95ad33c62ab8a2a7367/nvidia_icd.json
+
 appimage-builder --skip-tests --recipe wine-stable.yml
 
 ls -al
