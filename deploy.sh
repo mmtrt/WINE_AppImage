@@ -41,6 +41,9 @@ mkdir cache
 wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
 chown -R archie glxinfo
 
+# get build deps glxinfo
+pacman -S --noconfirm libgl glew
+
 (cd glxinfo ;su archie -c "makepkg" ; cp *.tar* ../cache/)
 
 # Add appimagetool
