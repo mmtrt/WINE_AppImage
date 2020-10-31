@@ -38,8 +38,8 @@ pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep
 modprobe fuse
 
 # Add appimagetool
-wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-mv appimagetool-x86_64.AppImage appimagetool && mv appimagetool /usr/bin
+(wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
+./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && cp -urs squashfs-root/AppRun /usr/bin/appimagetool)
 
 mkdir cache
 
