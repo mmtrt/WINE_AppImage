@@ -12,7 +12,7 @@ env:
 
 after_success:
  - mkdir apps
- - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch cp output.tar /tmp/apps
+ - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage-arch cp output.tar /tmp/apps
   # extract output
  - tar xvf apps/output.tar -C apps
  - rm -rf apps/output.tar
