@@ -2,96 +2,57 @@ version: 1
 
 script:
   # Remove any previous build cache data
-  - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir -p AppDir/usr/share/vulkan/icd.d/ ; cp wrapper AppDir ; cp nvidia_icd.json AppDir/usr/share/vulkan/icd.d/
+  - rm -rf AppDir || true
+  - mkdir -p AppDir/opt/libc/usr/{lib,lib32} appimage-builder-cache
+  - cp wrapper AppDir
+  - |-
+
+    # extracting *tar.zst...
+    (cd AppDir; find ../cache -type f -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;)
+
+    (cd AppDir/opt/libc/usr/lib/; mv ../../../../usr/lib/ld-*.so* . ; rm ld-linux-so ; ls ; cd .. ; cd lib32 ; mv ../../../../usr/lib32/ld-*.so* . ; ls )
+
+    sed -i -E 's,(^.+"library_path": ")/.*/,\1,' AppDir/usr/share/vulkan/icd.d/*.json
+
+  - cp nvidia_icd.json AppDir/usr/share/vulkan/icd.d/
 
 AppDir:
   path: ./AppDir
-  
+
   app_info:
     id: org.winehq.wine
     name: wine
     icon: wine
     version: stable
-    exec: wrapper
-
-  apt:
-    arch: amd64
-    sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
-      - sourceline: 'deb http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu focal main'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x5ABCE68FF4633EA42E219156957D2708A03A4626'
-      - sourceline: 'deb http://ppa.launchpad.net/mmtrt/testing/ubuntu focal main'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x930F86B3746975D4589F196D9C7EC7245F5BC3EA'
-
-    include:
-      - winehq-stable
-      - libfreetype6
-      - libfontconfig1
-      - libfaudio0
-      - libfaudio0:i386
-      - libvulkan1
-      - libvulkan1:i386
-      - libx11-6
-      - libxcb1
-      - libxft2
-      - libxft2:i386
-      - mpg123
-      - libxrandr2
-      - libxrandr2:i386
-      - libldap-2.4-2
-      - libldap-2.4-2:i386
-      - libopenal1
-      - libopenal1:i386
-      - pulseaudio
-      - i965-va-driver
-      - i965-va-driver:i386
-      - intel-media-va-driver
-      - intel-media-va-driver:i386
-      - libgl1
-      - libgl1:i386
-      - libgl1-mesa-dri
-      - libgl1-mesa-dri:i386
-      - libglapi-mesa
-      - libglapi-mesa:i386
-      - libglu1-mesa
-      - libglu1-mesa:i386
-      - libglvnd0
-      - libglvnd0:i386
-      - libglx-mesa0
-      - libglx-mesa0:i386
-      - libglx0
-      - libglx0:i386
-      - libosmesa6
-      - libosmesa6:i386
-      - mesa-va-drivers
-      - mesa-va-drivers:i386
-      - mesa-vdpau-drivers
-      - mesa-vdpau-drivers:i386
-      - mesa-vulkan-drivers
-      - mesa-vulkan-drivers:i386
-      - mesa-utils
-      - libgl1-mesa-glx:i386
-      - vulkan-tools
-    exclude: []
+    exec: usr/bin/bash
+    exec_args: $APPDIR/wrapper $@
 
   files:
     exclude:
-      - usr/lib/x86_64-linux-gnu/gconv
+      - usr/lib/gconv
+      - usr/lib/audit
+      - usr/lib32/gconv
+      - usr/lib32/audit
+      - usr/share/include
       - usr/share/man
-      - usr/share/doc
+      - usr/share/doc/*/README.*
+      - usr/share/doc/*/changelog.*
+      - usr/share/doc/*/NEWS.*
+      - usr/share/doc/*/TODO.*
+
   runtime:
     env:
-      APPDIR_LIBRARY_PATH: $APPDIR/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/alsa-lib:$APPDIR/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu/pulseaudio:$APPDIR/usr/lib/i386-linux-gnu/alsa-lib
-      LIBGL_DRIVERS_PATH: $APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/i386-linux-gnu/dri
-      LIBVA_DRIVERS_PATH: $APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/i386-linux-gnu/dri
-    path_mappings:
-    - /opt/wine-stable:$APPDIR/opt/wine-stable
+      PATH: $APPDIR/usr/lib/gstreamer1.0/gstreamer-1.0:$APPDIR/usr/lib32/gdk-pixbuf-2.0:$APPDIR/usr/libexec:$APPDIR/usr/bin:$APPDIR/usr/sbin:$APPDIR/usr/lib32/glib-2.0:$APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0:$APPDIR/bin:$APPDIR/usr/lib/glib-2.0:$APPDIR/usr/lib/gdk-pixbuf-2.0
+      APPDIR_LIBRARY_PATH: $APPDIR/usr/lib:$APPDIR/usr/lib/pulseaudio:$APPDIR/usr/lib/alsa-lib:$APPDIR/usr/lib32:$APPDIR/usr/lib32/pulseaudio:$APPDIR/usr/lib32/alsa-lib
+      LIBC_LIBRARY_PATH: $APPDIR/opt/libc/usr/lib32:$APPDIR/opt/libc/usr/lib
+      LIBGL_DRIVERS_PATH: $APPDIR/usr/lib/dri:$APPDIR/usr/lib32/dri
+      GST_REGISTRY_REUSE_PLUGIN_SCANNER: no
+      GST_PLUGIN_SCANNER: $APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+      GST_PTP_HELPER: $APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0/gst-ptp-helper
+      GDK_PIXBUF_MODULEDIR: $APPDIR/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders
+      GDK_PIXBUF_MODULE_FILE: $APPDIR/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache
+      GSETTINGS_SCHEMA_DIR: $APPDIR/usr/share/glib-2.0/schemas
+      LIBVA_DRIVERS_PATH: $APPDIR/usr/lib/dri:$APPDIR/usr/lib32/dri
 
   test:
     debian:
@@ -115,9 +76,8 @@ AppDir:
       command: "./AppRun --version"
       use_host_x: True
 
-
 AppImage:
-  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-testing|wine-stable*.AppImage.zsync'
+  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous-arch|wine-stable*.AppImage.zsync'
   sign-key: None
   arch: x86_64
 
