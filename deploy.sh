@@ -33,7 +33,7 @@ echo "DEBUG: pacmam updating system"
 pacman -Syu --noconfirm
 
 #Add "base-devel multilib-devel" for compile in the list:
-pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip
+pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip fuse2
 
 # Add appimagetool
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
