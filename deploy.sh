@@ -39,6 +39,7 @@ mkdir cache
 
 # get glxinfo
 wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
+chown -R archie glxinfo
 
 (cd glxinfo ;su archie -c "makepkg" ; cp *.tar* ../cache/)
 
