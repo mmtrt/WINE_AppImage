@@ -33,13 +33,11 @@ echo "DEBUG: pacmam updating system"
 pacman -Syu --noconfirm
 
 #Add "base-devel multilib-devel" for compile in the list:
-pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip fuse2
-
-modprobe fuse
+pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip
 
 # Add appimagetool
 (wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && cp -urs squashfs-root/AppRun /usr/bin/appimagetool)
+./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && cd squashfs-root && ln -s $PWD/AppRun /usr/bin/appimagetool)
 
 mkdir cache
 
