@@ -40,7 +40,7 @@ mkdir cache
 # get glxinfo
 wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
 
-(cd glxinfo ;su travis -c "makepkg" ; cp *.tar* ../cache/)
+(cd glxinfo ;su archie -c "makepkg" ; cp *.tar* ../cache/)
 
 # Add appimagetool
 (wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
