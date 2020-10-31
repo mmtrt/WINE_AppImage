@@ -35,6 +35,11 @@ pacman -Syu --noconfirm
 #Add "base-devel multilib-devel" for compile in the list:
 pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2 patchelf python-pip
 
+# get glxinfo
+wget -qO- https://aur.archlinux.org/cgit/aur.git/snapshot/glxinfo.tar.gz | tar xvz
+
+(cd glxinfo ; makepkg ; cp *.tar* ../cache/)
+
 # Add appimagetool
 (wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
 ./appimagetool-x86_64.AppImage --appimage-extract &>/dev/null && rm *.AppImage && ln -s $PWD/squashfs-root/AppRun /usr/bin/appimagetool)
