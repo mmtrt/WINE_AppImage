@@ -13,6 +13,9 @@ script:
     # extracting *tar.zst...
     (cd AppDir; find ../cache -type f -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;)
 
+    # wineworkdir cleanup
+    (cd Appdir; rm -rf include; rm usr/{lib,lib32}/{*.a,*.o,pkgconfig}; rm -rf usr/share/{doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig})
+
     (cd AppDir/opt/libc/usr/lib/; mv ../../../../usr/lib/ld-*.so* . ; cd .. ; cd lib32 ; mv ../../../../usr/lib32/ld-*.so* .)
 
     sed -i -E 's,(^.+"library_path": ")/.*/,\1,' AppDir/usr/share/vulkan/icd.d/*.json
