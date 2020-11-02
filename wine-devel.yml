@@ -51,7 +51,6 @@ AppDir:
       PATH: $APPDIR/usr/lib/gstreamer1.0/gstreamer-1.0:$APPDIR/usr/lib32/gdk-pixbuf-2.0:$APPDIR/usr/libexec:$APPDIR/usr/bin:$APPDIR/usr/sbin:$APPDIR/usr/lib32/glib-2.0:$APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0:$APPDIR/bin:$APPDIR/usr/lib/glib-2.0:$APPDIR/usr/lib/gdk-pixbuf-2.0
       APPDIR_LIBRARY_PATH: $APPDIR/usr/lib:$APPDIR/usr/lib/pulseaudio:$APPDIR/usr/lib/alsa-lib:$APPDIR/usr/lib32:$APPDIR/usr/lib32/pulseaudio:$APPDIR/usr/lib32/alsa-lib
       LIBC_LIBRARY_PATH: $APPDIR/opt/libc/usr/lib32:$APPDIR/opt/libc/usr/lib
-      LIBGL_DRIVERS_PATH: $APPDIR/usr/lib/dri:$APPDIR/usr/lib32/dri
       GST_REGISTRY_REUSE_PLUGIN_SCANNER: no
       GST_PLUGIN_SCANNER: $APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
       GST_PTP_HELPER: $APPDIR/usr/lib32/gstreamer1.0/gstreamer-1.0/gst-ptp-helper

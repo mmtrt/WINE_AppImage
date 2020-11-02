@@ -142,16 +142,10 @@ libstdc++5
 
 # drivers
 pacman -Syw --noconfirm --cachedir cache \
-mesa \
-lib32-mesa \
-mesa-libgl \
-lib32-mesa-libgl \
 ocl-icd \
 lib32-ocl-icd \
 vulkan-icd-loader \
 lib32-vulkan-icd-loader \
-libdrm \
-lib32-libdrm \
 libva \
 lib32-libva \
 vulkan-intel \
