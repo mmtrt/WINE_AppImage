@@ -8,10 +8,10 @@ script:
   - |-
 
     # extracting *tar.xz...
-    (cd AppDir; find ../cache -type f -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;)
+    (cd AppDir; find ../cache -type f \( -name '*tar.xz' -o ! -name '*libglvnd*' -o ! -name '*libglx*' -o ! -name '*libgl1*' -o ! -name '*libdrm*' -o ! -name '*libegl1*' -o ! -name '*libegl1*' -o ! -name '*libglapi*' -o ! -name '*libgles2*' -o ! -name '*libgbm*' -o ! -name '*mesa*' \) -exec tar --warning=no-unknown-keyword -xJf {} \;)
 
     # extracting *tar.zst...
-    (cd AppDir; find ../cache -type f -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;)
+    (cd AppDir; find ../cache -type f \( -name '*tar.zst' -o ! -name '*libglvnd*' -o ! -name '*libglx*' -o ! -name '*libgl1*' -o ! -name '*libdrm*' -o ! -name '*libegl1*' -o ! -name '*libegl1*' -o ! -name '*libglapi*' -o ! -name '*libgles2*' -o ! -name '*libgbm*' -o ! -name '*mesa*' \) -exec tar --warning=no-unknown-keyword --zstd -xf {} \;)
 
     # wineworkdir cleanup
     (cd AppDir; rm -rf include; rm usr/{lib,lib32}/{*.a,*.o,pkgconfig}; rm -rf usr/share/{doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig})
