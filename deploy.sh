@@ -181,6 +181,16 @@ wine-staging
 # build appimage
 appimage-builder --skip-tests --recipe wine-staging.yml
 
+# remove wine cache
+rm ./cache/wine*.tar.zst
+
+# get wine staging
+pacman -Syw --noconfirm --cachedir cache \
+wine-tkg-git-leagueoflegends
+
+# build appimage
+appimage-builder --skip-tests --recipe wine-staging-lol.yml
+
 # packing appimg* files
 tar cvf output.tar *.AppImage *.zsync
 
