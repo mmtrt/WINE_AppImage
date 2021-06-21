@@ -4,6 +4,8 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - sudo dpkg --add-architecture i386
+  - sudo apt update -y && sudo apt upgrade -y
+  - sudo apt --fix-broken install -y
 
 AppDir:
   path: ./AppDir

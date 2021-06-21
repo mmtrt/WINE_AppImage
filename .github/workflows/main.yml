@@ -29,7 +29,6 @@ jobs:
       - name: Prerequisites
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt-get -y install python3 python3-setuptools python3-pip wget patchelf fakeroot gnupg2 libglib2.0-bin file desktop-file-utils libgdk-pixbuf2.0-dev librsvg2-dev zsync
           pip3 install appimage-builder
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
