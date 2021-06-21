@@ -12,8 +12,8 @@ AppDir:
     id: org.winehq.wine
     name: wine
     icon: wine
-    version: staging
-    exec: opt/wine-staging/bin/wine
+    version: stable
+    exec: opt/wine-stable/bin/wine
 
   apt:
     arch: amd64
@@ -26,7 +26,8 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - winehq-staging
+      # - winehq-staging
+      - winehq-stable-i386
       - libfreetype6
       - libfontconfig1
       # - libfaudio0
