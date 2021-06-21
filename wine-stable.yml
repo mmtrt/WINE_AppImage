@@ -3,6 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - dpkg --add-architecture i386
 
 AppDir:
   path: ./AppDir
