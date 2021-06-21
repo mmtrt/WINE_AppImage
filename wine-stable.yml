@@ -4,8 +4,6 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - sudo dpkg --add-architecture i386
-  - sudo apt update -y && sudo apt upgrade -y
-  - sudo apt --fix-broken install -y
 
 AppDir:
   path: ./AppDir
@@ -14,8 +12,8 @@ AppDir:
     id: org.winehq.wine
     name: wine
     icon: wine
-    version: stable
-    exec: opt/wine-stable/bin/wine
+    version: staging
+    exec: opt/wine-staging/bin/wine
 
   apt:
     arch: amd64
@@ -28,7 +26,7 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - winehq-stable
+      - winehq-staging
       - libfreetype6
       - libfontconfig1
       # - libfaudio0
