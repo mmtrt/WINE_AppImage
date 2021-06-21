@@ -24,16 +24,22 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
+      - name: Prerequisites
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get -y install python3 python3-setuptools python3-pip wget patchelf fakeroot gnupg2 libglib2.0-bin file desktop-file-utils libgdk-pixbuf2.0-dev librsvg2-dev zsync
+          pip3 install appimage-builder
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+          wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
+          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
-        uses: AppImageCrafters/build-appimage@master
-        with:
-          recipe: "./wine-stable.yml"
-          args: "--skip-tests"
-
-      - name: Move appimage
         run: |
+          appimage-builder --skip-tests --recipe wine-stable.yml
           chmod +x *.AppImage
           mkdir dist
           mv wine*.AppImage* dist/.
