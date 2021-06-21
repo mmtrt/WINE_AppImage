@@ -25,6 +25,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Enable i386 arch & update apt
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update -y -qq
+
       # Runs a set of commands using the runners shell
       - name: Build appimage
         uses: AppImageCrafters/build-appimage@master
