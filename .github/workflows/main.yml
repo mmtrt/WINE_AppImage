@@ -31,6 +31,8 @@ jobs:
         with:
           recipe: "./wine-stable.yml"
           args: "--skip-tests"
+
+      - name: Move appimage
         run: |
           chmod +x *.AppImage
           mkdir dist
