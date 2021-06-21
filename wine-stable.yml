@@ -16,13 +16,17 @@ AppDir:
 
   apt:
     arch: amd64
-    # sources:
-    #   - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
-    #   - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
-    #   - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
-    #     key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-    #   - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-    #     key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+    sources:
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+      - sourceline: 'deb [arch=i386] http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+      - sourceline: 'deb [arch=i386] http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb [arch=i386] http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
+      - sourceline: 'deb [arch=amd64] https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+      - sourceline: 'deb [arch=i386] https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
       - winehq-stable
