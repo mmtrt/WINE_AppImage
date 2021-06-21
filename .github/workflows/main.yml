@@ -29,6 +29,8 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update -y -qq
+          wget -nc https://dl.winehq.org/wine-builds/winehq.key
+          sudo apt-key add winehq.key
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
