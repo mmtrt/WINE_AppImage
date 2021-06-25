@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "Stable"
-  Stable:
+  stable:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -28,7 +28,6 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo dpkg --add-architecture i386
           pip3 install appimage-builder
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://gist.githubusercontent.com/mmtrt/8d1a2b9eb33429feb0197ec46b0acdf4/raw/493a1700897897963dba24ffe2985d6e00a71ba1/nvidia_icd.json
@@ -49,8 +48,8 @@ jobs:
           name: wine-stable-continuous-x86_64.AppImage
           path: 'dist'
 
-  Release-stable:
-      needs: [Stable]
+  release-stable:
+      needs: [stable]
       runs-on: ubuntu-latest
 
       steps:

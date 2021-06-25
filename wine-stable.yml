@@ -29,6 +29,7 @@ AppDir:
       - winehq-stable
       - libfreetype6
       - libfontconfig1
+      - dash
       # - libfaudio0
       # - libfaudio0:i386
       # - libvulkan1
