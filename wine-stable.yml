@@ -14,7 +14,7 @@ AppDir:
     icon: wine
     version: stable
     exec: bin/bash
-    exec_args: wrapper $@
+    exec_args: wrapper
 
   apt:
     arch: [amd64, i386]
