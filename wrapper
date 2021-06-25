@@ -1,7 +1,3 @@
-#!/bin/bash
-
-HERE="$(dirname "$(readlink -f "${0}")")"
-
 VENDOR=$(glxinfo -B | grep "OpenGL vendor")
 
 if [[ $VENDOR == *"Intel"* ]]; then
@@ -25,16 +21,16 @@ else
   BINARY_NAME=$(basename "$0")
 fi
 
-if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
-  MAIN="$HERE/bin/$1" ; shift
-elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
-  MAIN="$HERE/usr/bin/$1" ; shift
-elif [ -e "$HERE/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/bin/$BINARY_NAME"
-elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/usr/bin/$BINARY_NAME"
+if [ ! -z "$1" ] && [ -e "$APPDIR/bin/$1" ] ; then
+  MAIN="$APPDIR/bin/$1" ; shift
+elif [ ! -z "$1" ] && [ -e "$APPDIR/usr/bin/$1" ] ; then
+  MAIN="$APPDIR/usr/bin/$1" ; shift
+elif [ -e "$APPDIR/bin/$BINARY_NAME" ] ; then
+  MAIN="$APPDIR/bin/$BINARY_NAME"
+elif [ -e "$APPDIR/usr/bin/$BINARY_NAME" ] ; then
+  MAIN="$APPDIR/usr/bin/$BINARY_NAME"
 else
-  MAIN="$HERE/usr/bin/wine"
+  MAIN="$APPDIR/usr/bin/wine64"
 fi
 
 if [ -z "$APPLICATION" ] ; then
