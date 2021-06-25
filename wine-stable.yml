@@ -27,9 +27,11 @@ AppDir:
     include:
       # - winehq-staging
       - winehq-stable
-      - libfreetype6
-      - libfontconfig1
+      # - libfreetype6
+      # - libfontconfig1
       - dash
+      - perl
+      - coreutils
       # - libfaudio0
       # - libfaudio0:i386
       # - libvulkan1
