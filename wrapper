@@ -1,5 +1,3 @@
-#!/bin/bash
-
 VENDOR=$(glxinfo -B | grep "OpenGL vendor")
 
 if [[ $VENDOR == *"Intel"* ]]; then
