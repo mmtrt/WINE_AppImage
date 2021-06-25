@@ -3,7 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - cp wrapper AppDir
+  - mkdir AppDir && cp wrapper AppDir
 
 AppDir:
   path: ./AppDir
