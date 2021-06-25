@@ -13,7 +13,8 @@ AppDir:
     name: wine
     icon: wine
     version: stable
-    exec: wrapper
+    exec: AppRun
+    exec_args: wrapper $@
 
   apt:
     arch: [amd64, i386]
