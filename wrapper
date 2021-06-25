@@ -1,3 +1,5 @@
+#!/bin/bash
+
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 VENDOR=$(glxinfo -B | grep "OpenGL vendor")
