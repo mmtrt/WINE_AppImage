@@ -3,11 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - sudo dpkg --add-architecture i386
-  - wget -nc https://dl.winehq.org/wine-builds/winehq.key
-  - sudo apt-key add winehq.key
-  - sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-  - sudo apt update && sudo apt install -f -y
+
 AppDir:
   path: ./AppDir
   
@@ -19,14 +15,14 @@ AppDir:
     exec: opt/wine-stable/bin/wine
 
   apt:
-    arch: amd64
+    arch: [amd64, i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      # - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-      #   key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
       # - winehq-staging
@@ -56,11 +52,11 @@ AppDir:
       # - libosmesa6
       # - libosmesa6:i386
       # - vulkan-tools
-    exclude: []
+    exclude:
+      - dpkg
 
   files:
     exclude:
-      - usr/lib/x86_64-linux-gnu/gconv
       - usr/share/man
       - usr/share/doc
   runtime:
