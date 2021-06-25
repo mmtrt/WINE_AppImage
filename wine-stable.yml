@@ -27,6 +27,7 @@ AppDir:
 
     include:
       - winehq-stable
+      - bash
       - dash
       - perl
       - coreutils
