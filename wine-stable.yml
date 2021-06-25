@@ -13,7 +13,7 @@ AppDir:
     name: wine
     icon: wine
     version: stable
-    exec: AppRun
+    exec: bin/bash
     exec_args: wrapper $@
 
   apt:
