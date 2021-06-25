@@ -3,6 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - cp wrapper AppDir
 
 AppDir:
   path: ./AppDir
@@ -12,7 +13,7 @@ AppDir:
     name: wine
     icon: wine
     version: stable
-    exec: opt/wine-stable/bin/wine64
+    exec: wrapper
 
   apt:
     arch: [amd64, i386]
@@ -29,6 +30,7 @@ AppDir:
       - dash
       - perl
       - coreutils
+      - mesa-utils
 
   files:
     exclude:
