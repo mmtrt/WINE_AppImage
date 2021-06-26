@@ -42,8 +42,8 @@ jobs:
           # stable
           appimage-builder --skip-tests --recipe wine-stable.yml
           WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          mv *.AppImage wine-stable_$(WINE_VER)-x86_64.AppImage
-          mv *.zsync wine-stable_$(WINE_VER)-x86_64.AppImage.zsync
+          mv *.AppImage wine-stable_$(echo $WINE_VER)-x86_64.AppImage
+          mv *.zsync wine-stable_$(echo $WINE_VER)-x86_64.AppImage.zsync
           strings *.zsync | grep wine | sed -i "s|-x|_$WINE_VER-x|" *.zsync
           mv *.AppImage* dist/.
 
