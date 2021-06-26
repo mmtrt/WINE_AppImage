@@ -40,8 +40,6 @@ AppDir:
       - usr/share/doc
 
   runtime:
-    env:
-      WINEPREFIX: ${WINEPREFIX:-"$HOME/.wine-appimage"}
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
