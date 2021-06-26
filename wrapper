@@ -1,3 +1,7 @@
+# wine env
+export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
+
+# check gpu vendor
 VENDOR=$(glxinfo -B | grep "OpenGL vendor")
 
 if [[ $VENDOR == *"Intel"* ]]; then

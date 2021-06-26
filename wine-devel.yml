@@ -66,7 +66,7 @@ AppDir:
       use_host_x: True
 
 AppImage:
-  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-devel*.AppImage.zsync'
+  update-information: None
   sign-key: None
   arch: x86_64
 
