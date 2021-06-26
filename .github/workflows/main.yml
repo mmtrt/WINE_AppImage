@@ -36,26 +36,28 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
+          # add dir dist
+          mkdir dist
+
           # stable
           appimage-builder --skip-tests --recipe wine-stable.yml
           WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
           mv *.AppImage wine-stable_$(echo $WINE_VER)_x86-64.AppImage
           mv *.zsync wine-stable_$(echo $WINE_VER)_x86-64.AppImage.zsync
+          mv wine*.AppImage* dist/.
 
           # devel
           appimage-builder --skip-tests --recipe wine-devel.yml
           WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
           mv *.AppImage wine-devel_$(echo $WINE_VER)_x86-64.AppImage
           mv *.zsync wine-devel_$(echo $WINE_VER)_x86-64.AppImage.zsync
+          mv wine*.AppImage* dist/.
 
           # staging
           appimage-builder --skip-tests --recipe wine-staging.yml
           WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
           mv *.AppImage wine-staging_$(echo $WINE_VER)_x86-64.AppImage
           mv *.zsync wine-staging_$(echo $WINE_VER)_x86-64.AppImage.zsync
-
-          chmod +x *.AppImage
-          mkdir dist
           mv wine*.AppImage* dist/.
 
       - name: Upload artifact
