@@ -41,7 +41,7 @@ AppDir:
 
   runtime:
     env:
-      WINEPREFIX: .wine-appimage
+      WINEPREFIX: ${WINEPREFIX:-"$HOME/.wine-appimage"}
     path_mappings:
     - /opt/wine-devel:$APPDIR/opt/wine-devel
 
