@@ -58,6 +58,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
+      - name: Prerequisites
+        run: |
+          pip3 install appimage-builder
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
+          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build devel appimage
@@ -84,6 +92,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+
+      - name: Prerequisites
+        run: |
+          pip3 install appimage-builder
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
+          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build staging appimage
