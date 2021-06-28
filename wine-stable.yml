@@ -7,8 +7,6 @@ script:
   # Add winetricks & cabextract
   - wget "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   - wget "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
-  # Workaround class64 issue
-  - wget https://github.com/AppImageCrafters/AppRun/releases/download/v1.2.5/libapprun_hooks-Release-i386.so -O "libapprun_hooks.so" -P ./AppDir/opt/wine-stable/lib
 
 
 AppDir:
