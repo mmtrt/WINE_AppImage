@@ -4,6 +4,9 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
+  # Add winetricks & cabextract
+  - wget "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  - wget "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
 
 AppDir:
   path: ./AppDir
