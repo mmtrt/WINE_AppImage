@@ -24,11 +24,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # - uses: actions/setup-python@v1
 
       - name: Prerequisites
         run: |
-          # pip3 install appimage-builder
           wget https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-0.9.0-3a07126-x86_64.AppImage -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
