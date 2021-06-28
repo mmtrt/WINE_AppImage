@@ -19,15 +19,15 @@ if [ -z "$*" ] ; then
 fi
 
 # Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
-if [ -n "$APPIMAGE" ] ; then
+if [ ! -z $APPIMAGE ] ; then
   BINARY_NAME=$(basename "$ARGV0")
 else
   BINARY_NAME=$(basename "$0")
 fi
 
-if [ -n "$1" ] && [ -e "$APPDIR/bin/$1" ] ; then
+if [ ! -z "$1" ] && [ -e "$APPDIR/bin/$1" ] ; then
   MAIN="$APPDIR/bin/$1" ; shift
-elif [ -n "$1" ] && [ -e "$APPDIR/usr/bin/$1" ] ; then
+elif [ ! -z "$1" ] && [ -e "$APPDIR/usr/bin/$1" ] ; then
   MAIN="$APPDIR/usr/bin/$1" ; shift
 elif [ -e "$APPDIR/bin/$BINARY_NAME" ] ; then
   MAIN="$APPDIR/bin/$BINARY_NAME"
