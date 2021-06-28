@@ -24,11 +24,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      # - uses: actions/setup-python@v1
 
       - name: Prerequisites
         run: |
-          pip3 install appimage-builder
+          # pip3 install appimage-builder
+          wget https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-0.9.0-3a07126-x86_64.AppImage -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
           mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
@@ -45,17 +46,17 @@ jobs:
           export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-stable*.AppImage.zsync" wine-stable_${WINE_VER}-${ARCH}.AppImage
           mv *AppImage* dist/.
 
-          # devel
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-devel.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-devel*.AppImage.zsync" wine-devel_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
+          # # devel
+          # WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+          # appimage-builder --skip-tests --skip-appimage --recipe wine-devel.yml
+          # export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-devel*.AppImage.zsync" wine-devel_${WINE_VER}-${ARCH}.AppImage
+          # mv *AppImage* dist/.
 
-          # staging
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-staging.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-staging*.AppImage.zsync" wine-staging_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
+          # # staging
+          # WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+          # appimage-builder --skip-tests --skip-appimage --recipe wine-staging.yml
+          # export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-staging*.AppImage.zsync" wine-staging_${WINE_VER}-${ARCH}.AppImage
+          # mv *AppImage* dist/.
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
