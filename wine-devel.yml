@@ -3,6 +3,10 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - mkdir AppDir && cp wrapper AppDir
+  # Add winetricks & cabextract
+  - wget "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  - wget "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
 
 AppDir:
   path: ./AppDir
@@ -12,10 +16,11 @@ AppDir:
     name: wine
     icon: wine
     version: devel
-    exec: opt/wine-devel/bin/wine
+    exec: bin/bash
+    exec_args: wrapper $@
 
   apt:
-    arch: amd64
+    arch: [amd64, i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -26,47 +31,24 @@ AppDir:
 
     include:
       - winehq-devel
-      - libfreetype6
-      - libfontconfig1
-      - libfaudio0
-      - libfaudio0:i386
-      - libvulkan1
-      - libvulkan1:i386
-      - libx11-6
-      - libxcb1
-      - libxft2
-      - libxft2:i386
-      - mpg123
-      - libxrandr2
-      - libxrandr2:i386
-      - libldap-2.4-2
-      - libldap-2.4-2:i386
-      - libopenal1
-      - libopenal1:i386
-      - pulseaudio
-      - i965-va-driver
-      - i965-va-driver:i386
-      - intel-media-va-driver
-      - intel-media-va-driver:i386
-      - libosmesa6
-      - libosmesa6:i386
-      - vulkan-tools
-    exclude: []
+      - bash
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
 
   files:
     exclude:
-      - usr/lib/x86_64-linux-gnu/gconv
       - usr/share/man
       - usr/share/doc
+
   runtime:
-    env:
-      APPDIR_LIBRARY_PATH: $APPDIR/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/alsa-lib:$APPDIR/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu/pulseaudio:$APPDIR/usr/lib/i386-linux-gnu/alsa-lib
     path_mappings:
     - /opt/wine-devel:$APPDIR/opt/wine-devel
 
   test:
     debian:
-      image: appimagecrafters/tests-env:debian-devel
+      image: appimagecrafters/tests-env:debian-stable
       command: "./AppRun --version"
       use_host_x: True
     centos:
@@ -86,9 +68,8 @@ AppDir:
       command: "./AppRun --version"
       use_host_x: True
 
-
 AppImage:
-  update-information: 'gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-devel*.AppImage.zsync'
+  update-information: None
   sign-key: None
   arch: x86_64
 
