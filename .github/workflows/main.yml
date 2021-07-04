@@ -30,8 +30,8 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/Continuous | grep Continuous/ | cut -d '"' -f2 | sed '1s|/| |g' | awk '{print $6}' | head -n1)
-          wget https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases | grep x86_64 | cut -d'"' -f2 | head -1)
+          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
           mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
