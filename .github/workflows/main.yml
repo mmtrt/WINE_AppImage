@@ -49,7 +49,7 @@ jobs:
           sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-stable/share/wine/wine.inf
           # Disable winemenubuilder
           sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-stable/share/wine/wine.inf
-          sed -i 's|\%11\%\\winemenubuilder.exe -a -r||' AppDir/opt/wine-stable/share/wine/wine.inf
+          sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-stable/share/wine/wine.inf
           # Pre patching DPI setting DPI dword value 240=f0 180=b4 120=78 110=6e 100=64 96=60
           sed -i 's|0x00000060|0x00000064|' AppDir/opt/wine-stable/share/wine/wine.inf
           export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-stable*.AppImage.zsync" wine-stable_${WINE_VER}-${ARCH}.AppImage
@@ -62,7 +62,7 @@ jobs:
           sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-devel/share/wine/wine.inf
           # Disable winemenubuilder
           sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-devel/share/wine/wine.inf
-          sed -i 's|\%11\%\\winemenubuilder.exe -a -r||' AppDir/opt/wine-devel/share/wine/wine.inf
+          sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-devel/share/wine/wine.inf
           # Pre patching DPI setting DPI dword value 240=f0 180=b4 120=78 110=6e 100=64 96=60
           sed -i 's|0x00000060|0x00000064|' AppDir/opt/wine-devel/share/wine/wine.inf
           export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-devel*.AppImage.zsync" wine-devel_${WINE_VER}-${ARCH}.AppImage
@@ -75,7 +75,7 @@ jobs:
           sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
           # Disable winemenubuilder
           sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
-          sed -i 's|\%11\%\\winemenubuilder.exe -a -r||' AppDir/opt/wine-staging/share/wine/wine.inf
+          sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
           # Pre patching DPI setting DPI dword value 240=f0 180=b4 120=78 110=6e 100=64 96=60
           sed -i 's|0x00000060|0x00000064|' AppDir/opt/wine-staging/share/wine/wine.inf
           export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-staging*.AppImage.zsync" wine-staging_${WINE_VER}-${ARCH}.AppImage
