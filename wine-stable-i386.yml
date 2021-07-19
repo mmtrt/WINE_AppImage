@@ -20,7 +20,7 @@ AppDir:
     exec_args: wrapper $@
 
   apt:
-    arch: [amd64, i386]
+    arch: [i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -31,12 +31,12 @@ AppDir:
 
     include:
       - winehq-stable:i386
-      - bash
-      - dash
-      - perl
-      - coreutils
-      - mesa-utils
-      - unionfs-fuse
+      - bash:i386
+      - dash:i386
+      - perl:i386
+      - coreutils:i386
+      - mesa-utils:i386
+      - unionfs-fuse:amd64
 
   files:
     exclude:
