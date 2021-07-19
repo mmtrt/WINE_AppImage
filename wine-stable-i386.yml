@@ -20,7 +20,7 @@ AppDir:
     exec_args: wrapper $@
 
   apt:
-    arch: [i386]
+    arch: [amd64,i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -30,11 +30,14 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - winehq-stable
+      - wine-stable:i386
+      - wine-stable-i386:i386
       - bash
       - dash
       - perl
       - coreutils
+      - mesa-utils
+      - unionfs-fuse
 
   files:
     exclude:
