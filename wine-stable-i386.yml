@@ -35,8 +35,8 @@ AppDir:
       - dash
       - perl
       - coreutils
-      - mesa-utils
-      - unionfs-fuse
+      # - mesa-utils
+      # - unionfs-fuse
 
   files:
     exclude:
