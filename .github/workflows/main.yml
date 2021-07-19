@@ -72,6 +72,7 @@ jobs:
           # find ./tmp/ -type f -exec chmod +x {} \;
           # cp -Rp ./tmp/usr AppDir/
           # rm ./*.deb ; rm -rf ./tmp
+          ( cd ./AppDir/usr/bin ; ln -s ../../opt/wine-stable/bin/* ./ )
           export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous|wine-stable*.AppImage.zsync" wine-stable-i386_${WINE_VER}-${ARCH}.AppImage
           mv *AppImage* dist/.
 
