@@ -1,0 +1,76 @@
+version: 1
+
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - mkdir AppDir && cp wrapper AppDir
+  # Add winetricks & cabextract
+  - wget "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  - wget "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
+
+AppDir:
+  path: ./AppDir
+  
+  app_info:
+    id: org.winehq.wine
+    name: wine
+    icon: wine
+    version: stable
+    exec: bin/bash
+    exec_args: wrapper $@
+
+  apt:
+    arch: [amd64, i386]
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+
+    include:
+      - winehq-stable:i386
+      - bash
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
+      - unionfs-fuse
+
+  files:
+    exclude:
+      - usr/share/man
+      - usr/share/doc
+
+  runtime:
+    path_mappings:
+    - /opt/wine-stable:$APPDIR/opt/wine-stable
+
+  test:
+    debian:
+      image: appimagecrafters/tests-env:debian-stable
+      command: "./AppRun --version"
+      use_host_x: True
+    centos:
+      image: appimagecrafters/tests-env:centos-7
+      command: "./AppRun --version"
+      use_host_x: True
+    arch:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: "./AppRun --version"
+      use_host_x: True
+    fedora:
+      image: appimagecrafters/tests-env:fedora-30
+      command: "./AppRun --version"
+      use_host_x: True
+    ubuntu:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: "./AppRun --version"
+      use_host_x: True
+
+AppImage:
+  update-information: None
+  sign-key: None
+  arch: x86_64
+
