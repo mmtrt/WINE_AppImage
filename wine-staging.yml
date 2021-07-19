@@ -36,6 +36,8 @@ AppDir:
       - perl
       - coreutils
       - mesa-utils
+      - libfuse2
+      - unionfs-fuse
 
   files:
     exclude:
