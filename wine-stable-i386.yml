@@ -30,13 +30,13 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - winehq-stable:i386
-      - bash:i386
-      - dash:i386
-      - perl:i386
-      - coreutils:i386
-      - mesa-utils:i386
-      - unionfs-fuse:amd64
+      - winehq-stable
+      - bash
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
+      - unionfs-fuse
 
   files:
     exclude:
