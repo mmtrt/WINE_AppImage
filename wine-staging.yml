@@ -31,6 +31,7 @@ AppDir:
 
     include:
       - winehq-staging
+      - wine-staging
       - bash
       - dash
       - perl
