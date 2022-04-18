@@ -64,8 +64,15 @@ AppDir:
      dpkg -x "wine-staging-i386_5.18-f~0ubuntu3_i386.deb" AppDir/
      rm -rf usr/share/doc; rm -rf usr/share/lintian ; rm *.deb
 
-     # patch wrapper script
+     # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-lolp|' AppDir/wrapper
+
+     # Disable FileOpenAssociations
+     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
+
+     # Disable winemenubuilder
+     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
+     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
 
   runtime:
     path_mappings:
