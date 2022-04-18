@@ -47,13 +47,18 @@ AppDir:
       - opt/libc/lib/i386-linux-gnu/*
       - opt/libc/usr/lib/i386-linux-gnu/audit/*
       - opt/libc/usr/lib/i386-linux-gnu/gconv/*
+      - opt/libc/lib/x86_64-linux-gnu/*
+      - opt/libc/usr/lib/x86_64-linux-gnu/audit/*
+      - opt/libc/usr/lib/x86_64-linux-gnu/gconv/*
 
   after_bundle:
     # this is executed after the packages and files are added
     - |
      # download and add lolp glibc
      wget -q -nc https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/libc6_2.31-f~0ubuntu1_i386.deb
+     wget -q -nc https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/libc6_2.31-f~0ubuntu1_amd64.deb
      dpkg -x libc6_2.31-f~0ubuntu1_i386.deb AppDir/opt/libc
+     dpkg -x libc6_2.31-f~0ubuntu1_amd64.deb AppDir/opt/libc
 
      # download and add lolp wine-staging
      wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging-amd64_5.18-f~0ubuntu3_amd64.deb"
