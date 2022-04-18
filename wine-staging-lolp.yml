@@ -66,6 +66,7 @@ AppDir:
 
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-lolp|' AppDir/wrapper
+     sed -i '/export WIN/a \\n# pre launching script for login fix\nlolfix &' AppDir/wrapper
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
@@ -73,6 +74,10 @@ AppDir:
      # Disable winemenubuilder
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
+
+     # download & add lolfix
+     wget -q https://github.com/mmtrt/leagueoflegends/raw/master/snap/local/scripts/lolfix -P AppDir/bin
+     chmod +x AppDir/bin/lolfix
 
   runtime:
     path_mappings:
