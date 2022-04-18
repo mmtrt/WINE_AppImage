@@ -1,0 +1,100 @@
+version: 1
+
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - mkdir AppDir && cp wrapper AppDir
+  # Add winetricks & cabextract
+  - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  - wget -q "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
+
+AppDir:
+  path: ./AppDir
+  
+  app_info:
+    id: org.winehq.wine
+    name: wine
+    icon: wine
+    version: staging_lolp
+    exec: bin/bash
+    exec_args: wrapper $@
+
+  apt:
+    arch: [amd64, i386]
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+
+    include:
+      - winehq-staging
+      - wine-staging
+      - bash
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
+      - unionfs-fuse
+
+  files:
+    exclude:
+      - usr/share/man
+      - usr/share/doc
+      - opt/wine-staging/*
+      - opt/libc/lib/i386-linux-gnu/*
+      - opt/libc/usr/lib/i386-linux-gnu/audit/*
+      - opt/libc/usr/lib/i386-linux-gnu/gconv/*
+
+  after_bundle:
+    # this is executed after the packages and files are added
+    - |
+     # download and add lolp glibc
+     wget -q -nc https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/libc6_2.31-f~0ubuntu1_i386.deb
+     dpkg -x libc6_2.31-f~0ubuntu1_i386.deb AppDir/opt/libc
+
+     # download and add lolp wine-staging
+     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging-amd64_5.18-f~0ubuntu3_amd64.deb"
+     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging_5.18-f~0ubuntu3_amd64.deb"
+     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging-i386_5.18-f~0ubuntu3_i386.deb"
+     dpkg -x "wine-staging-amd64_5.18-f~0ubuntu3_amd64.deb" AppDir/
+     dpkg -x "wine-staging_5.18-f~0ubuntu3_amd64.deb" AppDir/
+     dpkg -x "wine-staging-i386_5.18-f~0ubuntu3_i386.deb" AppDir/
+     rm -rf usr/share/doc; rm -rf usr/share/lintian ; rm *.deb
+
+     # patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-lolp|' AppDir/wrapper
+
+  runtime:
+    path_mappings:
+    - /opt/wine-staging:$APPDIR/opt/wine-staging
+
+  test:
+    debian:
+      image: appimagecrafters/tests-env:debian-stable
+      command: "./AppRun --version"
+      use_host_x: True
+    centos:
+      image: appimagecrafters/tests-env:centos-7
+      command: "./AppRun --version"
+      use_host_x: True
+    arch:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: "./AppRun --version"
+      use_host_x: True
+    fedora:
+      image: appimagecrafters/tests-env:fedora-30
+      command: "./AppRun --version"
+      use_host_x: True
+    ubuntu:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: "./AppRun --version"
+      use_host_x: True
+
+AppImage:
+  update-information: None
+  sign-key: None
+  arch: x86_64
+
