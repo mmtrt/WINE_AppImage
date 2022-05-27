@@ -4,9 +4,10 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
-  # Add winetricks & cabextract
-  - wget "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
-  - wget "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
+  # Add winetricks
+  - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
 
 AppDir:
   path: ./AppDir
@@ -33,6 +34,7 @@ AppDir:
       - winehq-staging
       - wine-staging
       - bash
+      - cabextract
       - dash
       - perl
       - coreutils
@@ -41,8 +43,64 @@ AppDir:
 
   files:
     exclude:
+      - sbin
+      - var
+      - etc/alternatives
+      - etc/apt
+      - etc/cron.daily
+      - etc/dpkg
+      - etc/mysql
+      - etc/sane.d
+      - etc/sensors.d
+      - etc/skel
+      - etc/snmp
+      - etc/udev
+      - etc/gss
+      - etc/init.d
+      - etc/logrotate.d
+      - lib/modprobe.d
+      - lib/systemd
+      - lib/udev
+      - usr/lib/mime
+      - usr/lib/sasl2
+      - usr/lib/tmpfiles.d
+      - usr/sbin
+      - usr/share/apps
       - usr/share/man
       - usr/share/doc
+      - usr/share/adduser
+      - usr/share/apport
+      - usr/share/bash-completion
+      - usr/share/bug
+      - usr/share/debconf
+      - usr/share/doc
+      - usr/share/doc-base
+      - usr/share/dpkg
+      - usr/share/glib-2.0
+      - usr/share/gst-plugins-base
+      - usr/share/hal
+      - usr/share/info
+      - usr/share/initramfs-tools
+      - usr/share/kde4
+      - usr/share/libgphoto2
+      - usr/share/lintian
+      - usr/share/menu
+      - usr/share/metainfo
+      - usr/share/misc
+      - usr/share/mysql-common
+      - usr/share/pixmaps
+      - usr/share/pkgconfig
+      - usr/share/polkit-1
+      - usr/share/snmp
+      - usr/share/zoneinfo
+      - usr/share/zoneinfo-icu
+      - usr/share/zsh
+      - opt/wine-staging/share/man
+      - opt/wine-staging/share/applications
+      - opt/wine-staging/lib/wine/i386-unix/*.a
+      - opt/wine-staging/lib/wine/i386-windows/*.a
+      - opt/wine-staging/lib64/wine/x86_64-unix/*.a
+      - opt/wine-staging/lib64/wine/x86_64-windows/*.a
 
   after_bundle:
     # this is executed after the packages and files are added
@@ -62,23 +120,18 @@ AppDir:
     debian:
       image: appimagecrafters/tests-env:debian-stable
       command: "./AppRun --version"
-      use_host_x: True
     centos:
       image: appimagecrafters/tests-env:centos-7
       command: "./AppRun --version"
-      use_host_x: True
     arch:
       image: appimagecrafters/tests-env:archlinux-latest
       command: "./AppRun --version"
-      use_host_x: True
     fedora:
       image: appimagecrafters/tests-env:fedora-30
       command: "./AppRun --version"
-      use_host_x: True
     ubuntu:
       image: appimagecrafters/tests-env:ubuntu-xenial
       command: "./AppRun --version"
-      use_host_x: True
 
 AppImage:
   update-information: None
