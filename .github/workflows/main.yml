@@ -289,6 +289,65 @@ jobs:
               wine-stable-continuous-x86_64.AppImage
             repo_token: ${{ secrets.GITHUB_TOKEN }}
 
+  release-stable-4-i386:
+      needs: [build-stable-4-i386]
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/download-artifact@v1
+          with:
+            name: wine-stable-4-i386-continuous-x86_64.AppImage
+
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: Continuous build (stable) 4.0.x i386
+            automatic_release_tag: continuous-stable-4-i386
+            prerelease: false
+            draft: false
+            files: |
+              wine-stable-4-i386-continuous-x86_64.AppImage
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  release-stable-4-amd64:
+      needs: [build-stable-4-amd64]
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/download-artifact@v1
+          with:
+            name: wine-stable-4-amd64-continuous-x86_64.AppImage
+
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: Continuous build (stable) 4.0.x amd64
+            automatic_release_tag: continuous-stable-4-amd64
+            prerelease: false
+            draft: false
+            files: |
+              wine-stable-4-amd64-continuous-x86_64.AppImage
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  release-stable-4-multi:
+      needs: [build-stable-4-multi]
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/download-artifact@v1
+          with:
+            name: wine-stable-4-multi-continuous-x86_64.AppImage
+
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: Continuous build (stable) 4.0.x multi
+            automatic_release_tag: continuous-stable-4-multi
+            prerelease: false
+            draft: false
+            files: |
+              wine-stable-4-multi-continuous-x86_64.AppImage
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   release-devel:
       needs: [build-devel]
