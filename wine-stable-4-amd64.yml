@@ -101,6 +101,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script to use wine64
+     sed -i 's|/wine"|/wine64"|' AppDir/wrapper
+
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/wine-stable_${WINE_VER}~focal_amd64.deb
      dpkg -x "wine-stable_${WINE_VER}~focal_amd64.deb" AppDir/usr/
