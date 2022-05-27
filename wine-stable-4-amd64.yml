@@ -63,7 +63,6 @@ AppDir:
       - usr/lib/mime
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
-      - usr/lib/x86_64-linux-gnu
       - usr/sbin
       - usr/share/man
       - usr/share/doc
