@@ -106,7 +106,7 @@ AppDir:
 
      # Cleanup
      rm -rf AppDir/usr/{otp,usr}
-     rm -rf AppDir/usr/share/{applications,man}
+     rm -rf AppDir/usr/share/{applications,man,doc}
      rm -rf AppDir/opt/wine-stable/share/{applications,man}
 
      # Disable FileOpenAssociations
