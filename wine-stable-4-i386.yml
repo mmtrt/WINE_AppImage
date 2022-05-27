@@ -65,6 +65,7 @@ AppDir:
       - usr/lib/tmpfiles.d
       - usr/lib/x86_64-linux-gnu
       - usr/sbin
+      - usr/share/apps
       - usr/share/man
       - usr/share/doc
       - usr/share/adduser
@@ -80,6 +81,7 @@ AppDir:
       - usr/share/hal
       - usr/share/info
       - usr/share/initramfs-tools
+      - usr/share/kde4
       - usr/share/libgphoto2
       - usr/share/lintian
       - usr/share/menu
