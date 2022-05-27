@@ -4,7 +4,7 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
-  # Add winetricks & cabextract
+  # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
@@ -65,6 +65,7 @@ AppDir:
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
       - usr/sbin
+      - usr/share/apps
       - usr/share/man
       - usr/share/doc
       - usr/share/adduser
@@ -80,6 +81,7 @@ AppDir:
       - usr/share/hal
       - usr/share/info
       - usr/share/initramfs-tools
+      - usr/share/kde4
       - usr/share/libgphoto2
       - usr/share/lintian
       - usr/share/menu
