@@ -6,7 +6,8 @@ script:
   - mkdir AppDir && cp wrapper AppDir
   # Add winetricks & cabextract
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
-  - wget -q "https://gist.github.com/mmtrt/578f4c0694fcfc968b2d9dcc90da4c0e/raw/74f3c0ff7a89c5a4a16f74e03cb87b0b01bda2b5/cabextract" -P ./AppDir/bin  && chmod +x ./AppDir/bin/cabextract
+  # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
 
 AppDir:
   path: ./AppDir
@@ -26,13 +27,14 @@ AppDir:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
-        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/mmtrt/testing/ubuntu focal main'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9c7ec7245f5bc3ea'
 
     include:
       - winehq-staging
       - wine-staging
       - bash
+      - cabextract
       - dash
       - perl
       - coreutils
@@ -41,37 +43,70 @@ AppDir:
 
   files:
     exclude:
+      - sbin
+      - var
+      - etc/alternatives
+      - etc/apt
+      - etc/cron.daily
+      - etc/dpkg
+      - etc/mysql
+      - etc/sane.d
+      - etc/sensors.d
+      - etc/skel
+      - etc/snmp
+      - etc/udev
+      - etc/gss
+      - etc/init.d
+      - etc/logrotate.d
+      - lib/modprobe.d
+      - lib/systemd
+      - lib/udev
+      - usr/lib/mime
+      - usr/lib/sasl2
+      - usr/lib/tmpfiles.d
+      - usr/sbin
       - usr/share/man
       - usr/share/doc
-      - opt/wine-staging/*
-      - opt/libc/lib/i386-linux-gnu/*
-      - opt/libc/usr/lib/i386-linux-gnu/audit/*
-      - opt/libc/usr/lib/i386-linux-gnu/gconv/*
-      - opt/libc/lib/x86_64-linux-gnu/*
-      - opt/libc/usr/lib/x86_64-linux-gnu/audit/*
-      - opt/libc/usr/lib/x86_64-linux-gnu/gconv/*
+      - usr/share/adduser
+      - usr/share/apport
+      - usr/share/bash-completion
+      - usr/share/bug
+      - usr/share/debconf
+      - usr/share/doc
+      - usr/share/doc-base
+      - usr/share/dpkg
+      - usr/share/glib-2.0
+      - usr/share/gst-plugins-base
+      - usr/share/hal
+      - usr/share/info
+      - usr/share/initramfs-tools
+      - usr/share/libgphoto2
+      - usr/share/lintian
+      - usr/share/menu
+      - usr/share/metainfo
+      - usr/share/misc
+      - usr/share/mysql-common
+      - usr/share/pixmaps
+      - usr/share/pkgconfig
+      - usr/share/polkit-1
+      - usr/share/snmp
+      - usr/share/zoneinfo
+      - usr/share/zoneinfo-icu
+      - usr/share/zsh
+      - opt/wine-stable/share/man
+      - opt/wine-staging/lib/wine/*.a
+      - opt/wine-staging/lib/wine/*.def
+      - opt/wine-staging/lib64/wine/*.a
+      - opt/wine-staging/lib64/wine/*.def
 
   after_bundle:
     # this is executed after the packages and files are added
     - |
-     # download and add lolp glibc
-     wget -q -nc https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/libc6_2.31-f~0ubuntu1_i386.deb
-     wget -q -nc https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/libc6_2.31-f~0ubuntu1_amd64.deb
-     dpkg -x libc6_2.31-f~0ubuntu1_i386.deb AppDir/opt/libc
-     dpkg -x libc6_2.31-f~0ubuntu1_amd64.deb AppDir/opt/libc
-
-     # download and add lolp wine-staging
-     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging-amd64_5.18-f~0ubuntu3_amd64.deb"
-     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging_5.18-f~0ubuntu3_amd64.deb"
-     wget -q -nc "https://launchpad.net/~mmtrt/+archive/ubuntu/testing/+files/wine-staging-i386_5.18-f~0ubuntu3_i386.deb"
-     dpkg -x "wine-staging-amd64_5.18-f~0ubuntu3_amd64.deb" AppDir/
-     dpkg -x "wine-staging_5.18-f~0ubuntu3_amd64.deb" AppDir/
-     dpkg -x "wine-staging-i386_5.18-f~0ubuntu3_i386.deb" AppDir/
-     rm -rf usr/share/doc; rm -rf usr/share/lintian ; rm *.deb
-
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-lolp|' AppDir/wrapper
-     sed -i '/export WIN/a \\n# pre launching script for login fix\nlolfix &' AppDir/wrapper
+     
+     # Cleanup wine install dir
+     rm -rf AppDir/opt/wine-staging/share/{applications,man}
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
@@ -79,10 +114,6 @@ AppDir:
      # Disable winemenubuilder
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
-
-     # download & add lolfix
-     wget -q https://github.com/mmtrt/leagueoflegends/raw/master/snap/local/scripts/lolfix -P AppDir/bin
-     chmod +x AppDir/bin/lolfix
 
   runtime:
     path_mappings:
@@ -92,23 +123,18 @@ AppDir:
     debian:
       image: appimagecrafters/tests-env:debian-stable
       command: "./AppRun --version"
-      use_host_x: True
     centos:
       image: appimagecrafters/tests-env:centos-7
       command: "./AppRun --version"
-      use_host_x: True
     arch:
       image: appimagecrafters/tests-env:archlinux-latest
       command: "./AppRun --version"
-      use_host_x: True
     fedora:
       image: appimagecrafters/tests-env:fedora-30
       command: "./AppRun --version"
-      use_host_x: True
     ubuntu:
       image: appimagecrafters/tests-env:ubuntu-xenial
       command: "./AppRun --version"
-      use_host_x: True
 
 AppImage:
   update-information: None
