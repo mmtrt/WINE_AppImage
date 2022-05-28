@@ -32,7 +32,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -67,7 +67,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -102,7 +102,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -137,7 +137,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -173,7 +173,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -209,7 +209,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
@@ -245,7 +245,7 @@ jobs:
 
       #- name: Prerequisites
         #run: |
-          #VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.1 | grep x86_64 | cut -d'"' -f2 | head -1)
+          #VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.2 | grep x86_64 | cut -d'"' -f2 | head -1)
           #wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           #mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           #wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
