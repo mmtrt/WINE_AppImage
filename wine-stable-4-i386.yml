@@ -106,13 +106,12 @@ AppDir:
     - |
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable_${WINE_VER}~focal_i386.deb
-     dpkg -x "wine-stable_${WINE_VER}~focal_i386.deb" AppDir/usr/
-     cp -r AppDir/usr/opt/wine-stable/* AppDir/usr
+     dpkg -x "wine-stable_${WINE_VER}~focal_i386.deb" AppDir/
+     (cd AppDir/usr/bin; ln -s "../../opt/wine-stable/bin/"* .)
 
      # Cleanup
-     rm -rf AppDir/usr/{opt,usr}
      rm -rf AppDir/usr/share/{applications,man,doc}
-     rm -rf AppDir/opt/wine-stable/share/{applications,man}
+     rm -rf AppDir/opt/wine-stable/share/{applications,man,doc}
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/usr/share/wine/wine.inf
