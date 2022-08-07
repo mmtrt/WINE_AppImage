@@ -45,6 +45,8 @@ jobs:
           # stable
           WINE_VER="4.0.4"
           appimage-builder --recipe wine-stable-4-multi.yml
+          mv wine-stable-x86_64.AppImage wine-stable-multi_${WINE_VER}-x86_64.AppImage
+          mv wine-stable-x86_64.AppImage.zsync wine-stable-multi_${WINE_VER}-x86_64.AppImage.zsync
           mv *AppImage* dist/.
 
       - name: Upload artifact
