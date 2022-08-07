@@ -11,7 +11,7 @@ script:
 
 AppDir:
   path: ./AppDir
-  
+
   app_info:
     id: org.winehq.wine
     name: wine
