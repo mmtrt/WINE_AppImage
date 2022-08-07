@@ -43,7 +43,7 @@ jobs:
           mkdir dist
 
           # stable
-          echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
+          echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
 
           appimage-builder --recipe wine-stable.yml
           mv *AppImage* dist/.
@@ -76,7 +76,7 @@ jobs:
           mkdir dist
 
           # stable
-          echo "WINE_VER=stable-i386_4.0.4" > $GITHUB_ENV
+          echo "WINE_VER=stable-i386_4.0.4" >> $GITHUB_ENV
 
           appimage-builder --recipe wine-stable-4-i386.yml
           mv *AppImage* dist/.
@@ -109,7 +109,7 @@ jobs:
           mkdir dist
 
           # stable
-          echo "WINE_VER=stable-amd64_4.0.4" > $GITHUB_ENV
+          echo "WINE_VER=stable-amd64_4.0.4" >> $GITHUB_ENV
 
           appimage-builder --recipe wine-stable-4-amd64.yml
           mv *AppImage* dist/.
@@ -142,7 +142,7 @@ jobs:
           mkdir dist
 
           # stable
-          echo "WINE_VER=stable-multi_4.0.4" > $GITHUB_ENV
+          echo "WINE_VER=stable-multi_4.0.4" >> $GITHUB_ENV
           appimage-builder --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
 
@@ -175,7 +175,7 @@ jobs:
           mkdir dist
 
           # devel
-          echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
+          echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
 
           appimage-builder --recipe wine-devel.yml
           mv *AppImage* dist/.
@@ -209,7 +209,7 @@ jobs:
           mkdir dist
 
           # staging
-          echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
+          echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
 
           appimage-builder --recipe wine-staging.yml
           mv *AppImage* dist/.
@@ -243,7 +243,7 @@ jobs:
           #mkdir dist
 
           ## staging
-          #echo "WINE_VER=staging_lolp_5.18" > $GITHUB_ENV
+          #echo "WINE_VER=staging_lolp_5.18" >> $GITHUB_ENV
           #appimage-builder --recipe wine-staging-lolp.yml
           #mv *AppImage* dist/.
 
