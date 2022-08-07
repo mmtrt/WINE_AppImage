@@ -36,11 +36,12 @@ jobs:
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        uses: c-py/action-dotenv-to-setenv@v2
+      - uses: c-py/action-dotenv-to-setenv@v2
         with:
         env-file: .env
+
+      # Runs a set of commands using the runners shell
+      - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
