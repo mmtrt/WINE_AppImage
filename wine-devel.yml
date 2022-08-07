@@ -16,7 +16,7 @@ AppDir:
     id: org.winehq.wine
     name: wine
     icon: wine
-    version: devel
+    version: !ENV ${WINE_VER}
     exec: bin/bash
     exec_args: wrapper $@
 
