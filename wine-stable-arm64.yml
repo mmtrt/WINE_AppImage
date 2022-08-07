@@ -118,7 +118,7 @@ AppDir:
     - /usr/lib/wine:$APPDIR/usr/lib/wine
 
 AppImage:
-  update-information: None
+  update-information: guess
   #sign-key: None
   arch: arm64
 

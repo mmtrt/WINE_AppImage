@@ -117,7 +117,7 @@ AppDir:
     - /opt/wine-devel:$APPDIR/opt/wine-devel
 
 AppImage:
-  update-information: None
+  update-information: guess
   #sign-key: None
   arch: x86_64
 

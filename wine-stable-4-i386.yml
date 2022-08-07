@@ -128,7 +128,7 @@ AppDir:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
 AppImage:
-  update-information: None
+  update-information: guess
   #sign-key: None
   arch: x86_64
 
