@@ -5,14 +5,14 @@ name: CI
 # Controls when the action will run. 
 on:
   # Build at 00:00 on every 12th day-of-month.
-  schedule:
-    - cron: "0 0 */12 * *"
-  # Triggers the workflow on push or pull request events but only for the master branch
+  #schedule:
+    #- cron: "0 0 */12 * *"
+  # Triggers the workflow on push or pull request events but only for the test3 branch
   push:
-    branches: [ master ]
+    branches: [ test3 ]
     paths-ignore: [ '**/README.md' ]
   pull_request:
-    branches: [ master ]
+    branches: [ test3 ]
     paths-ignore: [ '**/README.md' ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -20,111 +20,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build-stable"
-  build-stable:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Prerequisites
-        run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add dir dist
-          mkdir dist
-
-          # stable
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable|wine-stable*.AppImage.zsync" wine-stable_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: wine-stable-continuous-x86_64.AppImage
-          path: 'dist'
-
-  build-stable-4-i386:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Prerequisites
-        run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add dir dist
-          mkdir dist
-
-          # stable
-          WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-i386.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-i386|wine-stable*.AppImage.zsync" wine-stable-i386_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: wine-stable-4-i386-continuous-x86_64.AppImage
-          path: 'dist'
-
-  build-stable-4-amd64:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Prerequisites
-        run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add dir dist
-          mkdir dist
-
-          # stable
-          WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-amd64.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-amd64|wine-stable*.AppImage.zsync" wine-stable-amd64_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: wine-stable-4-amd64-continuous-x86_64.AppImage
-          path: 'dist'
 
   build-stable-4-multi:
     # The type of runner that the job will run on
@@ -140,8 +35,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -151,8 +44,7 @@ jobs:
 
           # stable
           WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-multi.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-multi|wine-stable*.AppImage.zsync" wine-stable-multi_${WINE_VER}-${ARCH}.AppImage
+          appimage-builder --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -160,174 +52,6 @@ jobs:
         with:
           name: wine-stable-4-multi-continuous-x86_64.AppImage
           path: 'dist'
-
-  # This workflow contains a single job called "build-devel"
-  build-devel:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Prerequisites
-        run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add dir dist
-          mkdir dist
-
-          # devel
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-devel.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-devel|wine-devel*.AppImage.zsync" wine-devel_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: wine-devel-continuous-x86_64.AppImage
-          path: 'dist'
-
-  # This workflow contains a single job called "build-staging"
-  build-staging:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Prerequisites
-        run: |
-          VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add dir dist
-          mkdir dist
-
-          # staging
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-staging.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-staging|wine-staging*.AppImage.zsync" wine-staging_${WINE_VER}-${ARCH}.AppImage
-          mv *AppImage* dist/.
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: wine-staging-continuous-x86_64.AppImage
-          path: 'dist'
-
-  ## This workflow contains a single job called "build-staging-lolp"
-  #build-staging-lolp:
-    ## The type of runner that the job will run on
-    #runs-on: ubuntu-latest
-
-    ## Steps represent a sequence of tasks that will be executed as part of the job
-    #steps:
-      ## Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      #- uses: actions/checkout@v2
-
-      #- name: Prerequisites
-        #run: |
-          #VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          #wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
-          #mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          #wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          #mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
-
-      ## Runs a set of commands using the runners shell
-      #- name: Build appimage
-        #run: |
-          ## add dir dist
-          #mkdir dist
-
-          ## staging
-          #WINE_VER="5.18"
-          #appimage-builder --skip-tests --skip-appimage --recipe wine-staging-lolp.yml
-          #export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-staging_lolp|wine-staging_lolp*.AppImage.zsync" wine-staging_lolp_${WINE_VER}-${ARCH}.AppImage
-          #mv *AppImage* dist/.
-
-      #- name: Upload artifact
-        #uses: actions/upload-artifact@v1.0.0
-        #with:
-          #name: wine-staging_lolp-continuous-x86_64.AppImage
-          #path: 'dist'
-
-  release-stable:
-      needs: [build-stable]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build (stable)
-            automatic_release_tag: continuous-stable
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-stable-4-i386:
-      needs: [build-stable-4-i386]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-4-i386-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build (stable) 4.0.x i386
-            automatic_release_tag: continuous-stable-4-i386
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-4-i386-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-stable-4-amd64:
-      needs: [build-stable-4-amd64]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-4-amd64-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build (stable) 4.0.x amd64
-            automatic_release_tag: continuous-stable-4-amd64
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-4-amd64-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   release-stable-4-multi:
       needs: [build-stable-4-multi]
@@ -341,71 +65,10 @@ jobs:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: Continuous build (stable) 4.0.x multi
-            automatic_release_tag: continuous-stable-4-multi
+            title: test3 4.0.x multi
+            automatic_release_tag: test3
             prerelease: false
             draft: false
             files: |
               wine-stable-4-multi-continuous-x86_64.AppImage
             repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-devel:
-      needs: [build-devel]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-devel-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build (devel)
-            automatic_release_tag: continuous-devel
-            prerelease: false
-            draft: false
-            files: |
-              wine-devel-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-
-  release-staging:
-      needs: [build-staging]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-staging-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@latest
-          with:
-            title: Continuous build (staging)
-            automatic_release_tag: continuous-staging
-            prerelease: false
-            draft: false
-            files: |
-              wine-staging-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  #release-staging-lolp:
-      #needs: [build-staging-lolp]
-      #runs-on: ubuntu-latest
-
-      #steps:
-        #- uses: actions/download-artifact@v1
-          #with:
-            #name: wine-staging_lolp-continuous-x86_64.AppImage
-
-        #- name: release
-          #uses: marvinpinto/action-automatic-releases@latest
-          #with:
-            #title: Continuous build (staging) lolp
-            #automatic_release_tag: continuous-staging_lolp
-            #prerelease: false
-            #draft: false
-            #files: |
-              #wine-staging_lolp-continuous-x86_64.AppImage
-            #repo_token: ${{ secrets.GITHUB_TOKEN }}
