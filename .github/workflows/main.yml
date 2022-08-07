@@ -35,6 +35,9 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+          # stable
+          echo "WINE_VER=stable-multi_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | head -n1)" >> $GITHUB_ENV
+
 
       - name: Setup env
         uses: c-py/action-dotenv-to-setenv@v2
@@ -46,10 +49,7 @@ jobs:
         run: |
           # add dir dist
           mkdir dist
-
-          # stable
-          echo "WINE_VER=stable-multi_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | head -n1)" >> $GITHUB_ENV
-
+  
           appimage-builder --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
 
