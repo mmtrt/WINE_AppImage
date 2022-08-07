@@ -40,7 +40,7 @@ jobs:
       - name: Build appimage
         env:
           # stable
-          WINE_VER="stable-multi_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | head -n1)"
+          WINE_VER: "stable-multi_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | head -n1)"
         run: |
           # add dir dist
           mkdir dist
