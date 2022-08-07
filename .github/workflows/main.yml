@@ -35,8 +35,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -45,9 +43,9 @@ jobs:
           mkdir dist
 
           # stable
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable|wine-stable*.AppImage.zsync" wine-stable_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
+
+          appimage-builder --recipe wine-stable.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -70,8 +68,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -80,9 +76,9 @@ jobs:
           mkdir dist
 
           # stable
-          WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-i386.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-i386|wine-stable*.AppImage.zsync" wine-stable-i386_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=stable-i386_4.0.4" > $GITHUB_ENV
+
+          appimage-builder --recipe wine-stable-4-i386.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -105,8 +101,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -115,9 +109,9 @@ jobs:
           mkdir dist
 
           # stable
-          WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-amd64.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-amd64|wine-stable*.AppImage.zsync" wine-stable-amd64_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=stable-amd64_4.0.4" > $GITHUB_ENV
+
+          appimage-builder --recipe wine-stable-4-amd64.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -140,8 +134,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -150,9 +142,8 @@ jobs:
           mkdir dist
 
           # stable
-          WINE_VER="4.0.4"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-stable-4-multi.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-multi|wine-stable*.AppImage.zsync" wine-stable-multi_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=stable-multi_4.0.4" > $GITHUB_ENV
+          appimage-builder --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -176,8 +167,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -186,9 +175,9 @@ jobs:
           mkdir dist
 
           # devel
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-devel.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-devel|wine-devel*.AppImage.zsync" wine-devel_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
+
+          appimage-builder --recipe wine-devel.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -212,8 +201,6 @@ jobs:
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -222,9 +209,9 @@ jobs:
           mkdir dist
 
           # staging
-          WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-          appimage-builder --skip-tests --skip-appimage --recipe wine-staging.yml
-          export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-staging|wine-staging*.AppImage.zsync" wine-staging_${WINE_VER}-${ARCH}.AppImage
+          echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" $GITHUB_ENV
+
+          appimage-builder --recipe wine-staging.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -248,8 +235,6 @@ jobs:
           #VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
           #wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
           #mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          #wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && chmod +x appimagetool-x86_64.AppImage
-          #mv appimagetool-x86_64.AppImage appimagetool && sudo mv appimagetool /usr/bin
 
       ## Runs a set of commands using the runners shell
       #- name: Build appimage
@@ -258,9 +243,8 @@ jobs:
           #mkdir dist
 
           ## staging
-          #WINE_VER="5.18"
-          #appimage-builder --skip-tests --skip-appimage --recipe wine-staging-lolp.yml
-          #export ARCH=x86_64; appimagetool -v ./AppDir -u "gh-releases-zsync|mmtrt|WINE_AppImage|continuous-staging_lolp|wine-staging_lolp*.AppImage.zsync" wine-staging_lolp_${WINE_VER}-${ARCH}.AppImage
+          #echo "WINE_VER=staging_lolp_5.18" > $GITHUB_ENV
+          #appimage-builder --recipe wine-staging-lolp.yml
           #mv *AppImage* dist/.
 
       #- name: Upload artifact
