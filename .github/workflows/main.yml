@@ -209,7 +209,7 @@ jobs:
           mkdir dist
 
           # staging
-          echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" $GITHUB_ENV
+          echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" > $GITHUB_ENV
 
           appimage-builder --recipe wine-staging.yml
           mv *AppImage* dist/.
