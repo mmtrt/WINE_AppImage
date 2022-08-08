@@ -33,8 +33,8 @@ jobs:
       - name: Prerequisites
         run: |
           VER=$(wget -qO- https://github.com/AppImageCrafters/appimage-builder/releases/tag/v1.0.3 | grep x86_64 | cut -d'"' -f2 | head -1)
-          wget https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
-          wget -q "https://github.com/probonopd/static-tools/releases/download/continuous/mksquashfs-x86_64" -O squashfs-root/usr/bin/mksquashfs
+          wget -q https://github.com"${VER}" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          wget "https://github.com/probonopd/static-tools/releases/download/continuous/mksquashfs-x86_64" -O squashfs-root/usr/bin/mksquashfs
           file squashfs-root/usr/bin/mksquashfs ; rm appimage-builder
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
