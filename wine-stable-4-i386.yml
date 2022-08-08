@@ -3,7 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir appimage-build AppDir && cp wrapper AppDir
+  - mkdir appimage-build/prime AppDir && cp wrapper AppDir
   # Add unionfs cabextract mesa-utils libfuse2 libglew2.1 i386 from debian as they don't exists in focal
   - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
@@ -15,7 +15,7 @@ script:
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add static appimage runtime
-  - wget -q "https://github.com/AppImageCrafters/appimage-runtime/releases/download/continuous/runtime-i686-linux-musl" -O appimage-build/runtime-i686
+  - wget -q "https://github.com/AppImageCrafters/appimage-runtime/releases/download/continuous/runtime-i686-linux-musl" -O appimage-build/prime/runtime-i686
   # Add WINE official light blue theme
   - wget -q "https://github.com/mmtrt/sommelier-core/raw/master/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
 
