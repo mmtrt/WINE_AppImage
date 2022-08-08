@@ -15,7 +15,7 @@ script:
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add static appimage runtime
-  - wget -q "https://github.com/AppImageCrafters/appimage-runtime/releases/download/continuous/runtime-i686-linux-musl" -O appimage-build/prime/runtime-i686
+  - wget -q "https://github.com/probonopd/static-tools/releases/download/continuous/runtime-fuse2-i686" -O appimage-build/prime/runtime-i686
   # Add WINE official light blue theme
   - wget -q "https://github.com/mmtrt/sommelier-core/raw/master/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
 
