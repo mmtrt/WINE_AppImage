@@ -122,7 +122,7 @@ AppDir:
     - /opt/wine-staging:$APPDIR/opt/wine-staging
 
 AppImage:
-  update-information: guess
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-staging_lolp|wine-staging_lolp*.AppImage.zsync
   #sign-key: None
   arch: x86_64
 
