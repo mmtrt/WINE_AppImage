@@ -3,7 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir AppDir && cp wrapper AppDir
+  - mkdir appimage-build AppDir && cp wrapper AppDir
   # Add unionfs cabextract mesa-utils libfuse2 libglew2.1 i386 from debian as they don't exists in focal
   - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
