@@ -4,6 +4,11 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
+  # Add unionfs cabextract mesa-utils libfuse2 i386 from debian as they don't exists in focal
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/m/mesa-demos/mesa-utils_8.4.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/f/fuse/libfuse2_2.9.9-5_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
@@ -23,7 +28,7 @@ AppDir:
     exec_args: wrapper $@
 
   apt:
-    arch: [amd64, i386]
+    arch: [i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -34,14 +39,10 @@ AppDir:
 
     include:
       - wine-stable-i386=4.0.4~focal
-      - wine-stable-amd64=4.0.4~focal
       - bash
-      - cabextract
       - dash
       - perl
       - coreutils
-      - mesa-utils
-      - unionfs-fuse
 
   files:
     exclude:
@@ -66,6 +67,7 @@ AppDir:
       - usr/lib/mime
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
+      - usr/lib/x86_64-linux-gnu
       - usr/sbin
       - usr/share/apps
       - usr/share/man
@@ -100,17 +102,13 @@ AppDir:
       - opt/wine-stable/share/man
       - opt/wine-stable/lib/wine/*.a
       - opt/wine-stable/lib/wine/*.def
-      - opt/wine-stable/lib64/wine/*.a
-      - opt/wine-stable/lib64/wine/*.def
 
   after_bundle:
     # this is executed after the packages and files are added
     - |
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable_${WINE_VER}~focal_i386.deb
-     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/wine-stable_${WINE_VER}~focal_amd64.deb
      dpkg -x "wine-stable_${WINE_VER}~focal_i386.deb" AppDir/
-     dpkg -x "wine-stable_${WINE_VER}~focal_amd64.deb" AppDir/
      (cd AppDir/usr/bin; ln -s "../../opt/wine-stable/bin/"* .)
 
      # Cleanup
@@ -132,7 +130,7 @@ AppDir:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
 AppImage:
-  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|test3|wine-stable*.AppImage.zsync
-  sign-key: None
-  arch: x86_64
+  update-information: guess
+  #sign-key: None
+  arch: i686
 
