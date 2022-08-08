@@ -4,6 +4,12 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
+  # Add unionfs cabextract mesa-utils libfuse2 libglew2.1 i386 from debian as they don't exists in focal
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/m/mesa-demos/mesa-utils_8.4.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/g/glew/libglew2.1_2.1.0-4+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
+  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/f/fuse/libfuse2_2.9.9-5_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
@@ -23,7 +29,7 @@ AppDir:
     exec_args: wrapper $@
 
   apt:
-    arch: [amd64, i386]
+    arch: [i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -35,12 +41,9 @@ AppDir:
     include:
       - wine-stable-i386=4.0.4~focal
       - bash
-      - cabextract
       - dash
       - perl
       - coreutils
-      - mesa-utils
-      - unionfs-fuse
 
   files:
     exclude:
@@ -130,5 +133,5 @@ AppDir:
 AppImage:
   update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-i386|wine-stable*.AppImage.zsync
   #sign-key: None
-  arch: x86_64
+  arch: i686
 
