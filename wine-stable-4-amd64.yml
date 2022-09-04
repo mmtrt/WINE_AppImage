@@ -9,7 +9,7 @@ script:
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add WINE official light blue theme
-  - wget -q "https://github.com/mmtrt/sommelier-core/raw/master/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
+  - wget -q "https://github.com/mmtrt/sommelier-core/raw/tmp/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
 
 AppDir:
   path: ./AppDir
