@@ -29,7 +29,7 @@ AppDir:
     exec_args: wrapper $@
 
   apt:
-    arch: [i386]
+    arch: [amd64, i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
