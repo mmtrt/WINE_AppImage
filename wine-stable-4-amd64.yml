@@ -25,18 +25,19 @@ AppDir:
   apt:
     arch: [amd64]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - wine-stable-amd64=4.0.4~focal
+      - wine-staging-amd64=7.19~jammy-1
       - bash
       - cabextract
       - dash
+      - libmpg123-0
       - perl
       - coreutils
       - mesa-utils
@@ -96,6 +97,7 @@ AppDir:
       - usr/share/zoneinfo
       - usr/share/zoneinfo-icu
       - usr/share/zsh
+      - opt/wine-staging
       - opt/wine-stable/share/man
       - opt/wine-stable/lib64/wine/*.a
       - opt/wine-stable/lib64/wine/*.def
@@ -108,7 +110,9 @@ AppDir:
 
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/wine-stable_${WINE_VER}~focal_amd64.deb
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/wine-stable-amd64_${WINE_VER}~focal_amd64.deb
      dpkg -x "wine-stable_${WINE_VER}~focal_amd64.deb" AppDir/
+     dpkg -x "wine-stable-amd64_${WINE_VER}~focal_amd64.deb" AppDir/
      (cd AppDir/usr/bin; ln -s "../../opt/wine-stable/bin/"* .)
 
      # Cleanup

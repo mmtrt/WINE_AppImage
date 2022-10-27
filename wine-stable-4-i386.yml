@@ -31,17 +31,18 @@ AppDir:
   apt:
     arch: [i386]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - wine-stable-i386=4.0.4~focal
+      - wine-staging-i386=7.19~jammy-1
       - bash
       - dash
+      - libmpg123-0
       - perl
       - coreutils
 
@@ -100,6 +101,7 @@ AppDir:
       - usr/share/zoneinfo
       - usr/share/zoneinfo-icu
       - usr/share/zsh
+      - opt/wine-staging
       - opt/wine-stable/share/man
       - opt/wine-stable/lib/wine/*.a
       - opt/wine-stable/lib/wine/*.def
@@ -109,7 +111,9 @@ AppDir:
     - |
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable_${WINE_VER}~focal_i386.deb
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable-i386_${WINE_VER}~focal_i386.deb
      dpkg -x "wine-stable_${WINE_VER}~focal_i386.deb" AppDir/
+     dpkg -x "wine-stable-i386_${WINE_VER}~focal_i386.deb" AppDir/
      (cd AppDir/usr/bin; ln -s "../../opt/wine-stable/bin/"* .)
 
      # Cleanup
@@ -133,5 +137,5 @@ AppDir:
 AppImage:
   update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-i386|wine-stable*.AppImage.zsync
   #sign-key: None
-  arch: i686
+  arch: x86_64
 
