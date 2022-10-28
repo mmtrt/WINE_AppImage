@@ -23,16 +23,16 @@ AppDir:
   apt:
     arch: [amd64, i386]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ kinetic main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ kinetic-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ kinetic-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
       - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
 
     include:
-      - winehq-devel
-      - wine-devel
+      - wine-staging-i386=7.19~jammy-1
+      - wine-staging-amd64=7.19~jammy-1
       - bash
       - cabextract
       - dash
@@ -95,6 +95,7 @@ AppDir:
       - usr/share/zoneinfo
       - usr/share/zoneinfo-icu
       - usr/share/zsh
+      - opt/wine-staging
       - opt/wine-devel/share/man
       - opt/wine-devel/share/applications
       - opt/wine-devel/lib/wine/i386-unix/*.a
@@ -105,6 +106,25 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-devel_${WINE_VER}~jammy-1_i386.deb
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-devel-i386_${WINE_VER}~jammy-1_i386.deb
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/wine-devel_${WINE_VER}~jammy-1_amd64.deb
+     wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/wine-devel-amd64_${WINE_VER}~jammy-1_amd64.deb
+     dpkg -x "wine-devel_${WINE_VER}~jammy-1_i386.deb" AppDir/
+     dpkg -x "wine-devel-i386_${WINE_VER}~jammy-1_i386.deb" AppDir/
+     dpkg -x "wine-devel_${WINE_VER}~jammy-1_amd64.deb" AppDir/
+     dpkg -x "wine-devel-amd64_${WINE_VER}~jammy-1_amd64.deb" AppDir/
+     (cd AppDir/usr/bin; ln -s "../../opt/wine-devel/bin/"* .)
+
+     # Cleanup
+     rm -rf AppDir/usr/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-devel/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-devel/lib/wine/i386-unix/*.a
+     rm -rf AppDir/opt/wine-devel/lib/wine/i386-windows/*.a
+     rm -rf AppDir/opt/wine-devel/lib64/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-devel/lib64/wine/x86_64-windows/*.a
+
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-devel/share/wine/wine.inf
 
