@@ -14,7 +14,7 @@
 </p>
 
 ## Info
- * This AppImage does not have any GPU drivers see requirements below before getting angry at me.
+ * This AppImage includes i386 GPU drivers. If it still doesnt work then don't get angry at me.
 
 ## Get Started
 
@@ -48,13 +48,4 @@ still possible to run the AppImage
 ./wine-*.AppImage --appimage-extract
 cd squashfs-root
 ./AppRun
-```
-
-## Requirements
- * Install required GPU driver pkgs for you GPU both `amd64` & `i386`.
-```
-MESA
-NVIDIA
-INTEL
-AMD
 ```
