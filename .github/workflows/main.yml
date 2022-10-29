@@ -50,7 +50,7 @@ jobs:
           # set Nvidia driver version
           sed -i "s|520|$NVDV|" wine-stable.yml
 
-          squashfs-root/AppRun --recipe wine-stable.yml
+          appimage-builder --recipe wine-stable.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
