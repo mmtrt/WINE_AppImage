@@ -29,6 +29,10 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
       - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ kinetic main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu kinetic main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
       - wine-devel-i386=7.19~jammy-1
@@ -40,6 +44,41 @@ AppDir:
       - coreutils
       - mesa-utils
       - unionfs-fuse
+      - libnvidia-compute-520:i386
+      - libnvidia-decode-520:i386
+      - libnvidia-encode-520:i386
+      - libnvidia-extra-520:i386
+      - libnvidia-fbc1-520:i386
+      - libnvidia-gl-520:i386
+      - libdrm2:i386
+      - libdrm-intel1:i386
+      - libdrm-nouveau2:i386
+      - libdrm-amdgpu1:i386
+      - libdrm-radeon1:i386
+      - libegl-mesa0:i386
+      - libegl1:i386
+      - libgbm1:i386
+      - libgl1:i386
+      - libgl1-mesa-dri:i386
+      - libglapi-mesa:i386
+      - libgles2:i386
+      - libglvnd0:i386
+      - libglx0:i386
+      - libglx-mesa0:i386
+      - mesa-vdpau-drivers:i386
+      - mesa-va-drivers:i386
+      - mesa-vulkan-drivers:i386
+      - libx11-6:i386
+      - libx11-xcb1:i386
+      - libxcb-dri2-0:i386
+      - libxcb-dri3-0:i386
+      - libxcb-glx0:i386
+      - libxcb-present0:i386
+      - libxcb-render0:i386
+      - libxcb-shape0:i386
+      - libxcb-shm0:i386
+      - libxcb-xfixes0:i386
+      - libxcb1:i386
 
   files:
     exclude:
@@ -120,10 +159,10 @@ AppDir:
      # Cleanup
      rm -rf AppDir/usr/share/{applications,man,doc}
      rm -rf AppDir/opt/wine-staging/share/{applications,man,doc}
-     rm -rf AppDir/opt/wine-staging/lib/wine/i386-unix/*.a
-     rm -rf AppDir/opt/wine-staging/lib/wine/i386-windows/*.a
-     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-unix/*.a
-     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-windows/*.a
+     rm -rf AppDir/opt/wine-staging/lib/wine/*.a
+     rm -rf AppDir/opt/wine-staging/lib/wine/*.def
+     rm -rf AppDir/opt/wine-staging/lib64/wine/*.a
+     rm -rf AppDir/opt/wine-staging/lib64/wine/*.def
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
