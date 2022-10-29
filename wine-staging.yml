@@ -159,10 +159,10 @@ AppDir:
      # Cleanup
      rm -rf AppDir/usr/share/{applications,man,doc}
      rm -rf AppDir/opt/wine-staging/share/{applications,man,doc}
-     rm -rf AppDir/opt/wine-staging/lib/wine/*.a
-     rm -rf AppDir/opt/wine-staging/lib/wine/*.def
-     rm -rf AppDir/opt/wine-staging/lib64/wine/*.a
-     rm -rf AppDir/opt/wine-staging/lib64/wine/*.def
+     rm -rf AppDir/opt/wine-staging/lib/wine/i386-unix/*.a
+     rm -rf AppDir/opt/wine-staging/lib/wine/i386-windows/*.a
+     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-windows/*.a
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
