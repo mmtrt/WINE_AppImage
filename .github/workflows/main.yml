@@ -36,12 +36,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-stable.yml
 
           appimage-builder --recipe wine-stable.yml
           mv *AppImage* dist/.
@@ -67,12 +72,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-i386_4.0.4" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-stable-4-i386.yml
 
           appimage-builder --recipe wine-stable-4-i386.yml
           mv *AppImage* dist/.
@@ -98,12 +108,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-amd64_4.0.4" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-stable-4-amd64.yml
 
           appimage-builder --recipe wine-stable-4-amd64.yml
           mv *AppImage* dist/.
@@ -129,12 +144,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-multi_4.0.4" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-stable-4-multi.yml
 
           appimage-builder --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
@@ -161,12 +181,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # devel
           echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-devel.yml
 
           appimage-builder --recipe wine-devel.yml
           mv *AppImage* dist/.
@@ -193,12 +218,17 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
           echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+          # Nvidia
+          echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
           # add dir dist
           mkdir dist
+
+          # set Nvidia driver version
+          sed -i "s|520|$NVDV|" wine-staging.yml
 
           appimage-builder --recipe wine-staging.yml
           mv *AppImage* dist/.
@@ -225,12 +255,17 @@ jobs:
           #mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
           #echo "WINE_VER=staging_lolp_5.18" >> $GITHUB_ENV
+          # Nvidia
+          #echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       ## Runs a set of commands using the runners shell
       #- name: Build appimage
         #run: |
           ## add dir dist
           #mkdir dist
+
+          # set Nvidia driver version
+          #sed -i "s|520|$NVDV|" wine-staging-lolp.yml
 
           #appimage-builder --recipe wine-staging-lolp.yml
           #mv *AppImage* dist/.
