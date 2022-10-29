@@ -4,18 +4,12 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
-  # Add unionfs cabextract mesa-utils libfuse2 libglew2.1 i386 from debian as they don't exists in focal
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/m/mesa-demos/mesa-utils_8.4.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/g/glew/libglew2.1_2.1.0-4+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/f/fuse/libfuse2_2.9.9-5_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add static appimage runtime
-  #- wget -q "https://github.com/probonopd/static-tools/releases/download/continuous/runtime-fuse2-i686" -O appimage-build/prime/runtime-i686
+  - wget -q "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-fuse2-x86_64" -O appimage-build/prime/runtime-x86_64
   # Add WINE official light blue theme
   - wget -q "https://github.com/mmtrt/sommelier-core/raw/tmp/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
 
@@ -39,13 +33,56 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
       - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ kinetic main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu kinetic main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
       - wine-staging-i386=7.19~jammy-1
       - bash
+      - cabextract
       - dash
       - perl
       - coreutils
+      - mesa-utils
+      - unionfs-fuse
+      - libfuse2
+      - libnvidia-compute-520:i386
+      - libnvidia-decode-520:i386
+      - libnvidia-encode-520:i386
+      - libnvidia-extra-520:i386
+      - libnvidia-fbc1-520:i386
+      - libnvidia-gl-520:i386
+      - libdrm2:i386
+      - libdrm-intel1:i386
+      - libdrm-nouveau2:i386
+      - libdrm-amdgpu1:i386
+      - libdrm-radeon1:i386
+      - libegl-mesa0:i386
+      - libegl1:i386
+      - libgbm1:i386
+      - libgl1:i386
+      - libgl1-mesa-dri:i386
+      - libglapi-mesa:i386
+      - libgles2:i386
+      - libglvnd0:i386
+      - libglx0:i386
+      - libglx-mesa0:i386
+      - mesa-vdpau-drivers:i386
+      - mesa-va-drivers:i386
+      - mesa-vulkan-drivers:i386
+      - libx11-6:i386
+      - libx11-xcb1:i386
+      - libxcb-dri2-0:i386
+      - libxcb-dri3-0:i386
+      - libxcb-glx0:i386
+      - libxcb-present0:i386
+      - libxcb-render0:i386
+      - libxcb-shape0:i386
+      - libxcb-shm0:i386
+      - libxcb-xfixes0:i386
+      - libxcb1:i386
 
   files:
     exclude:
@@ -70,7 +107,6 @@ AppDir:
       - usr/lib/mime
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
-      - usr/lib/x86_64-linux-gnu
       - usr/sbin
       - usr/share/apps
       - usr/share/man
