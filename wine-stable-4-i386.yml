@@ -4,12 +4,6 @@ script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
   - mkdir AppDir && cp wrapper AppDir
-  # Add unionfs cabextract mesa-utils libfuse2 libglew2.1 i386 from debian as they don't exists in focal
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/u/unionfs-fuse/unionfs-fuse_1.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/c/cabextract/cabextract_1.9-3_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/m/mesa-demos/mesa-utils_8.4.0-1+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/g/glew/libglew2.1_2.1.0-4+b1_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
-  - deb=$(curl -w "%{filename_effective}" -sLO http://http.us.debian.org/debian/pool/main/f/fuse/libfuse2_2.9.9-5_i386.deb) && dpkg -x $deb ./AppDir && rm $deb
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
@@ -45,10 +39,13 @@ AppDir:
     include:
       - wine-staging-i386=7.19~jammy-1
       - bash
+      - cabextract
       - dash
-      - libmpg123-0
       - perl
       - coreutils
+      - mesa-utils
+      - unionfs-fuse
+      - libfuse2
       - libnvidia-compute-520:i386
       - libnvidia-decode-520:i386
       - libnvidia-encode-520:i386
@@ -108,7 +105,6 @@ AppDir:
       - usr/lib/mime
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
-      - usr/lib/x86_64-linux-gnu
       - usr/sbin
       - usr/share/apps
       - usr/share/man

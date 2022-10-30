@@ -31,17 +31,19 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
       - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu kinetic main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
       - wine-staging-amd64=7.19~jammy-1
       - bash
       - cabextract
       - dash
-      - libmpg123-0
       - perl
       - coreutils
       - mesa-utils
       - unionfs-fuse
+      - libfuse2
 
   files:
     exclude:

@@ -42,11 +42,11 @@ AppDir:
       - bash
       - cabextract
       - dash
-      - libmpg123-0
       - perl
       - coreutils
       - mesa-utils
       - unionfs-fuse
+      - libfuse2
       - libnvidia-compute-520:i386
       - libnvidia-decode-520:i386
       - libnvidia-encode-520:i386
