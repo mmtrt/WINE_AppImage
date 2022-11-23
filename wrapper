@@ -19,6 +19,16 @@ elif [[ $VENDOR == *"Radeon"* ]]; then
   export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 fi
 
+if [ ! -f "$HOME"/.cache/wine/wine-mono-*.msi ]; then
+  mkdir -p "$HOME"/.cache/wine
+  ln -s $APPDIR/winedata/wine-mono-*.msi "$HOME"/.cache/wine/
+fi
+
+if [ ! -f "$HOME"/.cache/wine/wine-gecko-*.msi ]; then
+  mkdir -p "$HOME"/.cache/wine
+  ln -s $APPDIR/winedata/wine-gecko-*.msi "$HOME"/.cache/wine/
+fi
+
 # Load winecfg if no arguments given
 APPLICATION=""
 if [ -z "$*" ] ; then
@@ -49,3 +59,13 @@ if [ -z "$APPLICATION" ] ; then
 else
 "$MAIN" "$APPLICATION" | cat
 fi  
+
+if [ -L "$HOME"/.cache/wine/wine-mono-*.msi ]; then
+  rm "$HOME"/.cache/wine/wine-mono-*.msi
+fi
+if [ -L "$HOME"/.cache/wine/wine-gecko-*-x86.msi ]; then
+  rm "$HOME"/.cache/wine/wine-gecko-*-x86.msi
+fi
+if [ -L "$HOME"/.cache/wine/wine-gecko-*-x86_64.msi ]; then
+  rm "$HOME"/.cache/wine/wine-gecko-*-x86_64.msi
+fi
