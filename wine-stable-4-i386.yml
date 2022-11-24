@@ -192,12 +192,12 @@ AppDir:
        MONO_VER="5.1.1"
        ;;
 
-     7.0|7.0.0|7.0.1|7.0.0.0)
+     7.0.0|7.0.0.0|7.0.1)
        GECKO_VER="2.47.2"
        MONO_VER="7.0.0"
        ;;
      esac
-     if [[ ! $(echo "$WINE_VER<5.18"|bc) -gt 0 ]]; then
+     if [[ $(echo $WINE_VER |sed -e 's/\.//g') -ge 518 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 60 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 70  ]]; then
        MONO_VER="$MONO_VER-x86"
      fi
      MONO_URL="https://dl.winehq.org/wine/wine-mono/$(cut -d'-' -f1 <<< ${MONO_VER})/wine-mono-${MONO_VER}.msi"
