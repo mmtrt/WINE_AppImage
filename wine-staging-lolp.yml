@@ -210,13 +210,18 @@ AppDir:
      if [[ $(echo $WINE_VER |sed -e 's/\.//g') -ge 518 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 60 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 70  ]]; then
        MONO_VER="$MONO_VER-x86"
      fi
+     if [[ $(echo $GECKO_VER |sed -e 's/\.//g') -le 247 ]]; then
+        GECKO=wine_gecko-${GECKO_VER}
+     else
+        GECKO=wine-gecko-${GECKO_VER}
+     fi
+
      MONO_URL="https://dl.winehq.org/wine/wine-mono/$(cut -d'-' -f1 <<< ${MONO_VER})/wine-mono-${MONO_VER}.msi"
-     GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/wine-gecko-${GECKO_VER}-x86.msi"
-     GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/wine-gecko-${GECKO_VER}-x86_64.msi"
+     GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86.msi"
+     GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86_64.msi"
      wget -q "$MONO_URL" -O AppDir/winedata/wine-mono-${MONO_VER}.msi
      wget -q "$GECKO_URL_x86" -O AppDir/winedata/wine-gecko-${GECKO_VER}-x86.msi
      wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/wine-gecko-${GECKO_VER}-x86_64.msi
-
 
   runtime:
     path_mappings:
