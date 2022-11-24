@@ -44,8 +44,10 @@ AppDir:
       - coreutils
       - mesa-utils
       - unionfs-fuse
+      - vulkan-tools
       - libcups2
       - libfuse2
+      - libfuse3-3
 
   files:
     exclude:
