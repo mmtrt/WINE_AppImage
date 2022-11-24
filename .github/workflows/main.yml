@@ -276,6 +276,43 @@ jobs:
           #name: wine-staging_lolp-continuous-x86_64.AppImage
           #path: 'dist'
 
+  # This workflow contains a single job called "build-staging-ge-lol"
+  build-staging-ge-lol:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Prerequisites
+        run: |
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+          # staging
+          echo "WINE_VER=staging_ge-lol_$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep LoL | head -1 | sed -r 's|-GE||g;s|>| |g;s|-LoL| |g' | awk '{print $10}')" >> $GITHUB_ENV
+          # Nvidia
+          #echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
+
+      # Runs a set of commands using the runners shell
+      - name: Build appimage
+        run: |
+          # add dir dist
+          mkdir dist
+
+          # set Nvidia driver version
+          # sed -i "s|520|$NVDV|" wine-staging-ge-lol.yml
+
+          appimage-builder --recipe wine-staging-ge-lol.yml
+          mv *AppImage* dist/.
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: wine-staging_ge-lol-continuous-x86_64.AppImage
+          path: 'dist'
+
   release-stable:
       needs: [build-stable]
       runs-on: ubuntu-latest
@@ -416,3 +453,23 @@ jobs:
             #files: |
               #wine-staging_lolp-continuous-x86_64.AppImage
             #repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  release-staging-ge-lol:
+      needs: [build-staging-ge-lol]
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/download-artifact@v1
+          with:
+            name: wine-staging_ge-lol-continuous-x86_64.AppImage
+
+        - name: release
+          uses: marvinpinto/action-automatic-releases@latest
+          with:
+            title: Continuous build (staging) GE LoL
+            automatic_release_tag: continuous-staging_ge_lol
+            prerelease: false
+            draft: false
+            files: |
+              wine-staging_ge-lol-continuous-x86_64.AppImage
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
