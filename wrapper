@@ -24,7 +24,11 @@ if [ ! -f "$HOME"/.cache/wine/wine-mono-*.msi ]; then
   ln -s $APPDIR/winedata/wine-mono-*.msi "$HOME"/.cache/wine/
 fi
 
-GECKO=$(ls $APPDIR/winedata/ | grep gecko | sed -r 's|-| |g' | awk '{print $2}' | head -1)
+if [ $(ls $APPDIR/winedata/ | grep gecko | head -1 | grep -c "e_g") -eq 1 ]; then
+  GECKO=$(ls $APPDIR/winedata/ | grep gecko | head -1 | cut -d'-' -f2)
+else
+  GECKO=$(ls $APPDIR/winedata/ | grep gecko | head -1 | cut -d'-' -f3)
+fi
 
 for wg in wine-gecko-${GECKO}-x86.msi wine-gecko-${GECKO}-x86_64.msi wine_gecko-${GECKO}-x86.msi wine_gecko-${GECKO}-x86_64.msi ; do
   if [[ ! -f "$HOME"/.cache/wine/$wg && -f $APPDIR/winedata/$wg ]]; then
