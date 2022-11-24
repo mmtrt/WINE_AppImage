@@ -220,8 +220,8 @@ AppDir:
      GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86.msi"
      GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86_64.msi"
      wget -q "$MONO_URL" -O AppDir/winedata/wine-mono-${MONO_VER}.msi
-     wget -q "$GECKO_URL_x86" -O AppDir/winedata/wine-gecko-${GECKO_VER}-x86.msi
-     wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/wine-gecko-${GECKO_VER}-x86_64.msi
+     wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
+     wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
   runtime:
     path_mappings:
