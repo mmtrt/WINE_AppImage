@@ -175,51 +175,53 @@ AppDir:
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
 
-      #  # wine-mono wine-gecko
-      #  MONO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'MONO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
-      #  GECKO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'GECKO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
-      #  # For future reference see MONO_VER https://github.com/wine-mirror/wine/tree/stable of wine-stable
-      #  case "$WINE_VER" in
-      #  3.0.1|3.0.2|3.0.3|3.0.4|3.0.5)
-      #    GECKO_VER="2.47"
-      #    MONO_VER="4.7.1"
-      #    ;;
+     WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep LoL | head -1 | sed -r 's|-GE||g;s|>| |g;s|-LoL| |g' | awk '{print $10}' | cut -d'-' -f1)"
 
-      #  4.0.1|4.0.2|4.0.3|4.0.4)
-      #    GECKO_VER="2.47"
-      #    MONO_VER="4.7.5"
-      #    ;;
+     # wine-mono wine-gecko
+     MONO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'MONO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
+     GECKO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'GECKO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
+     # For future reference see MONO_VER https://github.com/wine-mirror/wine/tree/stable of wine-stable
+     case "$WINE_VER" in
+     3.0.1|3.0.2|3.0.3|3.0.4|3.0.5)
+       GECKO_VER="2.47"
+       MONO_VER="4.7.1"
+       ;;
 
-      #  5.0.1|5.0.2|5.0.3|5.0.4|5.0.5)
-      #    GECKO_VER="2.47.1"
-      #    MONO_VER="4.9.4"
-      #    ;;
+     4.0.1|4.0.2|4.0.3|4.0.4)
+       GECKO_VER="2.47"
+       MONO_VER="4.7.5"
+       ;;
 
-      #  6.0.1|6.0.2|6.0.3|6.0.4)
-      #    GECKO_VER="2.47.2"
-      #    MONO_VER="5.1.1"
-      #    ;;
+     5.0.1|5.0.2|5.0.3|5.0.4|5.0.5)
+       GECKO_VER="2.47.1"
+       MONO_VER="4.9.4"
+       ;;
 
-      #  7.0.1|7.0.2|7.0.3|7.0.4)
-      #    GECKO_VER="2.47.2"
-      #    MONO_VER="7.0.0"
-      #    ;;
-      #  esac
-      #  if [[ $(echo $WINE_VER |sed -e 's/\.//g') -ge 518 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 60 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 70  ]]; then
-      #    MONO_VER="$MONO_VER-x86"
-      #  fi
-      #  if [[ $(echo $GECKO_VER |sed -e 's/\.//g') -le 247 ]]; then
-      #     GECKO=wine_gecko-${GECKO_VER}
-      #  else
-      #     GECKO=wine-gecko-${GECKO_VER}
-      #  fi
+     6.0.1|6.0.2|6.0.3|6.0.4)
+       GECKO_VER="2.47.2"
+       MONO_VER="5.1.1"
+       ;;
 
-      #  MONO_URL="https://dl.winehq.org/wine/wine-mono/$(cut -d'-' -f1 <<< ${MONO_VER})/wine-mono-${MONO_VER}.msi"
-      #  GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86.msi"
-      #  GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86_64.msi"
-      #  wget -q "$MONO_URL" -O AppDir/winedata/wine-mono-${MONO_VER}.msi
-      #  wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
-      #  wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
+     7.0.1|7.0.2|7.0.3|7.0.4)
+       GECKO_VER="2.47.2"
+       MONO_VER="7.0.0"
+       ;;
+     esac
+     if [[ $(echo $WINE_VER |sed -e 's/\.//g') -ge 518 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 60 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 70  ]]; then
+       MONO_VER="$MONO_VER-x86"
+     fi
+     if [[ $(echo $GECKO_VER |sed -e 's/\.//g') -le 247 ]]; then
+        GECKO=wine_gecko-${GECKO_VER}
+     else
+        GECKO=wine-gecko-${GECKO_VER}
+     fi
+
+     MONO_URL="https://dl.winehq.org/wine/wine-mono/$(cut -d'-' -f1 <<< ${MONO_VER})/wine-mono-${MONO_VER}.msi"
+     GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86.msi"
+     GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86_64.msi"
+     wget -q "$MONO_URL" -O AppDir/winedata/wine-mono-${MONO_VER}.msi
+     wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
+     wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
   runtime:
     path_mappings:
