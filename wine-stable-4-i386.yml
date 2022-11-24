@@ -40,12 +40,14 @@ AppDir:
       - wine-staging-i386=7.19~jammy-1
       - bash
       - cabextract
+      - cups
       - dash
       - perl
       - coreutils
       - mesa-utils
       - unionfs-fuse
       - vulkan-tools
+      - libcups2
       - libfuse2
       - libfuse3-3
       # - libnvidia-compute-520:i386
