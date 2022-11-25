@@ -151,7 +151,7 @@ AppDir:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
-     sed -i 's|wine-appimage|wine-appimage-ge-lol|' AppDir/wrapper
+     sed -i 's|wine-appimage|wine-appimage-ge-proton|' AppDir/wrapper
 
      WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep -Eo "GE-.*" | head -1 | sed -r 's|"| |g' | awk '{print $1}')"
 
