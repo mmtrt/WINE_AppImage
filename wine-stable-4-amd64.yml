@@ -29,7 +29,7 @@ AppDir:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ kinetic-updates main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ kinetic-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ kinetic main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ kinetic main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
@@ -37,7 +37,7 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-staging-amd64=7.19~jammy-1
+      - wine-staging-amd64=7.21~kinetic-1
       - bash
       - cabextract
       - cups
