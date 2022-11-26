@@ -89,7 +89,6 @@ AppDir:
 
   files:
     exclude:
-      - sbin
       - var
       - etc/alternatives
       - etc/apt
