@@ -130,6 +130,8 @@ AppDir:
       - usr/share/lintian
       - usr/share/menu
       - usr/share/metainfo
+      - usr/share/mesa-demos
+      - usr/share/mime
       - usr/share/misc
       - usr/share/mysql-common
       - usr/share/pixmaps
