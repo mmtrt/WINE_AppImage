@@ -51,6 +51,7 @@ AppDir:
       - libfuse2
       - libfuse3-3
       - libmpg123-0
+      - libmspack0
       # - libnvidia-compute-520
       # - libnvidia-decode-520
       # - libnvidia-encode-520
