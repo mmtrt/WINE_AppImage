@@ -50,6 +50,7 @@ AppDir:
       - libcups2
       - libfuse2
       - libfuse3-3
+      - libmpg123-0
       # - libnvidia-compute-520:i386
       # - libnvidia-decode-520:i386
       # - libnvidia-encode-520:i386
