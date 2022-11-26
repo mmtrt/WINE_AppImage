@@ -214,6 +214,9 @@ AppDir:
      wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
 
   runtime:
+    env:
+      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
+
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
