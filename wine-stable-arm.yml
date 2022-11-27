@@ -18,12 +18,12 @@ AppDir:
     id: org.winehq.wine
     name: wine
     icon: wine
-    version: "stable-arm64_7.0"
+    version: "stable-arm_7.0"
     exec: bin/bash
     exec_args: wrapper $@
 
   apt:
-    arch: [arm64]
+    arch: [arm64,armhf]
     sources:
       - sourceline: 'deb http://ports.ubuntu.com/ubuntu-ports/ lunar main restricted universe multiverse'
       - sourceline: 'deb http://ports.ubuntu.com/ubuntu-ports/ lunar-updates main restricted universe multiverse'
@@ -31,8 +31,8 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
 
     include:
-      - wine64
-      - wine64-preloader
+      - wine32
+      - wine32-preloader
       - bash
       - cabextract
       - dash
@@ -42,6 +42,35 @@ AppDir:
       - unionfs-fuse
       - vulkan-tools
       - libmspack0
+      - libdrm2:armhf
+      # - libdrm-intel1:armhf
+      - libdrm-nouveau2:armhf
+      - libdrm-amdgpu1:armhf
+      - libdrm-radeon1:armhf
+      - libegl-mesa0:armhf
+      - libegl1:armhf
+      - libgbm1:armhf
+      - libgl1:armhf
+      - libgl1-mesa-dri:armhf
+      - libglapi-mesa:armhf
+      - libgles2:armhf
+      - libglvnd0:armhf
+      - libglx0:armhf
+      - libglx-mesa0:armhf
+      - mesa-vdpau-drivers:armhf
+      - mesa-va-drivers:armhf
+      - mesa-vulkan-drivers:armhf
+      - libx11-6:armhf
+      - libx11-xcb1:armhf
+      - libxcb-dri2-0:armhf
+      - libxcb-dri3-0:armhf
+      - libxcb-glx0:armhf
+      - libxcb-present0:armhf
+      - libxcb-render0:armhf
+      - libxcb-shape0:armhf
+      - libxcb-shm0:armhf
+      - libxcb-xfixes0:armhf
+      - libxcb1:armhf
 
   files:
     exclude:
@@ -66,6 +95,7 @@ AppDir:
       - usr/lib/mime
       - usr/lib/sasl2
       - usr/lib/tmpfiles.d
+      - usr/lib/aarch64-linux-gnu
       - usr/sbin
       - usr/share/apps
       - usr/share/man
@@ -103,11 +133,8 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
-     # Patch wrapper script to use wine64
-     sed -i 's|/wine"|/wine64"|' AppDir/wrapper
-
      # Patch wrapper script
-     sed -i 's|wine-appimage|wine-stable-arm64|' AppDir/wrapper
+     sed -i 's|wine-appimage|wine-stable-arm|' AppDir/wrapper
 
      # Copy over arm wine scripts to AppDir
      cp -R scripts-arm/* AppDir/usr/bin/
@@ -133,7 +160,7 @@ AppDir:
     - /usr/lib/wine:$APPDIR/usr/lib/wine
 
 AppImage:
-  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-arm64|wine-stable*.AppImage.zsync
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-arm|wine-stable*.AppImage.zsync
   #sign-key: None
   arch: aarch64
 
