@@ -42,7 +42,7 @@ AppDir:
       - vulkan-tools
       - libmspack0
       - libdrm2:armhf
-      - libwine:armhf
+      - libwine-development:armhf
       # - libdrm-intel1:armhf
       - libdrm-nouveau2:armhf
       - libdrm-amdgpu1:armhf
@@ -134,13 +134,13 @@ AppDir:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
-     sed -i 's|wine-appimage|wine-stable-arm|' AppDir/wrapper
+     sed -i 's|wine-appimage|wine-devel-arm|' AppDir/wrapper
 
      # Copy over arm wine scripts to AppDir
      cp -R scripts-arm/* AppDir/usr/bin/
 
      # Link wine files
-     ( cd AppDir/usr/bin ; ln -s ../lib/wine/* . )
+     ( cd AppDir/usr/bin ; ln -s ../lib/wine-development/* . )
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/usr/share/wine-development/wine.inf

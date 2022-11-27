@@ -41,7 +41,7 @@ AppDir:
       - unionfs-fuse
       - vulkan-tools
       - libmspack0
-      - libwine
+      - libwine-development
 
   files:
     exclude:
@@ -113,7 +113,7 @@ AppDir:
      cp -R scripts-arm/* AppDir/usr/bin/
 
      # Link wine files
-     ( cd AppDir/usr/bin ; ln -s ../lib/wine/* . )
+     ( cd AppDir/usr/bin ; ln -s ../lib/wine-development/* . )
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/usr/share/wine-development/wine.inf
