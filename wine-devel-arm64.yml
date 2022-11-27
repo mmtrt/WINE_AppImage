@@ -29,6 +29,7 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
 
     include:
+      - fonts-wine
       - wine64-development
       - wine64-development-preloader
       - bash
@@ -40,6 +41,7 @@ AppDir:
       - unionfs-fuse
       - vulkan-tools
       - libmspack0
+      - libwine
 
   files:
     exclude:
@@ -114,18 +116,18 @@ AppDir:
      ( cd AppDir/usr/bin ; ln -s ../lib/wine/* . )
 
      # Disable FileOpenAssociations
-     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/usr/share/wine/wine.inf
+     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/usr/share/wine-development/wine.inf
 
      # Disable winemenubuilder
-     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/usr/share/wine/wine.inf
-     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/usr/share/wine/wine.inf
+     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/usr/share/wine-development/wine.inf
+     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/usr/share/wine-development/wine.inf
 
   runtime:
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/arm-linux-gnueabihf/dri:${APPDIR}/usr/lib/aarch64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
 
     path_mappings:
-    - /usr/lib/wine:$APPDIR/usr/lib/wine
+    - /usr/lib/wine-development:$APPDIR/usr/lib/wine-development
 
 AppImage:
   update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-devel-arm64|wine-devel*.AppImage.zsync

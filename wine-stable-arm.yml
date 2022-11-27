@@ -31,6 +31,7 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
 
     include:
+      - fonts-wine
       - wine32
       - wine32-preloader
       - bash
@@ -43,6 +44,7 @@ AppDir:
       - vulkan-tools
       - libmspack0
       - libdrm2:armhf
+      - libwine:armhf
       # - libdrm-intel1:armhf
       - libdrm-nouveau2:armhf
       - libdrm-amdgpu1:armhf
