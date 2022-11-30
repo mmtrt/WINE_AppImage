@@ -206,7 +206,7 @@ AppDir:
 
      7.0.1|7.0.2|7.0.3|7.0.4)
        GECKO_VER="2.47.2"
-       MONO_VER="7.0.0"
+       MONO_VER="7.0.0-x86"
        ;;
      *)
        MONO_VER="$MONO_VER-x86"
