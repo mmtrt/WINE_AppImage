@@ -50,7 +50,7 @@ AppDir:
       - libcups2
       - libfuse2
       - libfuse3-3
-      - libmpg123-0
+      - libmpg123-0:i386
       - libmspack0
       - gstreamer1.0-plugins-good:i386
       - gstreamer1.0-plugins-bad:i386
