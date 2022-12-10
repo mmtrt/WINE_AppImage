@@ -50,6 +50,9 @@ AppDir:
       - libfuse2
       - libfuse3-3
       - libmspack0
+      - gstreamer1.0-plugins-good:i386
+      - gstreamer1.0-plugins-bad:i386
+      - gstreamer1.0-plugins-ugly:i386
       # - libnvidia-compute-520:i386
       # - libnvidia-decode-520:i386
       # - libnvidia-encode-520:i386

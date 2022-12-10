@@ -52,6 +52,9 @@ AppDir:
       - libfuse3-3
       - libmpg123-0
       - libmspack0
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
       # - libnvidia-compute-520
       # - libnvidia-decode-520
       # - libnvidia-encode-520
