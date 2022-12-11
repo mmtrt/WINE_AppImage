@@ -55,6 +55,7 @@ AppDir:
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
       - gstreamer1.0-plugins-ugly
+      - winbind
       # - libnvidia-compute-520
       # - libnvidia-decode-520
       # - libnvidia-encode-520
