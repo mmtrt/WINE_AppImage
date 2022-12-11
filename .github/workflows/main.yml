@@ -186,7 +186,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # devel
           if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-devel | head -1 | grep -c ~rc) -gt 0 ]; then
-           echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |2' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+           echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |2;s|~|-|' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
           else
            echo "WINE_VER=devel_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
           fi
@@ -228,7 +228,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
           if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-staging | head -1 | grep -c ~rc) -gt 0 ]; then
-           echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |2' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+           echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |2;s|~|-|' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
           else
            echo "WINE_VER=staging_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
           fi
