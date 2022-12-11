@@ -7,3 +7,4 @@ appimage-builder-cache/
 *.zsync
 *.msi
 *.squashfs
+*.part
