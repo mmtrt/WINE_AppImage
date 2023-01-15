@@ -33,8 +33,8 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ kinetic main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
-      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu kinetic main'
-        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu kinetic main'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
       - wine-staging-amd64=7.21~kinetic-1
