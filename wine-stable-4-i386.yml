@@ -43,12 +43,22 @@ AppDir:
       - wine-staging-i386=7.22~kinetic-1
       - bash
       - cabextract
+      - cups
       - dash
       - perl
       - coreutils
       - mesa-utils
       - unionfs-fuse
+      - vulkan-tools
+      - libcups2
       # - libfuse2
+      # - libfuse3-3
+      - libmspack0
+      - libmpg123-0:i386
+      - gstreamer1.0-plugins-good:i386
+      - gstreamer1.0-plugins-bad:i386
+      - gstreamer1.0-plugins-ugly:i386
+      - winbind:i386
       # - libnvidia-compute-520:i386
       # - libnvidia-decode-520:i386
       # - libnvidia-encode-520:i386
@@ -73,6 +83,7 @@ AppDir:
       - mesa-vdpau-drivers:i386
       - mesa-va-drivers:i386
       - mesa-vulkan-drivers:i386
+      - libopenal1:i386
       - libx11-6:i386
       - libx11-xcb1:i386
       - libxcb-dri2-0:i386
