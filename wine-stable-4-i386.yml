@@ -49,12 +49,12 @@ AppDir:
       - mesa-utils
       - unionfs-fuse
       - libfuse2
-      - libnvidia-compute-520:i386
-      - libnvidia-decode-520:i386
-      - libnvidia-encode-520:i386
-      - libnvidia-extra-520:i386
-      - libnvidia-fbc1-520:i386
-      - libnvidia-gl-520:i386
+      # - libnvidia-compute-520:i386
+      # - libnvidia-decode-520:i386
+      # - libnvidia-encode-520:i386
+      # - libnvidia-extra-520:i386
+      # - libnvidia-fbc1-520:i386
+      # - libnvidia-gl-520:i386
       - libdrm2:i386
       - libdrm-intel1:i386
       - libdrm-nouveau2:i386
