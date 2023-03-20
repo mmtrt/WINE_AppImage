@@ -16,6 +16,9 @@ script:
 
 AppDir:
   path: ./AppDir
+  runtime:
+      preserve:
+          - opt/wine-stable
 
   app_info:
     id: org.winehq.wine
