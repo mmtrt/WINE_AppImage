@@ -1,6 +1,7 @@
 AppDir/
 appimage-build/
 appimage-builder-cache/
+squashfs-root/
 *.deb
 *.appimage
 *.AppImage
