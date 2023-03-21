@@ -47,8 +47,8 @@ AppDir:
       - unionfs-fuse
       - vulkan-tools
       - libcups2
-      - libfuse2
-      - libfuse3-3
+      # - libfuse2
+      # - libfuse3-3
       - libmspack0
       - gstreamer1.0-plugins-good:i386
       - gstreamer1.0-plugins-bad:i386
