@@ -40,8 +40,8 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-devel-i386=7.21~kinetic-1
-      - wine-devel-amd64=7.21~kinetic-1
+      - wine-devel-i386=7.22~kinetic-1
+      - wine-devel-amd64=7.22~kinetic-1
       - bash
       - cabextract
       - cups
