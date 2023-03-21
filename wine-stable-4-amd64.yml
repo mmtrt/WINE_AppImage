@@ -85,6 +85,7 @@ AppDir:
       - mesa-vdpau-drivers
       - mesa-va-drivers
       - mesa-vulkan-drivers
+      - libopenal1
       - libx11-6
       - libx11-xcb1
       - libxcb-dri2-0
