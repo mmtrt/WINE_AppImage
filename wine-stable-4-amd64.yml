@@ -39,7 +39,7 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-staging-amd64=7.21~kinetic-1
+      - wine-staging-amd64=7.22~kinetic-1
       - bash
       - cabextract
       - cups
