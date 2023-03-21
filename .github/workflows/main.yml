@@ -33,7 +33,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
@@ -46,10 +46,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-stable.yml
 
-          appimage-builder --recipe wine-stable.yml
+          squashfs-root/AppRun --recipe wine-stable.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -70,7 +76,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-i386_4.0.4" >> $GITHUB_ENV
@@ -83,10 +89,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-stable-4-i386.yml
 
-          appimage-builder --recipe wine-stable-4-i386.yml
+          squashfs-root/AppRun --recipe wine-stable-4-i386.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -107,7 +119,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-amd64_4.0.4" >> $GITHUB_ENV
@@ -120,10 +132,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-stable-4-amd64.yml
 
-          appimage-builder --recipe wine-stable-4-amd64.yml
+          squashfs-root/AppRun --recipe wine-stable-4-amd64.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -144,7 +162,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
           echo "WINE_VER=stable-multi_4.0.4" >> $GITHUB_ENV
@@ -157,10 +175,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-stable-4-multi.yml
 
-          appimage-builder --recipe wine-stable-4-multi.yml
+          squashfs-root/AppRun --recipe wine-stable-4-multi.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -182,7 +206,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # devel
           if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-devel | head -1 | grep -c ~rc) -gt 0 ]; then
@@ -199,10 +223,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-devel.yml
 
-          appimage-builder --recipe wine-devel.yml
+          squashfs-root/AppRun --recipe wine-devel.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -224,7 +254,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
           if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/kinetic/main/binary-amd64/ | grep wine-staging | head -1 | grep -c ~rc) -gt 0 ]; then
@@ -241,10 +271,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-staging.yml
 
-          appimage-builder --recipe wine-staging.yml
+          squashfs-root/AppRun --recipe wine-staging.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
@@ -266,7 +302,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; sudo mv appimage-builder /usr/bin
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
           echo "WINE_VER=staging_ge-lol_$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep LoL | head -1 | sed -r 's|-GE||g;s|>| |g;s|-LoL| |g' | awk '{print $10}')" >> $GITHUB_ENV
@@ -279,10 +315,16 @@ jobs:
           # add dir dist
           mkdir dist
 
+          # add custom mksquashfs
+          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
+
+          # force zstd format in appimagebuilder for appimages
+          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
           # set Nvidia driver version
           # sed -i "s|520|$NVDV|" wine-staging-ge-lol.yml
 
-          appimage-builder --recipe wine-staging-ge-lol.yml
+          squashfs-root/AppRun --recipe wine-staging-ge-lol.yml
           mv *AppImage* dist/.
 
       - name: Upload artifact
