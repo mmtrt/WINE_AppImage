@@ -144,7 +144,6 @@ AppDir:
 
   runtime:
     env:
-      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: '2.37'
 
     path_mappings:
