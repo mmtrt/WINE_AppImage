@@ -343,7 +343,7 @@ jobs:
             name: wine-stable-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (stable)
             automatic_release_tag: continuous-stable
@@ -363,7 +363,7 @@ jobs:
             name: wine-stable-4-i386-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (stable) 4.0.x i386
             automatic_release_tag: continuous-stable-4-i386
@@ -383,7 +383,7 @@ jobs:
             name: wine-stable-4-amd64-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (stable) 4.0.x amd64
             automatic_release_tag: continuous-stable-4-amd64
@@ -403,7 +403,7 @@ jobs:
             name: wine-stable-4-multi-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (stable) 4.0.x multi
             automatic_release_tag: continuous-stable-4-multi
@@ -423,7 +423,7 @@ jobs:
             name: wine-devel-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (devel)
             automatic_release_tag: continuous-devel
@@ -443,7 +443,7 @@ jobs:
             name: wine-staging-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (staging)
             automatic_release_tag: continuous-staging
@@ -463,7 +463,7 @@ jobs:
             name: wine-staging_ge-lol-continuous-x86_64.AppImage
 
         - name: release
-          uses: marvinpinto/action-automatic-releases@latest
+          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
           with:
             title: Continuous build (staging) GE LoL
             automatic_release_tag: continuous-staging_ge_lol
