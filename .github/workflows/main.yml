@@ -43,9 +43,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -56,13 +53,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-stable.yml
 
           squashfs-root/AppRun --recipe wine-stable.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-stable-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (stable)
+          automatic_release_tag: continuous-stable
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-stable-4-i386:
     # The type of runner that the job will run on
@@ -86,9 +86,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -99,13 +96,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-stable-4-i386.yml
 
           squashfs-root/AppRun --recipe wine-stable-4-i386.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-stable-4-i386-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (stable) 4.0.x i386
+          automatic_release_tag: continuous-stable-4-i386
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-stable-4-amd64:
     # The type of runner that the job will run on
@@ -129,9 +129,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -142,13 +139,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-stable-4-amd64.yml
 
           squashfs-root/AppRun --recipe wine-stable-4-amd64.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-stable-4-amd64-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (stable) 4.0.x amd64
+          automatic_release_tag: continuous-stable-4-amd64
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-stable-4-multi:
     # The type of runner that the job will run on
@@ -172,9 +172,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -185,13 +182,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-stable-4-multi.yml
 
           squashfs-root/AppRun --recipe wine-stable-4-multi.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-stable-4-multi-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (stable) 4.0.x multi
+          automatic_release_tag: continuous-stable-4-multi
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   # This workflow contains a single job called "build-devel"
   build-devel:
@@ -220,9 +220,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -233,13 +230,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-devel.yml
 
           squashfs-root/AppRun --recipe wine-devel.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-devel-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (devel)
+          automatic_release_tag: continuous-devel
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   # This workflow contains a single job called "build-staging"
   build-staging:
@@ -268,9 +268,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add dir dist
-          mkdir dist
-
           # add custom mksquashfs
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
@@ -281,13 +278,16 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-staging.yml
 
           squashfs-root/AppRun --recipe wine-staging.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-staging-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (staging)
+          automatic_release_tag: continuous-staging
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   # This workflow contains a single job called "build-staging-ge-lol"
   build-staging-ge-lol:
@@ -325,150 +325,15 @@ jobs:
           # sed -i "s|520|$NVDV|" wine-staging-ge-lol.yml
 
           squashfs-root/AppRun --recipe wine-staging-ge-lol.yml
-          mv *AppImage* dist/.
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          name: wine-staging_ge-lol-continuous-x86_64.AppImage
-          path: 'dist'
+          title: Continuous build (staging) GE LoL
+          automatic_release_tag: continuous-staging_ge_lol
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
-  release-stable:
-      needs: [build-stable]
-      runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (stable)
-            automatic_release_tag: continuous-stable
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-stable-4-i386:
-      needs: [build-stable-4-i386]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-4-i386-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (stable) 4.0.x i386
-            automatic_release_tag: continuous-stable-4-i386
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-4-i386-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-stable-4-amd64:
-      needs: [build-stable-4-amd64]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-4-amd64-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (stable) 4.0.x amd64
-            automatic_release_tag: continuous-stable-4-amd64
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-4-amd64-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-stable-4-multi:
-      needs: [build-stable-4-multi]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-stable-4-multi-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (stable) 4.0.x multi
-            automatic_release_tag: continuous-stable-4-multi
-            prerelease: false
-            draft: false
-            files: |
-              wine-stable-4-multi-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-devel:
-      needs: [build-devel]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-devel-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (devel)
-            automatic_release_tag: continuous-devel
-            prerelease: false
-            draft: false
-            files: |
-              wine-devel-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-staging:
-      needs: [build-staging]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-staging-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (staging)
-            automatic_release_tag: continuous-staging
-            prerelease: false
-            draft: false
-            files: |
-              wine-staging-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  release-staging-ge-lol:
-      needs: [build-staging-ge-lol]
-      runs-on: ubuntu-latest
-
-      steps:
-        - uses: actions/download-artifact@v1
-          with:
-            name: wine-staging_ge-lol-continuous-x86_64.AppImage
-
-        - name: release
-          uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-          with:
-            title: Continuous build (staging) GE LoL
-            automatic_release_tag: continuous-staging_ge_lol
-            prerelease: false
-            draft: false
-            files: |
-              wine-staging_ge-lol-continuous-x86_64.AppImage
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
