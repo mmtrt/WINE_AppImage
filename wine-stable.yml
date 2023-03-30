@@ -46,6 +46,7 @@ AppDir:
       - perl
       - coreutils
       - mesa-utils
+      - mesa-utils-bin
       - unionfs-fuse
       - vulkan-tools
       - libcups2
