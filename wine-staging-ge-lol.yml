@@ -3,7 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir
+  - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir && sed -i '21,47d' AppDir/wrapper
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
