@@ -1,6 +1,7 @@
 # WINE env
 export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
+export WINEDLLOVERRIDES=${WINEDLLOVERRIDES:-"mscoree,mshtml="}
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -48,4 +49,4 @@ if [ -z "$APPLICATION" ] ; then
 "$MAIN" "$@" | cat
 else
 "$MAIN" "$APPLICATION" | cat
-fi  
+fi

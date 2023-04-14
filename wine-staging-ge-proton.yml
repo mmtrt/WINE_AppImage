@@ -1,0 +1,239 @@
+version: 1
+
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
+  - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir
+  # Add winetricks
+  - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
+  # Add static appimage runtime
+  - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
+
+AppDir:
+  path: ./AppDir
+
+  app_info:
+    id: org.winehq.wine
+    name: wine
+    icon: wine
+    version: !ENV ${WINE_VER}
+    exec: bin/bash
+    exec_args: wrapper $@
+
+  apt:
+    arch: [amd64, i386]
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ kinetic main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ lunar main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu lunar main'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
+
+    include:
+      - wine-devel-i386=7.22~kinetic-1
+      - wine-devel-amd64=7.22~kinetic-1
+      - bash
+      - cabextract
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
+      - mesa-utils-bin
+      - unionfs-fuse
+      - vulkan-tools
+      - libmspack0
+      # - libnvidia-compute-520:i386
+      # - libnvidia-decode-520:i386
+      # - libnvidia-encode-520:i386
+      # - libnvidia-extra-520:i386
+      # - libnvidia-fbc1-520:i386
+      # - libnvidia-gl-520:i386
+      - libdrm2:i386
+      - libdrm-intel1:i386
+      - libdrm-nouveau2:i386
+      - libdrm-amdgpu1:i386
+      - libdrm-radeon1:i386
+      - libegl-mesa0:i386
+      - libegl1:i386
+      - libgbm1:i386
+      - libgl1:i386
+      - libgl1-mesa-dri:i386
+      - libglapi-mesa:i386
+      - libgles2:i386
+      - libglvnd0:i386
+      - libglx0:i386
+      - libglx-mesa0:i386
+      - mesa-vdpau-drivers:i386
+      - mesa-va-drivers:i386
+      - mesa-vulkan-drivers:i386
+      - libx11-6:i386
+      - libx11-xcb1:i386
+      - libxcb-dri2-0:i386
+      - libxcb-dri3-0:i386
+      - libxcb-glx0:i386
+      - libxcb-present0:i386
+      - libxcb-render0:i386
+      - libxcb-shape0:i386
+      - libxcb-shm0:i386
+      - libxcb-xfixes0:i386
+      - libxcb1:i386
+
+  files:
+    exclude:
+      - sbin
+      - var
+      - etc/alternatives
+      - etc/apt
+      - etc/cron.daily
+      - etc/dpkg
+      - etc/mysql
+      - etc/sane.d
+      - etc/sensors.d
+      - etc/skel
+      - etc/snmp
+      - etc/udev
+      - etc/gss
+      - etc/init.d
+      - etc/logrotate.d
+      - lib/modprobe.d
+      - lib/systemd
+      - lib/udev
+      - usr/lib/mime
+      - usr/lib/sasl2
+      - usr/lib/tmpfiles.d
+      - usr/sbin
+      - usr/share/apps
+      - usr/share/man
+      - usr/share/doc
+      - usr/share/adduser
+      - usr/share/apport
+      - usr/share/bash-completion
+      - usr/share/bug
+      - usr/share/debconf
+      - usr/share/doc
+      - usr/share/doc-base
+      - usr/share/dpkg
+      - usr/share/glib-2.0
+      - usr/share/gst-plugins-base
+      - usr/share/hal
+      - usr/share/info
+      - usr/share/initramfs-tools
+      - usr/share/kde4
+      - usr/share/libgphoto2
+      - usr/share/lintian
+      - usr/share/menu
+      - usr/share/metainfo
+      - usr/share/mesa-demos
+      - usr/share/mime
+      - usr/share/misc
+      - usr/share/mysql-common
+      - usr/share/pixmaps
+      - usr/share/pkgconfig
+      - usr/share/polkit-1
+      - usr/share/snmp
+      - usr/share/zoneinfo
+      - usr/share/zoneinfo-icu
+      - usr/share/zsh
+      - opt/wine-devel
+      - opt/wine-staging/share/man
+      - opt/wine-staging/share/applications
+      - opt/wine-staging/lib/wine/i386-unix/*.a
+      - opt/wine-staging/lib/wine/i386-windows/*.a
+      - opt/wine-staging/lib64/wine/x86_64-unix/*.a
+      - opt/wine-staging/lib64/wine/x86_64-windows/*.a
+
+  after_bundle:
+    # this is executed after the packages and files are added
+    - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-ge-proton|' AppDir/wrapper
+
+     WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep -Eo "GE-P.*" | head -1 | sed -r 's|"| |g' | awk '{print $1}')"
+
+     wget -q "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/$WINE_VER/wine-lutris-${WINE_VER}-x86_64.tar.xz"
+     mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv lutris* wine-staging ; rm ../../*.tar.xz)
+     (cd AppDir/usr/bin; ln -s "../../opt/wine-staging/bin/"* .)
+
+     # Cleanup
+     rm -rf AppDir/usr/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-staging/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-staging/lib/wine/i386-unix/*.a
+     rm -rf AppDir/opt/wine-staging/lib/wine/i386-windows/*.a
+     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-staging/lib64/wine/x86_64-windows/*.a
+
+     # Disable FileOpenAssociations
+     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-staging/share/wine/wine.inf
+
+     # Disable winemenubuilder
+     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-staging/share/wine/wine.inf
+     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
+
+      #  WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep -Eo "GE-.*" | head -1 | sed -r 's|-GE||g;s|"| |g;s|n| |g' | awk '{print $2}')"
+
+      #  # wine-mono wine-gecko
+      #  MONO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'MONO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
+      #  GECKO_VER=$(wget "https://source.winehq.org/source/dlls/appwiz.cpl/addons.c?%21v=wine-${WINE_VER}" -qO- | grep -Po 'GECKO_VERSION</a>.*[0-9]"' | cut -d'"' -f4)
+      #  # For future reference see MONO_VER https://github.com/wine-mirror/wine/tree/stable of wine-stable
+      #  case "$WINE_VER" in
+      #  3.0.1|3.0.2|3.0.3|3.0.4|3.0.5)
+      #    GECKO_VER="2.47"
+      #    MONO_VER="4.7.1"
+      #    ;;
+
+      #  4.0.1|4.0.2|4.0.3|4.0.4)
+      #    GECKO_VER="2.47"
+      #    MONO_VER="4.7.5"
+      #    ;;
+
+      #  5.0.1|5.0.2|5.0.3|5.0.4|5.0.5)
+      #    GECKO_VER="2.47.1"
+      #    MONO_VER="4.9.4"
+      #    ;;
+
+      #  6.0.1|6.0.2|6.0.3|6.0.4)
+      #    GECKO_VER="2.47.2"
+      #    MONO_VER="5.1.1"
+      #    ;;
+
+      #  7.0.1|7.0.2|7.0.3|7.0.4)
+      #    GECKO_VER="2.47.2"
+      #    MONO_VER="7.0.0"
+      #    ;;
+      #  esac
+      #  if [[ $(echo $WINE_VER |sed -e 's/\.//g') -ge 518 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 60 || $(echo $WINE_VER |sed -e 's/\.//g') -eq 70  ]]; then
+      #    MONO_VER="$MONO_VER-x86"
+      #  fi
+      #  if [[ $(echo $GECKO_VER |sed -e 's/\.//g') -le 247 ]]; then
+      #     GECKO=wine_gecko-${GECKO_VER}
+      #  else
+      #     GECKO=wine-gecko-${GECKO_VER}
+      #  fi
+
+      #  MONO_URL="https://dl.winehq.org/wine/wine-mono/$(cut -d'-' -f1 <<< ${MONO_VER})/wine-mono-${MONO_VER}.msi"
+      #  GECKO_URL_x86="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86.msi"
+      #  GECKO_URL_x86_64="https://dl.winehq.org/wine/wine-gecko/$GECKO_VER/${GECKO}-x86_64.msi"
+      #  wget -q "$MONO_URL" -O AppDir/winedata/wine-mono-${MONO_VER}.msi
+      #  wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
+      #  wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
+
+  runtime:
+    env:
+      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
+      APPDIR_LIBC_VERSION: '2.37'
+
+    path_mappings:
+    - /opt/wine-staging:$APPDIR/opt/wine-staging
+
+AppImage:
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|test|wine-staging_ge-proton*.AppImage.zsync
+  #sign-key: None
+  arch: x86_64
+
