@@ -49,6 +49,9 @@ AppDir:
       - unionfs-fuse
       - vulkan-tools
       - libmspack0
+      - gstreamer1.0-plugins-good:amd64
+      - gstreamer1.0-plugins-bad:amd64
+      - gstreamer1.0-plugins-ugly:amd64
       - gstreamer1.0-plugins-good:i386
       - gstreamer1.0-plugins-bad:i386
       - gstreamer1.0-plugins-ugly:i386
