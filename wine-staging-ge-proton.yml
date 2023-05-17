@@ -37,8 +37,8 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-devel-i386=8.8~lunar-1
-      - wine-devel-amd64=8.8~lunar-1
+      # - wine-devel-i386=8.8~lunar-1
+      # - wine-devel-amd64=8.8~lunar-1
       - bash
       - cabextract
       - dash
