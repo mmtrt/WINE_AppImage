@@ -29,7 +29,7 @@ AppDir:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-updates main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ kinetic main'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ lunar main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ lunar main'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
@@ -37,8 +37,8 @@ AppDir:
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-devel-i386=7.22~kinetic-1
-      - wine-devel-amd64=7.22~kinetic-1
+      - wine-devel-i386=8.8~lunar-1
+      - wine-devel-amd64=8.8~lunar-1
       - bash
       - cabextract
       - dash
