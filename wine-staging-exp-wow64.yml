@@ -157,6 +157,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-staging-wow64|' AppDir/wrapper
+
      WINE_VER="8.10"
 
      wget -q "https://github.com/mmtrt/WINE_AppImage/releases/download/test5-wow64/wine-${WINE_VER}-staging-exp-wow64-amd64.tar.xz"
