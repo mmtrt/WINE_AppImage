@@ -1,0 +1,193 @@
+version: 1
+
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir || true
+  - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir
+  # Add winetricks
+  - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
+  # Add static appimage runtime
+  - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
+
+AppDir:
+  path: ./AppDir
+
+  app_info:
+    id: org.winehq.wine
+    name: wine
+    icon: wine
+    version: !ENV ${WINE_VER}
+    exec: bin/bash
+    exec_args: wrapper $@
+
+  apt:
+    arch: [amd64]
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ lunar main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ lunar main'
+        # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
+      # - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu lunar main'
+        # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
+
+    include:
+      # - wine-staging-amd64=8.10~lunar-1
+      - bash
+      - cabextract
+      # - cups
+      - dash
+      - perl
+      - coreutils
+      - mesa-utils
+      - mesa-utils-bin
+      - unionfs-fuse
+      - vulkan-tools
+      # - libcups2
+      - libmspack0
+      # - gstreamer1.0-plugins-good
+      # - gstreamer1.0-plugins-bad
+      # - gstreamer1.0-plugins-ugly
+      # - libnvidia-compute-520
+      # - libnvidia-decode-520
+      # - libnvidia-encode-520
+      # - libnvidia-extra-520
+      # - libnvidia-fbc1-520
+      # - libnvidia-gl-520
+      # - libdrm2
+      # - libdrm-intel1
+      # - libdrm-nouveau2
+      # - libdrm-amdgpu1
+      # - libdrm-radeon1
+      # - libegl-mesa0
+      # - libegl1
+      # - libgbm1
+      # - libgl1
+      # - libgl1-mesa-dri
+      # - libglapi-mesa
+      # - libgles2
+      # - libglvnd0
+      # - libglx0
+      # - libglx-mesa0
+      # - mesa-vdpau-drivers
+      # - mesa-va-drivers
+      # - mesa-vulkan-drivers
+      # - libopenal1
+      # - libx11-6
+      # - libx11-xcb1
+      # - libxcb-dri2-0
+      # - libxcb-dri3-0
+      # - libxcb-glx0
+      # - libxcb-present0
+      # - libxcb-render0
+      # - libxcb-shape0
+      # - libxcb-shm0
+      # - libxcb-xfixes0
+      # - libxcb1
+
+  files:
+    exclude:
+      - sbin
+      - var
+      - etc/alternatives
+      - etc/apt
+      - etc/cron.daily
+      - etc/dpkg
+      - etc/mysql
+      - etc/sane.d
+      - etc/sensors.d
+      - etc/skel
+      - etc/snmp
+      - etc/udev
+      - etc/gss
+      - etc/init.d
+      - etc/logrotate.d
+      - lib/modprobe.d
+      - lib/systemd
+      - lib/udev
+      - usr/lib/mime
+      - usr/lib/sasl2
+      - usr/lib/tmpfiles.d
+      - usr/sbin
+      - usr/share/apps
+      - usr/share/man
+      - usr/share/doc
+      - usr/share/adduser
+      - usr/share/apport
+      - usr/share/bash-completion
+      - usr/share/bug
+      - usr/share/debconf
+      - usr/share/doc
+      - usr/share/doc-base
+      - usr/share/dpkg
+      - usr/share/glib-2.0
+      - usr/share/gst-plugins-base
+      - usr/share/hal
+      - usr/share/info
+      - usr/share/initramfs-tools
+      - usr/share/kde4
+      - usr/share/libgphoto2
+      - usr/share/lintian
+      - usr/share/menu
+      - usr/share/metainfo
+      - usr/share/mesa-demos
+      - usr/share/mime
+      - usr/share/misc
+      - usr/share/mysql-common
+      - usr/share/pixmaps
+      - usr/share/pkgconfig
+      - usr/share/polkit-1
+      - usr/share/snmp
+      - usr/share/zoneinfo
+      - usr/share/zoneinfo-icu
+      - usr/share/zsh
+      - opt/wine-staging
+      - opt/wine-devel/share/man
+      - opt/wine-devel/share/applications
+      - opt/wine-devel/lib/wine/i386-unix/*.a
+      - opt/wine-devel/lib/wine/i386-windows/*.a
+      - opt/wine-devel/lib64/wine/x86_64-unix/*.a
+      - opt/wine-devel/lib64/wine/x86_64-windows/*.a
+
+  after_bundle:
+    # this is executed after the packages and files are added
+    - |
+     WINE_VER="8.10"
+
+     wget -q "https://github.com/mmtrt/WINE_AppImage/releases/download/test5-wow64/wine-${WINE_VER}-exp-wow64-amd64.tar.xz"
+     mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv wine-* wine-devel)
+     (cd AppDir/usr/bin; ln -s "../../opt/wine-devel/bin/"* .)
+
+     # Cleanup
+     rm -rf AppDir/usr/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-devel/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-devel/lib/wine/i386-unix/*.a
+     rm -rf AppDir/opt/wine-devel/lib/wine/i386-windows/*.a
+     rm -rf AppDir/opt/wine-devel/lib64/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-devel/lib64/wine/x86_64-windows/*.a
+
+     # Disable FileOpenAssociations
+     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-devel/share/wine/wine.inf
+
+     # Disable winemenubuilder
+     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-devel/share/wine/wine.inf
+     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-devel/share/wine/wine.inf
+
+  runtime:
+    env:
+      # LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
+      APPDIR_LIBC_VERSION: '2.37'
+
+    path_mappings:
+    - /opt/wine-devel:$APPDIR/opt/wine-devel
+
+AppImage:
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|test5-devel|wine-devel*.AppImage.zsync
+  #sign-key: None
+  arch: x86_64
+
