@@ -25,19 +25,19 @@ AppDir:
   apt:
     arch: [amd64]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ lunar main'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
-      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ lunar main'
+      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ jammy main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
-      # - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu lunar main'
-        # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu jammy main'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
-      # - wine-devel-amd64=8.10~lunar-1
+      # - wine-devel-amd64=8.10~jammy-1
       - bash
       - cabextract
       # - cups
@@ -182,10 +182,6 @@ AppDir:
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-staging/share/wine/wine.inf
 
   runtime:
-    env:
-      # LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
-      APPDIR_LIBC_VERSION: '2.37'
-
     path_mappings:
     - /opt/wine-staging:$APPDIR/opt/wine-staging
 
