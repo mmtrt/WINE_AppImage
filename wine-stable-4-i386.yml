@@ -27,19 +27,19 @@ AppDir:
   apt:
     arch: [amd64, i386]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ lunar-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ kinetic main'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
-      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ lunar main'
+      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ jammy main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
-      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu lunar main'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/oibaf/graphics-drivers/ubuntu jammy main'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x957D2708A03A4626'
 
     include:
-      - wine-staging-i386=7.22~kinetic-1
+      - wine-staging-i386=7.22~jammy-1
       - bash
       - cabextract
       - cups
@@ -231,7 +231,6 @@ AppDir:
   runtime:
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
-      APPDIR_LIBC_VERSION: '2.37'
 
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
