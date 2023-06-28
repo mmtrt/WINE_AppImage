@@ -38,7 +38,7 @@ jobs:
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
           # stable
-          echo "WINE_VER=devel-wow64_8.10" >> $GITHUB_ENV
+          echo "WINE_VER=devel-wow64_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -72,7 +72,7 @@ jobs:
           cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
           # stable
-          echo "WINE_VER=staging-wow64_8.10" >> $GITHUB_ENV
+          echo "WINE_VER=staging-wow64_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage

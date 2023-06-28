@@ -160,9 +160,9 @@ AppDir:
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-devel-wow64|' AppDir/wrapper
 
-     WINE_VER="8.10"
+     WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
 
-     wget -q "https://github.com/mmtrt/WINE_AppImage/releases/download/test5-wow64/wine-${WINE_VER}-exp-wow64-amd64.tar.xz"
+     wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/wow64/wine-${WINE_VER}-exp-wow64-amd64.tar.xz"
      mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv wine-* wine-devel)
      (cd AppDir/usr/bin; ln -s "../../opt/wine-devel/bin/"* .)
 
