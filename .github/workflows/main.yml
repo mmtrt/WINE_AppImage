@@ -4,9 +4,9 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Build at 00:00 on every 12th day-of-month.
-  #schedule:
-    #- cron: "0 0 */12 * *"
+  # Build at 00:00 on every 13th day-of-month.
+  schedule:
+    - cron: "0 0 */13 * *"
   # Triggers the workflow on push or pull request events but only for the test5 branch
   push:
     branches: [ test5 ]
