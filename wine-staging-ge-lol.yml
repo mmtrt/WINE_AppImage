@@ -21,7 +21,7 @@ AppDir:
     icon: wine
     version: !ENV ${WINE_VER}
     exec: bin/bash
-    exec_args: wrapper $@
+    exec_args: $APPDIR/wrapper $@
 
   apt:
     arch: [amd64, i386]
