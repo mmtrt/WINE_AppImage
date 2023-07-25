@@ -12,6 +12,8 @@ script:
   - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
   # Add WINE official light blue theme
   - wget -q "https://github.com/mmtrt/sommelier-core/raw/tmp/themes/light/light.msstyles" -P ./AppDir/winedata/resources/themes/light
+  # Add config
+  - cp -R config AppDir/winedata
 
 AppDir:
   path: ./AppDir
