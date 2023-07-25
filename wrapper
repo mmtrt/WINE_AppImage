@@ -28,7 +28,7 @@ if [ ! -d "$WINEPREFIX" ]; then
  # Remove old created links
  find "$HOME/.cache/wine/" -type l -delete &>/dev/null
 
- if [ ! -f "$HOME"/.cache/wine/wine-mono-*.msi ]; then
+ if [ ! -f "$HOME"/.cache/wine/"$(ls $APPDIR/winedata/ | grep mono)" ]; then
    ln -s $APPDIR/winedata/wine-mono-*.msi "$HOME"/.cache/wine/
  fi
 
