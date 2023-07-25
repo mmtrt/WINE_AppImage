@@ -121,7 +121,7 @@ AppDir:
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-ge-lol|' AppDir/wrapper
 
-     wget -q "https://github.com/$(wget -qO- https://github.com/GloriousEggroll/wine-ge-custom/releases/expanded_assets/$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/releases?page=1" | grep -Eo "tree/7.*" | head -1 | sed 's|/| |g;s|"| |g'|awk '{print $2}') | grep tar.xz | sed 's|"| |g' | awk '{print $3}' | head -1)"
+     wget -q "https://github.com/$(wget -qO- https://github.com/GloriousEggroll/wine-ge-custom/releases/expanded_assets/$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/releases?page=2" | grep -Eo "tree/7.*" | head -1 | sed 's|/| |g;s|"| |g'|awk '{print $2}') | grep tar.xz | sed 's|"| |g' | awk '{print $3}' | head -1)"
      mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv lutris* wine-staging ; rm ../../*.tar.xz)
      (cd AppDir/usr/bin; ln -s "../../opt/wine-staging/bin/"* .)
 
