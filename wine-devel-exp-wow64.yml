@@ -10,6 +10,8 @@ script:
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add static appimage runtime
   - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
+  # Add config
+  - cp -R config AppDir/winedata
 
 AppDir:
   path: ./AppDir
