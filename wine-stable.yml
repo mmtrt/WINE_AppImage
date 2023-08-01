@@ -94,6 +94,7 @@ AppDir:
       - libxcb-shm0:i386
       - libxcb-xfixes0:i386
       - libxcb1:i386
+      - winbind:i386
 
   files:
     exclude:
