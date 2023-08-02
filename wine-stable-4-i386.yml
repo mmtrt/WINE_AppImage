@@ -163,6 +163,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-4-stable-i386|' AppDir/wrapper
+
      WINE_VER="4.0.4"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable_${WINE_VER}~focal_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-stable-i386_${WINE_VER}~focal_i386.deb

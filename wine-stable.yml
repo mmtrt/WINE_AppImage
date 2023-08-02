@@ -164,6 +164,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-stable|' AppDir/wrapper
+
      WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-stable_${WINE_VER}~jammy-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-stable-i386_${WINE_VER}~jammy-1_i386.deb

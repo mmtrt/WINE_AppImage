@@ -164,6 +164,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-staging|' AppDir/wrapper
+
      # Check for rc builds
      if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-staging | tail -n1 | grep -c ~rc) -gt 0 ]; then
       WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-staging | sed 's|_| |g;s|~| |2' | awk '{print $5}' | tail -n1)"

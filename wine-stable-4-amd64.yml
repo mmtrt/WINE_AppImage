@@ -162,6 +162,9 @@ AppDir:
   after_bundle:
     # this is executed after the packages and files are added
     - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-appimage-4-stable-amd64|' AppDir/wrapper
+
      # Patch wrapper script to use wine64
      sed -i 's|/wine"|/wine64"|' AppDir/wrapper
 
