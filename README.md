@@ -50,6 +50,40 @@ cd squashfs-root
 ./AppRun
 ```
 
+## Building AppImage
+
+#### > Clone this repo
+```
+git clone 'https://github.com/mmtrt/WINE_AppImage.git'
+```
+
+#### > Download appimage-builder and unpack
+```
+cd WINE_AppImage ; wget -q 'https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage' ; chmod +x 'appimage-builder-1.0.3-x86_64.AppImage' ; ./appimage-builder-1.0.3-x86_64.AppImage --appimage-extract
+```
+
+#### > Modify appimage-builder
+```
+cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+```
+
+#### > Modify Recipe for building locally
+Change version in `wine-stable.yml` for example.
+
+version: `!ENV ${WINE_VER}` 
+
+To
+
+version: `"1.0"`
+
+
+#### > Start building
+Now launch modified appimage-builder using modifed recipe after doing above steps
+
+```
+squashfs-root/AppRun --recipe wine-stable.yml
+```
+
 ## Acknowledgements
 * https://www.winehq.org
 * https://github.com/AppImageCrafters/appimage-builder
