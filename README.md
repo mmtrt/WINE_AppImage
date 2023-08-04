@@ -50,7 +50,7 @@ cd squashfs-root
 ./AppRun
 ```
 
-## Building AppImage
+## Building AppImage (Debian Based Host Only)
 
 #### > Clone this repo
 ```
