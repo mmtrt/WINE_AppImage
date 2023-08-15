@@ -41,16 +41,16 @@ AppDir:
     include:
       - wine-staging-i386=7.22~jammy-1
       - bash
-      # - cabextract
+      - cabextract
       # - cups
       - dash
-      - perl
+      # - perl
       - coreutils
       # - mesa-utils
-      - unionfs-fuse
+      # - unionfs-fuse
       # - vulkan-tools
       # - libcups2
-      # - libmspack0
+      - libmspack0
       # - libmpg123-0:i386
       # - gstreamer1.0-plugins-good:i386
       # - gstreamer1.0-plugins-bad:i386
