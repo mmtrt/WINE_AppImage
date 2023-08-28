@@ -84,6 +84,8 @@ Now launch modified appimage-builder using modifed recipe after doing above step
 squashfs-root/AppRun --recipe wine-stable.yml
 ```
 
+**NOTE:** if you are making changes in recipe file after doing all steps then just skip all steps and use building step only.
+
 ## Acknowledgements
 * https://www.winehq.org
 * https://github.com/AppImageCrafters/appimage-builder
