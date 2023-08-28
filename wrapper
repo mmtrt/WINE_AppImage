@@ -90,7 +90,7 @@ else
 fi
 
 if [ -z "$APPLICATION" ] ; then
-"$MAIN" "$@" | cat
+"$MAIN" "$@"
 else
-"$MAIN" "$APPLICATION" | cat
+"$MAIN" "$APPLICATION"
 fi
