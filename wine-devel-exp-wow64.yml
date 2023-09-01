@@ -35,8 +35,8 @@ AppDir:
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ jammy main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
-      # - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu jammy main'
-        # key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu jammy main'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
       # - wine-staging-amd64=8.10~jammy-1
