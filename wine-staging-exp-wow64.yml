@@ -6,6 +6,8 @@ script:
   - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  # Patch winetricks
+  - wget -qO- "https://gist.github.com/mmtrt/0f6fb55c5ca0e71dbe6913e9bac770cf/raw/8fd66db792b8302346c1029b8a9165afebb05c77/gistfile1.txt" | patch -p1
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
   - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add static appimage runtime
