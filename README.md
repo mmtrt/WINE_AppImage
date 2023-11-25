@@ -20,11 +20,10 @@
 
 Download the latest release from
 
-| Stable | Devel | Staging | GE-Proton | GE-LoL |
-| ------- | --------- | --------- | --------- | --------- |
-| <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> |
-| [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-stable) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-devel) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging_ge_proton) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging_ge_lol) |
-
+| Stable | Devel | Staging | GE-Proton |
+| ------- | --------- | --------- | --------- |
+| <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> |
+| [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-stable) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-devel) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging_ge_proton) |
 
 ### Executing
 #### File Manager
