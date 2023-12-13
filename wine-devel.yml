@@ -198,6 +198,11 @@ AppDir:
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-devel/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-devel/share/wine/wine.inf
 
+     # Fix for rc wine builds
+     if [ $(echo "${WINE_VER}" | grep -c ~rc) -gt 0 ]; then
+       WINE_VER=$(sed -r 's/~/-/' <<< "${WINE_VER}")
+     fi
+
      # Deploy wine-mono wine-gecko
      # For future reference setting of MONO_VER see https://github.com/wine-mirror/wine/tree/stable of wine-stable
      MONO_VER=$(wget "https://raw.githubusercontent.com/wine-mirror/wine/$(wget -qO- https://github.com/wine-mirror/wine/releases/tag/wine-${WINE_VER} | grep 'commit/' | sed -r 's|/wine-mirror/wine/commit/||g' | cut -d'"' -f2 | head -1)/dlls/appwiz.cpl/addons.c" -qO- | grep -Po 'MONO_VERSION.*[0-9]"' | cut -d'"' -f2)
