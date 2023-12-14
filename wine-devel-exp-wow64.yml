@@ -162,7 +162,12 @@ AppDir:
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-devel-wow64|' AppDir/wrapper
 
-     WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
+     # Check for rc builds
+     if [ $(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | head -1 | grep -c rc) -gt 0 ]; then
+      WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | sed -r 's|-| |1;s|-| |2' | awk '{print $2}' | head -1)"
+     else
+      WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/wow64 | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
+     fi
 
      wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/wow64/wine-${WINE_VER}-exp-wow64-amd64.tar.xz"
      mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv wine-* wine-devel)
