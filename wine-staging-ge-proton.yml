@@ -164,7 +164,7 @@ AppDir:
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-ge-proton|' AppDir/wrapper
 
-     WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep -Eo "GE-P.*" | head -1 | sed -r 's|"| |g' | awk '{print $1}')"
+     WINE_VER="$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | sed -r '/LoL/d' | grep -Eo "GE-P.*" | head -1 | sed -r 's|"| |g' | awk '{print $1}')"
 
      wget -q "https://github.com/GloriousEggroll/wine-ge-custom/releases/download/$WINE_VER/wine-lutris-${WINE_VER}-x86_64.tar.xz"
      mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv lutris* wine-staging ; rm ../../*.tar.xz)
