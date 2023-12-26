@@ -55,8 +55,10 @@ AppDir:
       - libdrm-common
       - libgphoto2-6
       - libgstreamer-plugins-base1.0-0
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-plugins-ugly
       - libgcrypt20
-      - locales-all
       - libldap-2.5-0
       - libncurses5
       - libopenal1
@@ -93,8 +95,6 @@ AppDir:
       - libxxf86vm1
       - libvkd3d1
       - ocl-icd-libopencl1
-      - winbind
-      - samba-libs
       - mesa-va-drivers
       - mesa-vdpau-drivers
       - mesa-vulkan-drivers
@@ -120,7 +120,6 @@ AppDir:
       - gstreamer1.0-plugins-bad:i386
       - gstreamer1.0-plugins-ugly:i386
       - libgcrypt20:i386
-      - locales-all:i386
       - libldap-2.5-0:i386
       - libncurses5:i386
       - libopenal1:i386
@@ -161,7 +160,6 @@ AppDir:
       - mesa-vulkan-drivers:i386
       - ocl-icd-libopencl1:i386
       - winbind:i386
-      - samba-libs:i386
       - va-driver-all:i386
       - zlib1g:i386
 
