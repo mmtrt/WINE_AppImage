@@ -48,4 +48,4 @@ if [ -z "$APPLICATION" ] ; then
 "$MAIN" "$@"
 else
 "$MAIN" "$APPLICATION"
-fi  
+fi
