@@ -168,14 +168,11 @@ AppDir:
      sed -i 's|wine-appimage|wine-appimage-devel|' AppDir/wrapper
 
      # Check for rc builds
-     # if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | tail -n1 | grep -c ~rc) -gt 0 ]; then
-     #  WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |2' | awk '{print $5}' | tail -n1)"
-     # else
-     #  WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
-     # fi
-
-     WINE_VER="8.21"
-
+     if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | tail -n1 | grep -c ~rc) -gt 0 ]; then
+      WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |2' | awk '{print $5}' | tail -n1)"
+     else
+      WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+     fi
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-devel_${WINE_VER}~jammy-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-devel-i386_${WINE_VER}~jammy-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/wine-devel_${WINE_VER}~jammy-1_amd64.deb
