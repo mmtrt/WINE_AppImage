@@ -180,6 +180,8 @@ AppDir:
      rm -rf AppDir/opt/wine-devel/lib64/wine/x86_64-windows/*.a
 
   runtime:
+    version: v3.0.0-devel-2
+    debug: true
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: '2.40'
