@@ -23,7 +23,7 @@ AppDir:
     exec_args: $APPDIR/wrapper $@
 
   apt:
-    arch: [amd64, i386]
+    arch: [amd64]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
@@ -37,8 +37,8 @@ AppDir:
         key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
-      - wine-staging-i386=8.21~jammy-1
-      - wine-staging-amd64=8.21~jammy-1
+      # - wine-staging-i386=8.21~jammy-1
+      # - wine-staging-amd64=8.21~jammy-1
       - bash
       - cabextract
       - cups
@@ -49,119 +49,6 @@ AppDir:
       - mesa-utils-bin
       - vulkan-tools
       - libmspack0
-      - libasound2
-      - libasound2-plugins
-      - libavcodec58
-      - libdrm-common
-      - libgphoto2-6
-      - libgstreamer-plugins-base1.0-0
-      - gstreamer1.0-plugins-good
-      - gstreamer1.0-plugins-bad
-      - gstreamer1.0-plugins-ugly
-      - libgcrypt20
-      - libldap-2.5-0
-      - libncurses5
-      - libopenal1
-      - libpcap0.8
-      - libpulse0
-      - libudev1
-      - libxext6
-      - libxml2
-      - libcapi20-3
-      - libcups2
-      - libcanberra-gtk-module
-      - libdbus-1-3
-      - libfontconfig1
-      - libfreetype6
-      - libgl1-mesa-glx
-      - libgl1-mesa-dri
-      - libglu1-mesa
-      - libgnutls30
-      - libgssapi-krb5-2
-      - libodbc1
-      - libosmesa6
-      - libsane1
-      - libsdl2-2.0-0
-      - libv4l-0
-      - libvulkan1
-      - libxcomposite1
-      - libxcursor1
-      - libxcb-dri3-0
-      - libxfixes3
-      - libxi6
-      - libxinerama1
-      - libxrandr2
-      - libxrender1
-      - libxxf86vm1
-      - libvkd3d1
-      - ocl-icd-libopencl1
-      - mesa-va-drivers
-      - mesa-vdpau-drivers
-      - mesa-vulkan-drivers
-      - zlib1g
-      - binutils
-      - util-linux
-      - p7zip-full
-      - mesa-utils
-      - vulkan-tools
-      - libpci3
-      - xdg-utils
-      - xdg-user-dirs
-      - fontconfig-config
-      - pciutils
-      - lsof
-      - va-driver-all
-      - libasound2:i386
-      - libasound2-plugins:i386
-      - libavcodec58:i386
-      - libgphoto2-6:i386
-      - libgstreamer-plugins-base1.0-0:i386
-      - gstreamer1.0-plugins-good:i386
-      - gstreamer1.0-plugins-bad:i386
-      - gstreamer1.0-plugins-ugly:i386
-      - libgcrypt20:i386
-      - libldap-2.5-0:i386
-      - libncurses5:i386
-      - libopenal1:i386
-      - libpcap0.8:i386
-      - libpulse0:i386
-      - libudev1:i386
-      - libxext6:i386
-      - libxml2:i386
-      - libcapi20-3:i386
-      - libcups2:i386
-      - libcanberra-gtk-module:i386
-      - libdbus-1-3:i386
-      - libfontconfig1:i386
-      - libfreetype6:i386
-      - libgl1-mesa-glx:i386
-      - libgl1-mesa-dri:i386
-      - libglu1-mesa:i386
-      - libgnutls30:i386
-      - libgssapi-krb5-2:i386
-      - libodbc1:i386
-      - libosmesa6:i386
-      - libsane:i386
-      - libsdl2-2.0-0:i386
-      - libv4l-0:i386
-      - libvulkan1:i386
-      - libxcomposite1:i386
-      - libxcursor1:i386
-      - libxcb-dri3-0:i386
-      - libxfixes3:i386
-      - libxi6:i386
-      - libxinerama1:i386
-      - libxrandr2:i386
-      - libxrender1:i386
-      - libxxf86vm1:i386
-      - libvkd3d1:i386
-      - mesa-va-drivers:i386
-      - mesa-vdpau-drivers:i386
-      - mesa-vulkan-drivers:i386
-      - ocl-icd-libopencl1:i386
-      - winbind:i386
-      - va-driver-all:i386
-      - zlib1g:i386
 
   files:
     exclude:
@@ -259,7 +146,6 @@ AppDir:
 
   runtime:
     env:
-      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: '2.40'
 
     path_mappings:
