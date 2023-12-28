@@ -37,8 +37,8 @@ AppDir:
         key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
-      - wine-staging-i386=9.0~rc3~jammy-1
-      - wine-staging-amd64=9.0~rc3~jammy-1
+      - wine-staging-i386=8.21~jammy-1
+      - wine-staging-amd64=8.21~jammy-1
       - bash
       - cabextract
       - cups
@@ -47,7 +47,9 @@ AppDir:
       - coreutils
       - mesa-utils
       - mesa-utils-bin
+      - unionfs-fuse
       - vulkan-tools
+      - libcups2
       - libmspack0
       - gstreamer1.0-plugins-good:i386
       - gstreamer1.0-plugins-bad:i386
@@ -181,7 +183,7 @@ AppDir:
 
   runtime:
     version: v3.0.0-devel-2
-    debug: true
+    debug: false
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: '2.40'
