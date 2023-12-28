@@ -253,6 +253,7 @@ AppDir:
      wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
   runtime:
+    version: v3.0.0-devel-2
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: '2.38'
