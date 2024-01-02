@@ -12,6 +12,7 @@ script:
   - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
   # Add config
   - cp -R config AppDir/winedata
+  - mkdir -p AppDir/usr/lib64
 
 AppDir:
   path: ./AppDir
