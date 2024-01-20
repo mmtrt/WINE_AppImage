@@ -41,14 +41,12 @@ AppDir:
     include:
       - bash
       - cabextract
-      - cups
       - dash
       - coreutils
       - mesa-utils
       - mesa-utils-bin
       - unionfs-fuse
       - vulkan-tools
-      - libcups2
       - libmspack0
 
   files:
