@@ -14,7 +14,8 @@
 </p>
 
 ## Info
- * This AppImage includes i386 GPU drivers. If it still doesnt work then don't get angry at me.
+ * Now WINE AppImages are built with wow64 enabled WINE builds.
+ * GE-Proton AppImage does not have wow64 enabled atm.
 
 ## Get Started
 
