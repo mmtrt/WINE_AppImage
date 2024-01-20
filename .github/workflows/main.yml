@@ -38,8 +38,6 @@ jobs:
 
           # stable
           echo "WINE_VER=stable_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
-          # Nvidia
-          # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -49,9 +47,6 @@ jobs:
 
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
-
-          # set Nvidia driver version
-          # sed -i "s|520|$NVDV|" wine-stable.yml
 
           squashfs-root/AppRun --recipe wine-stable.yml
 
@@ -83,8 +78,6 @@ jobs:
 
           # devel
           echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
-          # Nvidia
-          # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -94,9 +87,6 @@ jobs:
 
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
-
-          # set Nvidia driver version
-          # sed -i "s|520|$NVDV|" wine-devel.yml
 
           squashfs-root/AppRun --recipe wine-devel.yml
 
@@ -128,8 +118,6 @@ jobs:
 
           # staging
           echo "WINE_VER=staging_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
-          # Nvidia
-          # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -139,9 +127,6 @@ jobs:
 
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
-
-          # set Nvidia driver version
-          # sed -i "s|520|$NVDV|" wine-staging.yml
 
           squashfs-root/AppRun --recipe wine-staging.yml
 
@@ -172,8 +157,6 @@ jobs:
 
           # staging
           echo "WINE_VER=staging_ge-proton_$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | sed -r '/LoL/d' | grep -Eo "GE-P.*" | head -1 | sed -r 's|-GE||g;s|"| |g;s|n| |g' | awk '{print $2}')" >> $GITHUB_ENV
-          # Nvidia
-          # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -183,9 +166,6 @@ jobs:
 
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
-
-          # set Nvidia driver version
-          # sed -i "s|520|$NVDV|" wine-staging-ge-proton.yml
 
           squashfs-root/AppRun --recipe wine-staging-ge-proton.yml
 
