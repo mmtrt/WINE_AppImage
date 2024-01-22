@@ -191,6 +191,12 @@ AppDir:
      # wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
      # wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
+  after_runtime:
+    # this is executed after the runtime is added
+    - |
+     # Remove runtime info
+     sed -i '/modules_dir/d' AppDir/AppRun.config
+
   runtime:
     version: v3.0.0-devel-2
     path_mappings:
