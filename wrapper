@@ -1,6 +1,8 @@
 # WINE env
-export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
+export WINE="$APPDIR/usr/bin/wine"
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
+export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
+export WINESERVER="$APPDIR/usr/bin/wineserver"
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
