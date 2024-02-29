@@ -4,15 +4,12 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Build at 00:00 on every 12th day-of-month.
-  schedule:
-    - cron: "0 0 */12 * *"
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on push or pull request events but only for the old-v8 branch
   push:
-    branches: [ master ]
+    branches: [ old-v8 ]
     paths-ignore: [ '**/README.md' ]
   pull_request:
-    branches: [ master ]
+    branches: [ old-v8 ]
     paths-ignore: [ '**/README.md' ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -36,7 +33,8 @@ jobs:
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
-          echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+          # echo "WINE_VER=stable_$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)" >> $GITHUB_ENV
+          echo "WINE_VER=stable_8.0.2" >> $GITHUB_ENV
           # Nvidia
           # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
 
@@ -57,8 +55,8 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (stable)
-          automatic_release_tag: continuous-stable
+          title: build (stable) v8
+          automatic_release_tag: stable-v8
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
@@ -106,8 +104,8 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (devel)
-          automatic_release_tag: continuous-devel
+          title: build (devel) v8
+          automatic_release_tag: devel-v8
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
@@ -155,51 +153,8 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (staging)
-          automatic_release_tag: continuous-staging
-          prerelease: false
-          draft: false
-          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-
-  # This workflow contains a single job called "build-staging-ge-proton"
-  build-staging-ge-proton:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: Prerequisites
-        run: |
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
-          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
-          # staging
-          echo "WINE_VER=staging_ge-proton_$(wget -qO- "https://github.com/GloriousEggroll/wine-ge-custom/tags" | grep -Eo "GE-P.*" | head -1 | sed -r 's|-GE||g;s|"| |g;s|n| |g' | awk '{print $2}')" >> $GITHUB_ENV
-          # Nvidia
-          # echo "NVDV=$(wget "https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa/+packages?field.name_filter=&field.status_filter=published&field.series_filter=kinetic" -qO- | grep -Eo drivers-.*changes | sed -r "s|_| |g;s|-| |g" | tail -n1 | awk '{print $9}')" >> $GITHUB_ENV
-
-      # Runs a set of commands using the runners shell
-      - name: Build appimage
-        run: |
-          # add custom mksquashfs
-          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
-
-          # force zstd format in appimagebuilder for appimages
-          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
-
-          # set Nvidia driver version
-          # sed -i "s|520|$NVDV|" wine-staging-ge-proton.yml
-
-          squashfs-root/AppRun --recipe wine-staging-ge-proton.yml
-
-      - name: release
-        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
-        with:
-          title: Continuous build (staging) GE Proton
-          automatic_release_tag: continuous-staging_ge_proton
+          title: build (staging) v8
+          automatic_release_tag: staging-v8
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*

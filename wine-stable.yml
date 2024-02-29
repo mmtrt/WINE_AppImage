@@ -165,9 +165,12 @@ AppDir:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
-     sed -i 's|wine-appimage|wine-appimage-stable|' AppDir/wrapper
+     sed -i 's|wine-appimage|wine-appimage-stable-v8|' AppDir/wrapper
 
-     WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+     # WINE_VER="$(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-stable | sed 's|_| |g;s|~| |g' | awk '{print $5}' | tail -n1)"
+
+     WINE_VER="8.0.2"
+
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-stable_${WINE_VER}~jammy-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-i386/wine-stable-i386_${WINE_VER}~jammy-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/wine-stable_${WINE_VER}~jammy-1_amd64.deb
@@ -188,9 +191,6 @@ AppDir:
      # Disable winemenubuilder
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-stable/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-stable/share/wine/wine.inf
-
-     # Pre patch setting wine blue theme by default
-     sed -i 's|    DllOverrides|    DllOverrides,\\\n    ThemeSet|;$a \\n[ThemeSet]\nHKCU,Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager,"ColorName",,"Blue"\nHKCU,Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager,"DllName",,"C:\\windows\\Resources\\Themes\\light\\light.msstyles"\nHKCU,Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager,"ThemeActive",,"1"' AppDir/opt/wine-stable/share/wine/wine.inf
 
      # Deploy wine-mono wine-gecko
      # For future reference setting of MONO_VER see https://github.com/wine-mirror/wine/tree/stable of wine-stable
@@ -244,13 +244,13 @@ AppDir:
   runtime:
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
-      APPDIR_LIBC_VERSION: '2.38'
+      APPDIR_LIBC_VERSION: '2.39'
 
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
 AppImage:
-  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable|wine-stable*.AppImage.zsync
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|stable-v8|wine-stable*.AppImage.zsync
   #sign-key: None
   arch: x86_64
 

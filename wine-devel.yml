@@ -165,7 +165,7 @@ AppDir:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
-     sed -i 's|wine-appimage|wine-appimage-devel|' AppDir/wrapper
+     sed -i 's|wine-appimage|wine-appimage-devel-v8|' AppDir/wrapper
 
      # Check for rc builds
      # if [ $(wget -qO- https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/main/binary-amd64/ | grep wine-devel | tail -n1 | grep -c ~rc) -gt 0 ]; then
@@ -253,13 +253,13 @@ AppDir:
   runtime:
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
-      APPDIR_LIBC_VERSION: '2.38'
+      APPDIR_LIBC_VERSION: '2.39'
 
     path_mappings:
     - /opt/wine-devel:$APPDIR/opt/wine-devel
 
 AppImage:
-  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-devel|wine-devel*.AppImage.zsync
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|devel-v8|wine-devel*.AppImage.zsync
   #sign-key: None
   arch: x86_64
 
