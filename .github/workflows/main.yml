@@ -167,6 +167,9 @@ jobs:
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
+          # pull glibc version from archlinux packages web
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-staging-ge-proton.yml
+
           squashfs-root/AppRun --recipe wine-staging-ge-proton.yml
 
       - name: release
