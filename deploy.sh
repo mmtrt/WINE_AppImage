@@ -13,7 +13,7 @@ export VERSION="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expand
 UPINFO="gh-releases-zsync|$(echo $GITHUB_REPOSITORY | tr '/' '|')|test7|wine-stable*$ARCH.AppImage.zsync"
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 URUNTIME="$(wget -q https://api.github.com/repos/VHSgunzo/uruntime/releases -O - \
-	| sed 's/[()",{} ]/\n/g' | grep -oi "https.*appimage.*squashfs.*$ARCH$" | head -1)"
+	| sed 's/[()",{} ]/\n/g' | grep -oi "https.*appimage.*dwarfs.*$ARCH$" | head -1)"
 
 # Prepare AppDir
 mkdir -p ./"$PACKAGE"/AppDir/shared/lib \
@@ -156,7 +156,7 @@ llvm-objcopy --update-section=.upd_info=data.upd_info \
 printf 'AI\x02' | dd of=./uruntime bs=1 count=3 seek=8 conv=notrunc
 
 echo "Generating AppImage..."
-./uruntime --appimage-mksquashfs -f \
+./uruntime --appimage-mkdwarfs -f \
 	--set-owner 0 --set-group 0 \
 	--no-history --no-create-timestamp \
 	--compression zstd:level=22 -S25 -B16 \
