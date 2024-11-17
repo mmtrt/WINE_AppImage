@@ -156,6 +156,8 @@ find ./shared/lib/gtk* -type f -name '*.so*' -exec ldd {} \; \
 find ./shared/lib -type f -regex '.*gdk.*immodules.cache' \
 	-exec sed -i 's|/.*lib.*/gtk.*/.*/3.0.0/||g' {} \;
 
+wget -q 'https://github.com/VHSgunzo/sharun/releases/download/v0.1.6/sharun-x86_64' -O sharun
+chmod +x sharun
 ./sharun -g
 
 # MAKE APPIMAGE WITH URUNTIME
