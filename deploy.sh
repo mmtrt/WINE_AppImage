@@ -91,10 +91,10 @@ echo '#!/bin/sh
 CURRENTDIR="$(dirname "$(readlink -f "${0}")")"
 
 # WINE env
-export WINE="$CURRENTDIR/bin/wine"
+export WINE="$CURRENTDIR/opt/wine-stable/bin/wine"
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
-export WINESERVER="$CURRENTDIR/bin/wineserver"
+export WINESERVER="$CURRENTDIR/opt/wine-stable/bin/wineserver"
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -128,10 +128,10 @@ fi
 
 if [ -n "$1" ] && [ -e "$CURRENTDIR/opt/wine-stable/bin/$1" ] ; then
   MAIN="$CURRENTDIR/opt/wine-stable/bin/$1" ; shift
-elif [ -e "$CURRENTDIR/bin/$BINARY_NAME" ] ; then
-  MAIN="$CURRENTDIR/bin/$BINARY_NAME"
+elif [ -e "$CURRENTDIR/opt/wine-stable/bin/$BINARY_NAME" ] ; then
+  MAIN="$CURRENTDIR/opt/wine-stable/bin/$BINARY_NAME"
 else
-  MAIN="$CURRENTDIR/bin/wine"
+  MAIN="$CURRENTDIR/opt/wine-stable/bin/wine"
 fi
 
 if [ -z "$APPLICATION" ] ; then
