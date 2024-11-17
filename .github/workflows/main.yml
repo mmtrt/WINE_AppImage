@@ -36,7 +36,7 @@ jobs:
       - name: Build appimage
         run: |
           pacman -Syu --noconfirm base-devel curl desktop-file-utils git wget \
-          base-devel patchelf gtk3 strace gimp ffmpeg ghostscript llvm
+          base-devel patchelf gtk3 strace xorg-server-xvfb llvm
 
           # Artix repos don't have zsyc
           wget https://london.mirror.pkgbuild.com/extra/os/x86_64/zsync-0.6.2-5-x86_64.pkg.tar.zst

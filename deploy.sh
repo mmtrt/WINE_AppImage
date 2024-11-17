@@ -71,7 +71,7 @@ ln -s ./shared/lib ./lib
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
-./lib4bin -p -v -r -s /opt/wine-stable/bin/wine*
+xvfb-run -d -- ./lib4bin -p -v -e -r /opt/wine-stable/bin/wine winecfg
 rm -f ./lib4bin
 
 # CREATE APPRUN
