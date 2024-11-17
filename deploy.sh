@@ -79,10 +79,10 @@ echo '#!/bin/sh
 CURRENTDIR="$(dirname "$(readlink -f "${0}")")"
 
 # WINE env
-export WINE="$CURRENTDIR/usr/bin/wine"
+export WINE="$CURRENTDIR/opt/wine-stable/bin/wine"
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
-export WINESERVER="$CURRENTDIR/usr/bin/wineserver"
+export WINESERVER="$CURRENTDIR/opt/wine-stable/bin/wineserver"
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -107,23 +107,19 @@ if [ -z "$*" ] ; then
   APPLICATION="winecfg"
 fi
 
-# Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
+# Allow the AppImage to be symlinked to e.g., /opt/wine-stable/bin/wineserver
 if [ -n "$APPIMAGE" ] ; then
   BINARY_NAME=$(basename "$ARGV0")
 else
   BINARY_NAME=$(basename "$0")
 fi
 
-if [ -n "$1" ] && [ -e "$CURRENTDIR/bin/$1" ] ; then
-  MAIN="$CURRENTDIR/bin/$1" ; shift
-elif [ -n "$1" ] && [ -e "$CURRENTDIR/usr/bin/$1" ] ; then
-  MAIN="$CURRENTDIR/usr/bin/$1" ; shift
+if [ -n "$1" ] && [ -e "$CURRENTDIR/opt/wine-stable/bin/$1" ] ; then
+  MAIN="$CURRENTDIR/opt/wine-stable/bin/$1" ; shift
 elif [ -e "$CURRENTDIR/bin/$BINARY_NAME" ] ; then
-  MAIN="$CURRENTDIR/bin/$BINARY_NAME"
-elif [ -e "$CURRENTDIR/usr/bin/$BINARY_NAME" ] ; then
-  MAIN="$CURRENTDIR/usr/bin/$BINARY_NAME"
+  MAIN="$CURRENTDIR/opt/wine-stable/bin/$BINARY_NAME"
 else
-  MAIN="$CURRENTDIR/usr/bin/wine"
+  MAIN="$CURRENTDIR/opt/wine-stable/bin/wine"
 fi
 
 if [ -z "$APPLICATION" ] ; then
