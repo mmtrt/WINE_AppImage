@@ -71,7 +71,7 @@ ln -s ./shared/lib ./lib
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
-xvfb-run -d -- ./lib4bin -p -v -e -r ./opt/wine-stable/bin/wine winecfg
+xvfb-run -d -- ./lib4bin -p -v -e -r ./opt/wine-stable/bin/w*
 rm -f ./lib4bin
 
 # CREATE APPRUN
@@ -129,31 +129,8 @@ else
 fi' > ./AppRun
 chmod +x ./AppRun
 
-# DEPLOY GDK
-echo "Deploying gdk..."
-GDK_PATH="$(find /usr/lib -type d -regex ".*/gdk-pixbuf-2.0" -print -quit)"
-cp -rv "$GDK_PATH" ./shared/lib
-
-echo "Deploying gdk deps..."
-find ./shared/lib/gdk-pixbuf-2.0 -type f -name '*.so*' -exec ldd {} \; \
-	| awk -F"[> ]" '{print $4}' | xargs -I {} cp -vn {} ./shared/lib || true
-
-find ./shared/lib -type f -regex '.*gdk.*loaders.cache' \
-	-exec sed -i 's|/.*lib.*/gdk-pixbuf.*/.*/loaders/||g' {} \;
-
-# DEPLOY GTK
-echo "Deploying gtk..."
-cp -rv /usr/lib/gtk* ./shared/lib
-
-echo "Deploying gdk deps..."
-find ./shared/lib/gtk* -type f -name '*.so*' -exec ldd {} \; \
-	| awk -F"[> ]" '{print $4}' | xargs -I {} cp -vn {} ./shared/lib || true
-
-find ./shared/lib -type f -regex '.*gdk.*immodules.cache' \
-	-exec sed -i 's|/.*lib.*/gtk.*/.*/3.0.0/||g' {} \;
-
-wget -q 'https://github.com/VHSgunzo/sharun/releases/download/v0.1.6/sharun-x86_64' -O sharun
-chmod +x sharun
+# wget -q 'https://github.com/VHSgunzo/sharun/releases/download/v0.1.6/sharun-x86_64' -O sharun
+# chmod +x sharun
 ./sharun -g
 
 # MAKE APPIMAGE WITH URUNTIME
