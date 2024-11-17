@@ -13,7 +13,7 @@ export VERSION="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expand
 UPINFO="gh-releases-zsync|$(echo $GITHUB_REPOSITORY | tr '/' '|')|test7|wine-stable*$ARCH.AppImage.zsync"
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 URUNTIME="$(wget -q https://api.github.com/repos/VHSgunzo/uruntime/releases -O - \
-	| sed 's/[()",{} ]/\n/g' | grep -oi "https.*appimage.*dwarfs.*$ARCH$" | head -1)"
+	| sed 's/[()",{} ]/\n/g' | grep -oi "https.*appimage.*squashfs.*$ARCH$" | head -1)"
 
 # Prepare AppDir
 mkdir -p ./"$PACKAGE"/AppDir/shared/lib \
@@ -68,21 +68,33 @@ cp ../../"$ICON" ./
 ln -s ./usr/share  ./share
 ln -s ./shared/lib ./lib
 
+cp /usr/bin/glxinfo ./opt/wine-stable/bin/
+
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
-xvfb-run -d -- ./lib4bin -p -v -e -r ./opt/wine-stable/bin/w*
+xvfb-run -d -- ./lib4bin -p -v -e -r ./opt/wine-stable/bin/*
 rm -f ./lib4bin
+
+echo "Deploying glxinfo deps..."
+cp -nv /usr/lib/libGL*      ./shared/lib
+cp -nv /usr/lib/libX11*     ./shared/lib
+cp -nv /usr/lib/libxcb*     ./shared/lib
+cp -nv /usr/lib/libXau*     ./shared/lib
+cp -nv /usr/lib/libXdmcp*   ./shared/lib
+find ./shared/lib -type f -name '*.so*' -exec ldd {} \; \
+	| awk -F"[> ]" '{print $4}' | xargs -I {} cp -vn {} ./shared/lib || true
+
 
 # CREATE APPRUN
 echo '#!/bin/sh
 CURRENTDIR="$(dirname "$(readlink -f "${0}")")"
 
 # WINE env
-export WINE="$CURRENTDIR/opt/wine-stable/bin/wine"
+export WINE="$CURRENTDIR/bin/wine"
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
-export WINESERVER="$CURRENTDIR/opt/wine-stable/bin/wineserver"
+export WINESERVER="$CURRENTDIR/bin/wineserver"
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -117,9 +129,9 @@ fi
 if [ -n "$1" ] && [ -e "$CURRENTDIR/opt/wine-stable/bin/$1" ] ; then
   MAIN="$CURRENTDIR/opt/wine-stable/bin/$1" ; shift
 elif [ -e "$CURRENTDIR/bin/$BINARY_NAME" ] ; then
-  MAIN="$CURRENTDIR/opt/wine-stable/bin/$BINARY_NAME"
+  MAIN="$CURRENTDIR/bin/$BINARY_NAME"
 else
-  MAIN="$CURRENTDIR/opt/wine-stable/bin/wine"
+  MAIN="$CURRENTDIR/bin/wine"
 fi
 
 if [ -z "$APPLICATION" ] ; then
@@ -129,8 +141,6 @@ else
 fi' > ./AppRun
 chmod +x ./AppRun
 
-# wget -q 'https://github.com/VHSgunzo/sharun/releases/download/v0.1.6/sharun-x86_64' -O sharun
-# chmod +x sharun
 ./sharun -g
 
 # MAKE APPIMAGE WITH URUNTIME
@@ -146,7 +156,7 @@ llvm-objcopy --update-section=.upd_info=data.upd_info \
 printf 'AI\x02' | dd of=./uruntime bs=1 count=3 seek=8 conv=notrunc
 
 echo "Generating AppImage..."
-./uruntime --appimage-mkdwarfs -f \
+./uruntime --appimage-mksquashfs -f \
 	--set-owner 0 --set-group 0 \
 	--no-history --no-create-timestamp \
 	--compression zstd:level=22 -S25 -B16 \
