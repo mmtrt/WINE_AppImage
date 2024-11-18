@@ -63,6 +63,7 @@ Categories=Utility;
 EOF
 
 cp ./usr/share/applications/$DESKTOP ./
+cp ../../"$ICON" ./usr/share/icons
 cp ../../"$ICON" ./
 ln -s "$ICON" .DirIcon
 
