@@ -65,7 +65,7 @@ EOF
 cp ./usr/share/applications/$DESKTOP ./
 cp ../../"$ICON" ./usr/share/icons
 cp ../../"$ICON" ./
-ln -s "$ICON" .DirIcon
+ln -s "$ICON" .DirIcon.svg
 
 ln -s ./usr/share  ./share
 ln -s ./shared/lib ./lib
