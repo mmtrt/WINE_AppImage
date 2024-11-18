@@ -64,27 +64,16 @@ EOF
 
 cp ./usr/share/applications/$DESKTOP ./
 cp ../../"$ICON" ./
+ln -s "$ICON" .DirIcon
 
 ln -s ./usr/share  ./share
 ln -s ./shared/lib ./lib
-
-cp /usr/bin/glxinfo ./opt/wine-stable/bin/
 
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
 xvfb-run -d -- ./lib4bin -p -v -e -r ./opt/wine-stable/bin/*
 rm -f ./lib4bin
-
-echo "Deploying glxinfo deps..."
-cp -nv /usr/lib/libGL*      ./shared/lib
-cp -nv /usr/lib/libX11*     ./shared/lib
-cp -nv /usr/lib/libxcb*     ./shared/lib
-cp -nv /usr/lib/libXau*     ./shared/lib
-cp -nv /usr/lib/libXdmcp*   ./shared/lib
-find ./shared/lib -type f -name '*.so*' -exec ldd {} \; \
-	| awk -F"[> ]" '{print $4}' | xargs -I {} cp -vn {} ./shared/lib || true
-
 
 # CREATE APPRUN
 echo '#!/bin/sh
