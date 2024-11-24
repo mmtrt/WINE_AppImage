@@ -252,7 +252,7 @@ AppDir:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
 AppImage:
-  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-stable-4-multi|wine-stable*.AppImage.zsync
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|old-v4-multi|wine-stable*.AppImage.zsync
   #sign-key: None
   arch: x86_64
 
