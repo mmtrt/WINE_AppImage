@@ -56,7 +56,7 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (stable) 4.0.x i386
+          title: build old 4.0.x i386
           automatic_release_tag: old-v4-i386
           prerelease: false
           draft: false
@@ -98,7 +98,7 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (stable) 4.0.x amd64
+          title: build old 4.0.x amd64
           automatic_release_tag: old-v4-amd64
           prerelease: false
           draft: false
@@ -140,7 +140,7 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: Continuous build (stable) 4.0.x multi
+          title: build old 4.0.x multi
           automatic_release_tag: old-v4-multi
           prerelease: false
           draft: false
