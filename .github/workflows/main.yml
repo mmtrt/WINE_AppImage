@@ -4,6 +4,9 @@ name: CI
 
 # Controls when the action will run. 
 on:
+  # Build at 00:00 on every 12th day-of-month.
+  schedule:
+    - cron: "0 0 */12 * *"
   # Triggers the workflow on push or pull request events but only for the old-v8 branch
   push:
     branches: [ old-v8 ]
@@ -25,7 +28,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Prerequisites
         run: |
@@ -67,7 +70,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Prerequisites
         run: |
@@ -109,7 +112,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Prerequisites
         run: |
