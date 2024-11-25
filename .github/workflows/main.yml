@@ -44,6 +44,9 @@ jobs:
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
+          # pull glibc version from archlinux packages web
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-stable.yml
+
           squashfs-root/AppRun --recipe wine-stable.yml
 
       - name: release
@@ -83,6 +86,9 @@ jobs:
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
+          # pull glibc version from archlinux packages web
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-devel.yml
+
           squashfs-root/AppRun --recipe wine-devel.yml
 
       - name: release
@@ -121,6 +127,9 @@ jobs:
 
           # force zstd format in appimagebuilder for appimages
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+
+          # pull glibc version from archlinux packages web
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-staging.yml
 
           squashfs-root/AppRun --recipe wine-staging.yml
 
