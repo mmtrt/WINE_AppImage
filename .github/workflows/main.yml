@@ -46,7 +46,7 @@ jobs:
 
           sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
           sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/focal/winehq-focal.sources
-          sudo apt update && sudo apt install -y winehq-stable wine-stable-dev
+          sudo apt update && sudo apt install -y --no-install-recommends wine-stable wine-stable-i386
 
           git clone --recursive https://github.com/wineasio/wineasio.git --depth=1
 
