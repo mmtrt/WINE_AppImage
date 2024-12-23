@@ -23,7 +23,7 @@ jobs:
   # This workflow contains a single job called "build-devel"
   build-devel:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,6 +38,21 @@ jobs:
 
           # devel
           echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
+
+          # wineasio
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y gcc-multilib git libjack-jackd2-dev libjack-jackd2-dev:i386 make openssl pkg-config wget tree
+
+          sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+          sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/focal/winehq-focal.sources
+          sudo apt update && sudo apt install -y --no-install-recommends winehq-stable wine-stable-dev
+
+          git clone --recursive https://github.com/wineasio/wineasio.git --depth=1
+
+          cd wineasio
+          make 32 64
+          tree .
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
