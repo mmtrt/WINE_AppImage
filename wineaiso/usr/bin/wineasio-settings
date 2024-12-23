@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -f $APPDIR/usr/bin/python3 ]; then
+  PYTHON=$APPDIR/usr/bin/python3
+else
+  PYTHON=python
+fi
+
+PREFIX="$APPDIR/usr"
+exec ${PYTHON} ${PREFIX}/share/wineasio/settings.py "$@"
