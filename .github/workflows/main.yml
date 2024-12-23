@@ -32,7 +32,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
+          sudo apt update && sudo apt install libfuse2 tree -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-1.1.1.dev32+g2709a3b-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
@@ -40,18 +40,11 @@ jobs:
           echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
 
           # wineasio
-          sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install -y gcc-multilib git libjack-jackd2-dev libjack-jackd2-dev:i386 make openssl pkg-config wget tree
-
-          sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
-          sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/focal/winehq-focal.sources
-          sudo apt update && sudo apt install -y --no-install-recommends wine-stable wine-stable-i386
-
           git clone --recursive https://github.com/wineasio/wineasio.git --depth=1
 
-          cd wineasio
-          make 32 64
+          cd wineasio/docker
+          bash build.sh
+          cd ..
           tree .
 
       # Runs a set of commands using the runners shell
