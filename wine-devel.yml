@@ -194,7 +194,10 @@ AppDir:
      # wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
      # add wineaiso
-     cp -R wineaiso/lib AppDir/opt/wine-devel/
+     cp wineasio/docker/wineasio32.dll AppDir/opt/wine-devel/lib/wine/i386-windows/
+     cp wineasio/docker/wineasio64.dll AppDir/opt/wine-devel/lib/wine/x86_64-windows/
+     cp wineasio/docker/wineasio32.dll.so AppDir/opt/wine-devel/lib/wine/i386-unix/wineasio32.so
+     cp wineasio/docker/wineasio64.dll.so AppDir/opt/wine-devel/lib/wine/x86_64-unix/wineasio64.so
 
   after_runtime:
     # this is executed after the runtime is added
