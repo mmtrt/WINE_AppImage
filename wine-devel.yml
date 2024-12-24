@@ -13,7 +13,7 @@ script:
   # Add config
   - cp -R config AppDir/winedata
   # Add wineaiso
-  - cp -R wineaiso/usr AppDir
+   - cp -R wineaiso/usr/share AppDir/usr/
 
 AppDir:
   path: ./AppDir
