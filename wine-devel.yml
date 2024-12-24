@@ -56,6 +56,7 @@ AppDir:
       # - libfuse2
       # - libfuse3-3
       - libmspack0
+      - python3
       - python3-pyqt5
       - gstreamer1.0-plugins-good:i386
       - gstreamer1.0-plugins-bad:i386
