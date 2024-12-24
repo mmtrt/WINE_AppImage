@@ -1,8 +1,6 @@
 # WINE env
-export WINE="$APPDIR/usr/bin/wine"
-export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
-export WINESERVER="$APPDIR/usr/bin/wineserver"
+export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -81,9 +79,9 @@ aiso-register(){
   )
 
   u64=(
-  "$APPDIR/opt/wine-devel/lib/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-stable/lib/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-staging/lib/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-devel/lib64/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-stable/lib64/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-staging/lib64/wine/x86_64-unix/wineasio64.so"
   )
 
   # try to register 32bit DLL
