@@ -81,9 +81,9 @@ aiso-register(){
   )
 
   u64=(
-  "$APPDIR/opt/wine-devel/lib64/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-stable/lib64/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-staging/lib64/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-devel/lib/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-stable/lib/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-staging/lib/wine/x86_64-unix/wineasio64.so"
   )
 
   # try to register 32bit DLL
