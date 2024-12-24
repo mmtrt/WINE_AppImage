@@ -56,6 +56,8 @@ AppDir:
       # - libfuse2
       # - libfuse3-3
       - libmspack0
+      - python3-minimal
+      - python3.8
       - python3
       - python3-pyqt5
       - gstreamer1.0-plugins-good:i386
@@ -99,6 +101,12 @@ AppDir:
       - libxcb1:i386
       - libxcomposite1:i386
       - winbind:i386
+      - samba-common-bin:i386
+      - samba-libs:i386
+      - python3:i386
+      - python3-samba:i386
+      - python3-ldb:i386
+      - python3-talloc:i386
 
   files:
     exclude:
