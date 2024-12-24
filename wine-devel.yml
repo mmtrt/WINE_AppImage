@@ -100,13 +100,13 @@ AppDir:
       - libxcb-xfixes0:i386
       - libxcb1:i386
       - libxcomposite1:i386
-      - winbind:i386
-      - samba-common-bin:i386
-      - samba-libs:i386
-      - python3:i386
-      - python3-samba:i386
-      - python3-ldb:i386
-      - python3-talloc:i386
+      # - winbind:i386
+      # - samba-common-bin:i386
+      # - samba-libs:i386
+      # - python3:i386
+      # - python3-samba:i386
+      # - python3-ldb:i386
+      # - python3-talloc:i386
 
   files:
     exclude:
