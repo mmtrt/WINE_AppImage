@@ -51,9 +51,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # pull glibc version from archlinux packages web
-          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-devel.yml
-
           ./appimage-builder --skip-appimage --recipe wine-devel.yml
           find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/lib/i386-linux-gnu/ -iname 'libz**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/i386-linux-gnu/
           find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/lib/x86_64-linux-gnu/ -iname 'libz**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
@@ -65,7 +62,7 @@ jobs:
           ln -rsf ld-linux.so.2 ${GITHUB_WORKSPACE}/AppDir/runtime/default/lib/
           cd ${GITHUB_WORKSPACE}
           patchelf --set-interpreter 'lib/ld-linux.so.2' ./AppDir/opt/wine-devel/bin/wine
-          ARCH=x86_64 ./appimagetool --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 -n -u ${UPINFO} AppDir/ wine-${WINE_VER}-x86_64.AppImage
+          ARCH=x86_64 ./appimagetool --comp zstd -n -u ${UPINFO} AppDir/ wine-${WINE_VER}-x86_64.AppImage
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
