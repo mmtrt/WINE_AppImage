@@ -63,6 +63,7 @@ jobs:
           cd ./AppDir/runtime/compat/lib/i386-linux-gnu/
           ln -rsf ld-linux.so.2 ${GITHUB_WORKSPACE}/AppDir/runtime/default/lib/
           cd ${GITHUB_WORKSPACE}
+          patchelf --set-interpreter 'lib/ld-linux.so.2' ./AppDir/opt/wine-devel/bin/wine
           ARCH=x86_64 ./appimagetool --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 -n -u ${UPINFO} AppDir/ wine-${WINE_VER}-x86_64.AppImage
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
