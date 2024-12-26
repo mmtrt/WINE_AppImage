@@ -1,6 +1,8 @@
 # WINE env
-export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
+export WINE="$APPDIR/usr/bin/wine"
 export WINEDEBUG=${WINEDEBUG:-"fixme-all"}
+export WINEPREFIX=${WINEPREFIX:-"$HOME/.wine-appimage"}
+export WINESERVER="$APPDIR/usr/bin/wineserver"
 
 # DXVK env
 export DXVK_HUD=${DXVK_HUD:-"0"}
@@ -79,16 +81,16 @@ asio-register(){
   )
 
   u64=(
-  "$APPDIR/opt/wine-devel/lib64/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-stable/lib64/wine/x86_64-unix/wineasio64.so"
-  "$APPDIR/opt/wine-staging/lib64/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-devel/lib/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-stable/lib/wine/x86_64-unix/wineasio64.so"
+  "$APPDIR/opt/wine-staging/lib/wine/x86_64-unix/wineasio64.so"
   )
 
   # try to register 32bit DLL
   for u in ${u32[@]}; do
       if [ -e "${u}" ]; then
           cp -v "${u}" "${WINEPREFIX}/drive_c/windows/syswow64/wineasio32.dll"
-          $APPDIR/usr/bin/wine regsvr32 "${u}"
+          regsvr32 "${u}"
           break
       fi
   done
