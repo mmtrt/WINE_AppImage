@@ -1,7 +1,7 @@
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-appimage-devel-v9|' AppDir/wrapper
 
-     WINE_VER="9.22"
+     WINE_VER="10.0~rc3"
 
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-devel_${WINE_VER}~focal-1_i386.deb
      wget -q -c https://dl.winehq.org/wine-builds/ubuntu/dists/focal/main/binary-i386/wine-devel-i386_${WINE_VER}~focal-1_i386.deb

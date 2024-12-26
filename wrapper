@@ -88,7 +88,7 @@ asio-register(){
   for u in ${u32[@]}; do
       if [ -e "${u}" ]; then
           cp -v "${u}" "${WINEPREFIX}/drive_c/windows/syswow64/wineasio32.dll"
-          regsvr32 "${u}"
+          $APPDIR/usr/bin/wine regsvr32 "${u}"
           break
       fi
   done
