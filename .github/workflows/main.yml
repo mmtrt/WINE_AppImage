@@ -39,13 +39,13 @@ jobs:
           # devel
           echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
 
-          # wineasio
-          git clone --recursive https://github.com/mmtrt/wineasio.git --depth=1 -b main
-
-          cd wineasio/docker
-          bash build.sh
-          cd ..
-          tree .
+          # # wineasio
+          # git clone --recursive https://github.com/mmtrt/wineasio.git --depth=1 -b main
+          #
+          # cd wineasio/docker
+          # bash build.sh
+          # cd ..
+          # tree .
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
