@@ -15,16 +15,15 @@
 
 ## Info
  * Now WINE AppImages are built with wow64 enabled WINE builds.
- * GE-Proton AppImage does not have wow64 enabled atm.
 
 ## Get Started
 
 Download the latest release from
 
-| Stable | Devel | Staging | GE-Proton |
-| ------- | --------- | --------- | --------- |
+| Stable | Devel | Staging |
+| ------- | --------- | --------- |
 | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> | <img src="https://github.com/mmtrt/WINE_AppImage/raw/master/wine.svg" height=100> |
-| [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-stable) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-devel) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging_ge_proton) |
+| [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-stable) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-devel) | [Download](https://github.com/mmtrt/WINE_AppImage/releases/tag/continuous-staging) |
 
 ### Executing
 #### File Manager
@@ -94,4 +93,3 @@ squashfs-root/AppRun --recipe wine-stable.yml
 ## Acknowledgements
 * https://www.winehq.org
 * https://github.com/AppImageCrafters/appimage-builder
-* https://github.com/GloriousEggroll
