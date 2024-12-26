@@ -12,8 +12,8 @@ script:
   - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
   # Add config
   - cp -R config AppDir/winedata
-  # Add wineaiso
-  - cp -R wineaiso/usr/share AppDir/usr/
+  # Add wineasio
+  - cp -R wineasio/usr/share AppDir/usr/
 
 AppDir:
   path: ./AppDir
@@ -193,11 +193,8 @@ AppDir:
      # wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
      # wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
-     # add wineaiso
-     cp wineasio/docker/wineasio32.dll AppDir/opt/wine-devel/lib/wine/i386-windows/
-     cp wineasio/docker/wineasio64.dll AppDir/opt/wine-devel/lib/wine/x86_64-windows/
-     cp wineasio/docker/wineasio32.dll.so AppDir/opt/wine-devel/lib/wine/i386-unix/wineasio32.so
-     cp wineasio/docker/wineasio64.dll.so AppDir/opt/wine-devel/lib/wine/x86_64-unix/wineasio64.so
+     # add wineasio
+     cp -R wineasio/lib AppDir/opt/wine-devel/
 
   after_runtime:
     # this is executed after the runtime is added
