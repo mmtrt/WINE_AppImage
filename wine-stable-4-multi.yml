@@ -3,7 +3,7 @@ version: 1
 script:
   # Remove any previous build cache data
   - rm -rf AppDir appimage-builder-cache/var/cache/apt/archives/*wine* || true
-  - mkdir -p appimage-build/prime AppDir/{bin,winedata} && cp wrapper AppDir
+  - mkdir -p appimage-build/prime AppDir/{bin,winedata} AppDir/usr/lib64 && cp wrapper AppDir
   # Add winetricks
   - wget -q "https://gist.github.com/mmtrt/dcaf1dcca14783646ce57c4271e7d5c6/raw/48351c83de4c89db244b6ca48f88674d25f7b12c/winetricks-wine4" -O ./AppDir/bin/winetricks && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
@@ -246,6 +246,7 @@ AppDir:
      wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
   runtime:
+    version: v3.0.0-devel-2
     env:
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri:${LIBGL_DRIVERS_PATH}'
       APPDIR_LIBC_VERSION: 'x.xx'
