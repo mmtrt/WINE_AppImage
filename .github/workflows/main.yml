@@ -53,7 +53,7 @@ jobs:
 
           export ARCH="$(uname -m)"
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|old-v4-multi|*$ARCH.AppImage.zsync"
-          VERSION=$(WINE_VER)
+          VERSION=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')
           URUNTIME="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-$ARCH"
           URUNTIME_LITE="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-lite-$ARCH"
           wget --retry-connrefused --tries=30 "$URUNTIME" -O ./uruntime
