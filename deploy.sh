@@ -19,6 +19,9 @@ LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bi
 mkdir -p ./AppDir/bin ./AppDir/usr/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons \
 cd ./AppDir
 
+ls -al
+ls -al ./usr/share/applications/
+
 cat > ./usr/share/applications/$DESKTOP << EOF
 [Desktop Entry]
 X-AppImage-Arch=$ARCH
@@ -32,6 +35,7 @@ Terminal=false
 Categories=Utility;
 EOF
 
+ls -al ./usr/share/applications/
 cp ./usr/share/applications/$DESKTOP ./
 cp ../../"$ICON" ./usr/share/icons
 cp ../../"$ICON" ./
