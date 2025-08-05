@@ -16,7 +16,7 @@ UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 
 # Prepare AppDir
-mkdir -p ./AppDir/bin ./AppDir/usr/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons \
+mkdir -p ./AppDir/bin ./AppDir/usr/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
 cd ./AppDir
 
 ls -al
