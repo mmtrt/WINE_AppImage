@@ -16,8 +16,14 @@ UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 
 # Prepare AppDir
-mkdir -p ./AppDir/bin ./AppDir/include ./AppDir/share ./AppDir/usr/share/applications ./AppDir/usr/share/icons
+mkdir -p ./AppDir/bin ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
 cd ./AppDir
+
+for i in "function_grep.pl msiexec regedit widl wineboot winecfg winecpp winedump wineg++ winemaker winepath wmc msidb notepad regsvr32 wine winebuild wineconsole winedbg winefile winegcc winemine wineserver wrc"; do cp -R /usr/bin/"$i" ./shared/bin/"$i" ; done
+cp -R /usr/share/wine ./shared/
+cp -R /usr/share/fontconfig ./shared/
+cp -R /usr/lib/binfmt.d ./shared/lib/
+cp -R /usr/lib/wine ./shared/lib/
 
 ls -al
 ls -al ./usr/share/applications/
@@ -45,41 +51,11 @@ ln -s "$ICON" .DirIcon.svg
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
-# "function_grep.pl msiexec regedit widl wineboot winecfg winecpp winedump wineg++ winemaker winepath wmc msidb notepad regsvr32 wine winebuild wineconsole winedbg winefile winegcc winemine wineserver wrc"
-./lib4bin -p -v -s -k "$(command -v function_grep.pl)"
-./lib4bin -p -v -s -k "$(command -v msiexec)"
-./lib4bin -p -v -s -k "$(command -v regedit)"
-./lib4bin -p -v -s -k "$(command -v widl)"
-./lib4bin -p -v -s -k "$(command -v wineboot)"
-./lib4bin -p -v -s -k "$(command -v winecfg)"
-./lib4bin -p -v -s -k "$(command -v winecpp)"
-./lib4bin -p -v -s -k "$(command -v wineg++)"
-./lib4bin -p -v -s -k "$(command -v winemaker)"
-./lib4bin -p -v -s -k "$(command -v winepath)"
-./lib4bin -p -v -s -k "$(command -v wmc)"
-./lib4bin -p -v -s -k "$(command -v msidb)"
-./lib4bin -p -v -s -k "$(command -v notepad)"
-./lib4bin -p -v -s -k "$(command -v regsvr32)"
-./lib4bin -p -v -s -k "$(command -v wine)"
-./lib4bin -p -v -s -k "$(command -v winebuild)"
-./lib4bin -p -v -s -k "$(command -v wineconsole)"
-./lib4bin -p -v -s -k "$(command -v winedbg)"
-./lib4bin -p -v -s -k "$(command -v winefile)"
-./lib4bin -p -v -s -k "$(command -v winegcc)"
-./lib4bin -p -v -s -k "$(command -v winemine)"
-./lib4bin -p -v -s -k "$(command -v wineserver)"
-./lib4bin -p -v -s -k "$(command -v wrc)"
-
-cp -R /usr/share/wine ./share/
-cp -R /usr/share/fontconfig ./share/
-rm ./lib ; mkdir lib
-cp -R /usr/lib/binfmt.d ./lib/
-cp -R /usr/lib/wine ./lib/
-touch ./shared/lib/lib.path
-echo "+" > ./shared/lib/lib.path
+./lib4bin -p -v -s -k ./shared/bin/*
+./sharun -g
 
 # CREATE APPRUN
-echo '#!/bin/sh
+echo '#!/bin/env bash
 CURRENTDIR="$(dirname "$(readlink -f "${0}")")"
 
 # WINE env
