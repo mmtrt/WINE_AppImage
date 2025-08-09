@@ -78,7 +78,7 @@ ln -s "$ICON" .DirIcon.svg
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
-./lib4bin -p -v -s -k ./shared/bin/*
+./lib4bin -i -p -v -s -k ./shared/bin/*
 ./sharun -g
 
 # CREATE APPRUN
