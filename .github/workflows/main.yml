@@ -52,5 +52,5 @@ jobs:
           automatic_release_tag: test7
           prerelease: false
           draft: false
-          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          files: /home/runner/work/WINE_AppImage/*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
