@@ -43,6 +43,7 @@ jobs:
           echo $PWD
           echo $CWD
           ls -al
+          ls -al ../
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
