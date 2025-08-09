@@ -8,7 +8,7 @@ ICON=wine.svg
 
 export ARCH="$(uname -m)"
 export APPIMAGE_EXTRACT_AND_RUN=1
-export VERSION="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
+export VERSION="$(wget -qO- https://archlinux.org/packages/extra/x86_64/wine/ | grep wine | awk '{print $5}' | cut -d'+' -f1 | head -1)"
 
 URUNTIME="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-$ARCH"
 URUNTIME_LITE="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-lite-$ARCH"
