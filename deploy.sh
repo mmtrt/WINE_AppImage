@@ -43,8 +43,8 @@ cp -R /usr/bin/winegcc ./shared/bin/
 cp -R /usr/bin/winemine ./shared/bin/
 cp -R /usr/bin/wineserver ./shared/bin/
 cp -R /usr/bin/wrc ./shared/bin/
-cp -R /usr/share/wine ./shared/
-cp -R /usr/share/fontconfig ./shared/
+cp -R /usr/share/wine ./usr/share/
+cp -R /usr/share/fontconfig ./usr/share/
 cp -R /usr/lib/binfmt.d ./shared/lib/
 cp -R /usr/lib/wine ./shared/lib/
 
