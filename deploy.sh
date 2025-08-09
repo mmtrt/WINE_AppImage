@@ -19,7 +19,7 @@ LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bi
 mkdir -p ./AppDir/bin ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
 cd ./AppDir
 
-for i in "function_grep.pl msiexec regedit widl wineboot winecfg winecpp winedump wineg++ winemaker winepath wmc msidb notepad regsvr32 wine winebuild wineconsole winedbg winefile winegcc winemine wineserver wrc"; do cp -R /usr/bin/"$i" ./shared/bin/"$i" ; done
+for i in "function_grep.pl msiexec regedit widl wineboot winecfg winecpp winedump wineg++ winemaker winepath wmc msidb notepad regsvr32 wine winebuild wineconsole winedbg winefile winegcc winemine wineserver wrc"; do cp -R /usr/bin/"$i" ./shared/bin/ ; done
 cp -R /usr/share/wine ./shared/
 cp -R /usr/share/fontconfig ./shared/
 cp -R /usr/lib/binfmt.d ./shared/lib/
