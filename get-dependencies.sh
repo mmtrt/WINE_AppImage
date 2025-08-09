@@ -42,6 +42,7 @@ pacman -Syu --noconfirm \
   libxpresent \
   libxrandr \
   mesa \
+  mesa-utils \
   mingw-w64-binutils \
   patchelf \
   libpipewire \

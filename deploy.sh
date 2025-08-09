@@ -78,6 +78,8 @@ ln -s "$ICON" .DirIcon.svg
 # ADD LIBRARIES
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
+./lib4bin -i -p -v -s -k "$(command -v glxinfo)"
+./lib4bin -i -p -v -s -k "$(command -v glxgears)"
 ./lib4bin -i -p -v -s -k ./shared/bin/*
 ./lib4bin -i -p -v -s -k ./shared/lib/wine/x86_64-unix/*
 ./sharun -g
