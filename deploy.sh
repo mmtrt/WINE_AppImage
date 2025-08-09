@@ -78,7 +78,7 @@ chmod +x ./lib4bin
 ./sharun -g
 
 # CREATE APPRUN
-echo '#!/bin/env bash
+echo '#!/bin/sh
 CURRENTDIR="$(dirname "$(readlink -f "${0}")")"
 
 # WINE env
