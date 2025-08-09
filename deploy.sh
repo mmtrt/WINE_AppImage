@@ -16,7 +16,7 @@ UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH
 LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 
 # Prepare AppDir
-mkdir -p ./AppDir/bin ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
+mkdir -p ./AppDir/bin ./AppDir/share ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
 cd ./AppDir
 
 cp -R /usr/bin/function_grep.pl ./shared/bin/
@@ -43,7 +43,7 @@ cp -R /usr/bin/winegcc ./shared/bin/
 cp -R /usr/bin/winemine ./shared/bin/
 cp -R /usr/bin/wineserver ./shared/bin/
 cp -R /usr/bin/wrc ./shared/bin/
-cp -R /usr/share/wine ./usr/share/
+cp -R /usr/share/wine ./share/
 cp -R /usr/share/fontconfig ./usr/share/
 cp -R /usr/lib/binfmt.d ./shared/lib/
 cp -R /usr/lib/wine ./shared/lib/
