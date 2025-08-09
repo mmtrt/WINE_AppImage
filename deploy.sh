@@ -48,6 +48,10 @@ cp -R /usr/share/fontconfig ./shared/share
 cp -R /usr/lib/binfmt.d ./shared/lib/
 cp -R /usr/lib/wine ./shared/lib/
 
+i686-w64-mingw32-strip --strip-unneeded ./shared/lib/wine/i386-windows/*.dll
+x86_64-w64-mingw32-strip --strip-unneeded ./shared/lib/wine/x86_64-windows/*.dll
+
+
 ls -al
 ls -al ./usr/share/applications/
 
