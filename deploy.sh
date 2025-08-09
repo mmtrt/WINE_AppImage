@@ -19,7 +19,30 @@ LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bi
 mkdir -p ./AppDir/bin ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/usr/share/applications ./AppDir/usr/share/icons
 cd ./AppDir
 
-for i in "function_grep.pl msiexec regedit widl wineboot winecfg winecpp winedump wineg++ winemaker winepath wmc msidb notepad regsvr32 wine winebuild wineconsole winedbg winefile winegcc winemine wineserver wrc"; do cp -R /usr/bin/"$i" ./shared/bin/ ; done
+cp -R /usr/bin/function_grep.pl ./shared/bin/
+cp -R /usr/bin/msiexec ./shared/bin/
+cp -R /usr/bin/regedit ./shared/bin/
+cp -R /usr/bin/widl ./shared/bin/
+cp -R /usr/bin/wineboot ./shared/bin/
+cp -R /usr/bin/winecfg ./shared/bin/
+cp -R /usr/bin/winecpp ./shared/bin/
+cp -R /usr/bin/winedump ./shared/bin/
+cp -R /usr/bin/wineg++ ./shared/bin/
+cp -R /usr/bin/winemaker ./shared/bin/
+cp -R /usr/bin/winepath ./shared/bin/
+cp -R /usr/bin/wmc ./shared/bin/
+cp -R /usr/bin/msidb ./shared/bin/
+cp -R /usr/bin/notepad ./shared/bin/
+cp -R /usr/bin/regsvr32 ./shared/bin/
+cp -R /usr/bin/wine ./shared/bin/
+cp -R /usr/bin/winebuild ./shared/bin/
+cp -R /usr/bin/wineconsole ./shared/bin/
+cp -R /usr/bin/winedbg ./shared/bin/
+cp -R /usr/bin/winefile ./shared/bin/
+cp -R /usr/bin/winegcc ./shared/bin/
+cp -R /usr/bin/winemine ./shared/bin/
+cp -R /usr/bin/wineserver ./shared/bin/
+cp -R /usr/bin/wrc ./shared/bin/
 cp -R /usr/share/wine ./shared/
 cp -R /usr/share/fontconfig ./shared/
 cp -R /usr/lib/binfmt.d ./shared/lib/
