@@ -16,14 +16,19 @@ echo "---------------------------------------------------------------"
 pacman -Syu --noconfirm \
   alsa-lib \
   base-devel \
+  binutils \
+  coreutils \
   desktop-file-utils \
   ffmpeg \
-  freetype2 \
+  file \
+  findutils \
   fontconfig \
+  freetype2 \
   gcc-libs \
   git \
   glibc \
   gnutls \
+  grep \
   hicolor-icon-theme \
   jack \
   lcms2 \
@@ -31,10 +36,11 @@ pacman -Syu --noconfirm \
   libegl \
   libgl \
   libglvnd \
-  libpulse \
-  libx11 \
   libpcap \
+  libpipewire \
+  libpulse \
   libunwind \
+  libx11 \
   libxcursor \
   libxext \
   libxi \
@@ -44,9 +50,11 @@ pacman -Syu --noconfirm \
   mesa \
   mesa-utils \
   mingw-w64-binutils \
-  patchelf \
-  libpipewire \
   openal \
+  patchelf \
+  patchelf \
+  sed \
+  strace \
   vulkan-headers \
   vulkan-icd-loader \
   wayland \
