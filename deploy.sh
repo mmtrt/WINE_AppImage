@@ -86,7 +86,7 @@ chmod +x ./lib4bin
 
 patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wine
 patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wineserver
-patchelf --set-rpath '$ORIGIN/../../lib' ./shared/lib/x86_64-unix/wine
+patchelf --set-rpath '$ORIGIN/../../lib' ./shared/lib/wine/x86_64-unix/wine
 
 # CREATE APPRUN
 echo '#!/bin/sh
