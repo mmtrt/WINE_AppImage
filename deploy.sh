@@ -13,7 +13,7 @@ export VERSION="$(wget -qO- https://archlinux.org/packages/extra/x86_64/wine/ | 
 URUNTIME="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-$ARCH"
 URUNTIME_LITE="https://github.com/VHSgunzo/uruntime/releases/latest/download/uruntime-appimage-dwarfs-lite-$ARCH"
 UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH.AppImage.zsync"
-LIB4BN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
+SHARUN="https://github.com/VHSgunzo/sharun/releases/latest/download/sharun-$ARCH-aio"
 
 # Prepare AppDir
 mkdir -p ./AppDir/bin ./AppDir/shared/lib ./AppDir/shared/bin ./AppDir/shared/share ./AppDir/usr/share/applications ./AppDir/usr/share/icons
@@ -76,17 +76,18 @@ ln -s "$ICON" .DirIcon.svg
 
 
 # ADD LIBRARIES
-wget "$LIB4BN" -O ./lib4bin
-chmod +x ./lib4bin
-./lib4bin -i -p -v -s -k ./shared/bin/*
-./lib4bin -i -p -v -s -k "$(command -v glxinfo)"
-./lib4bin -i -p -v -s -k "$(command -v glxgears)"
-./lib4bin -i -p -v -s -k ./shared/lib/wine/x86_64-unix/*
+wget "$SHARUN" -O ./sharun-aio
+chmod +x ./sharun-aio
+./sharun-aio -i -p -v -s -k ./shared/bin/*
+./sharun-aio -i -p -v -s -k "$(command -v glxinfo)"
+./sharun-aio -i -p -v -s -k "$(command -v glxgears)"
+./sharun-aio -i -p -v -s -k ./shared/lib/wine/x86_64-unix/*
+rm sharun-aio
 ./sharun -g
 
-patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wine
-patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wineserver
-patchelf --set-rpath '$ORIGIN/../lib' ./shared/lib/wine/x86_64-unix/wine
+# patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wine
+# patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wineserver
+# patchelf --set-rpath '$ORIGIN/../lib' ./shared/lib/wine/x86_64-unix/wine
 
 # CREATE APPRUN
 echo '#!/bin/sh
