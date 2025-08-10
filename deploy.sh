@@ -78,10 +78,11 @@ ln -s "$ICON" .DirIcon.svg
 # ADD LIBRARIES
 wget "$SHARUN" -O ./sharun-aio
 chmod +x ./sharun-aio
-./sharun-aio -i -p -v -s -k ./shared/bin/*
-./sharun-aio -i -p -v -s -k "$(command -v glxinfo)"
-./sharun-aio -i -p -v -s -k "$(command -v glxgears)"
-./sharun-aio -i -p -v -s -k ./shared/lib/wine/x86_64-unix/*
+xvfb-run -a -- \
+    ./sharun-aio l -p -v -e -s -k ./shared/bin/* \
+    "$(command -v glxinfo)" \
+    "$(command -v glxgears)" \
+    ./shared/lib/wine/x86_64-unix/*
 rm sharun-aio
 ./sharun -g
 
