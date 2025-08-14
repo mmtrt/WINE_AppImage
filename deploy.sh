@@ -79,7 +79,7 @@ ln -s "$ICON" .DirIcon.svg
 wget "$LIB4BN" -O ./lib4bin
 chmod +x ./lib4bin
 xvfb-run -a -- \
-    ./lib4bin -i -p -v -e -s -k \
+    ./lib4bin -p -v -e -s -k \
     ./shared/bin/* \
     "$(command -v glxinfo)" \
     "$(command -v glxgears)" \
@@ -87,6 +87,7 @@ xvfb-run -a -- \
 rm lib4bin
 ./sharun -g
 
+patchelf --set-interpreter 'lib/ld-linux.so.2' ./shared/bin/wine
 # patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wine
 # patchelf --set-rpath '$ORIGIN/../lib' ./shared/bin/wineserver
 # patchelf --set-rpath '$ORIGIN/../lib' ./shared/lib/wine/x86_64-unix/wine
