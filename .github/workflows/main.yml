@@ -34,7 +34,7 @@ jobs:
       - name: Prerequisites
         run: |
           sudo apt update && sudo apt install libfuse2 zsync -y
-          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-1.1.1.dev32+g2709a3b-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # devel
@@ -50,6 +50,13 @@ jobs:
           rm appimage-builder ; sed -i 's|xz|zstd|;s|AppImageKit|type2-runtime|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
           squashfs-root/AppRun --skip-appimage --recipe wine-devel.yml
+
+          find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/lib/x86_64-linux-gnu/ -iname 'libz**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
+          find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/usr/lib/x86_64-linux-gnu/ -iname 'libstdc**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
+          cd ./AppDir/runtime/compat/lib/x86_64-linux-gnu/
+          ln -rsf ld-linux.so.2 ${GITHUB_WORKSPACE}/AppDir/runtime/default/lib/
+
+          patchelf --set-interpreter 'lib/ld-linux.so.2' AppDir/opt/wine-devel/bin/wine
 
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
