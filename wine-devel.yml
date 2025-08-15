@@ -21,7 +21,7 @@ AppDir:
     exec_args: $APPDIR/wrapper $@
 
   apt:
-    arch: [amd64]
+    arch: [amd64, i386]
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
@@ -35,9 +35,11 @@ AppDir:
         key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
+      - libc6:i386
       - bash
       - cabextract
       - dash
+      - perl
       - coreutils
       - mesa-utils
       - unionfs-fuse
@@ -219,9 +221,9 @@ AppDir:
 
   runtime:
     env:
-      APPDIR_LIBRARY_PATH: '$APPDIR/lib/x86_64-linux-gnu:$APPDIR/lib/x86_64-linux-gnu/security:$APPDIR/usr/lib/llvm-15/lib:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/x86_64-linux-gnu/gallium-pipe:$APPDIR/usr/lib/x86_64-linux-gnu/krb5/plugins/preauth:$APPDIR/usr/lib/x86_64-linux-gnu/nss:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/vdpau:$APPDIR/lib/x86_64'
-      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
-      LIBVA_DRIVERS_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
+      APPDIR_LIBRARY_PATH: '$APPDIR/runtime/compat/lib/i386-linux-gnu:$APPDIR/lib/i386-linux-gnu:$APPDIR/lib/x86_64-linux-gnu:$APPDIR/lib/x86_64-linux-gnu/security:$APPDIR/usr/lib/i386-linux-gnu:$APPDIR/usr/lib/i386-linux-gnu/alsa-lib:$APPDIR/usr/lib/i386-linux-gnu/caca:$APPDIR/usr/lib/i386-linux-gnu/capi:$APPDIR/usr/lib/i386-linux-gnu/dri:$APPDIR/usr/lib/i386-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders:$APPDIR/usr/lib/i386-linux-gnu/gstreamer-1.0:$APPDIR/usr/lib/i386-linux-gnu/i686/sse2:$APPDIR/usr/lib/i386-linux-gnu/krb5/plugins/preauth:$APPDIR/usr/lib/i386-linux-gnu/libgphoto2/2.5.24:$APPDIR/usr/lib/i386-linux-gnu/libgphoto2_port/0.12.0:$APPDIR/usr/lib/i386-linux-gnu/libv4l:$APPDIR/usr/lib/i386-linux-gnu/libv4l/plugins:$APPDIR/usr/lib/i386-linux-gnu/odbc:$APPDIR/usr/lib/i386-linux-gnu/pulseaudio:$APPDIR/usr/lib/i386-linux-gnu/sane:$APPDIR/usr/lib/i386-linux-gnu/sasl2:$APPDIR/usr/lib/i386-linux-gnu/sse2:$APPDIR/usr/lib/i386-linux-gnu/vdpau:$APPDIR/usr/lib/llvm-15/lib:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/x86_64-linux-gnu/gallium-pipe:$APPDIR/usr/lib/x86_64-linux-gnu/krb5/plugins/preauth:$APPDIR/usr/lib/x86_64-linux-gnu/nss:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/vdpau:$APPDIR/lib/x86_64:$APPDIR/lib/i386'
+      LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
+      LIBVA_DRIVERS_PATH: '${APPDIR}/usr/lib/i386-linux-gnu/dri:${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
       APPDIR_LIBC_VERSION: '2.31'
 
     path_mappings:
