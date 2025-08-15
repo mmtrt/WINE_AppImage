@@ -90,7 +90,6 @@ AppDir:
       - libusb-1.0-0
       - libx11-6
       - libxext6
-      - libopencl1
       - libopencl-1.1-1
       - ocl-icd-libopencl1
       - libopencl-1.2-1
