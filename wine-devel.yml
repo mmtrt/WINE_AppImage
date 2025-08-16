@@ -192,7 +192,7 @@ AppDir:
       - opt/wine-devel/lib64/wine/x86_64-unix/*.a
       - opt/wine-devel/lib64/wine/x86_64-windows/*.a
 
-  after_bundle:
+  after_runtime:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
