@@ -55,7 +55,7 @@ jobs:
           find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/usr/lib/x86_64-linux-gnu/ -iname 'libstdc**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
           (cd ./AppDir/runtime/compat/lib32/ ; ln -rsf ld-linux.so.2 ${GITHUB_WORKSPACE}/AppDir/runtime/default/lib/)
 
-          patchelf --set-interpreter 'lib/ld-linux.so.2' AppDir/opt/wine-devel/bin/wine
+          # patchelf --set-interpreter 'lib/ld-linux.so.2' AppDir/opt/wine-devel/bin/wine
 
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
