@@ -51,8 +51,8 @@ jobs:
 
           squashfs-root/AppRun --skip-appimage --recipe wine-devel.yml
 
-          # find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/lib/x86_64-linux-gnu/ -iname 'libz**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
-          # find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/usr/lib/x86_64-linux-gnu/ -iname 'libstdc**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
+          find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/lib/x86_64-linux-gnu/ -iname 'libz**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
+          find ${GITHUB_WORKSPACE}/AppDir/runtime/compat/usr/lib/x86_64-linux-gnu/ -iname 'libstdc**' | xargs -i -t -exec cp {} ${GITHUB_WORKSPACE}/AppDir/usr/lib/x86_64-linux-gnu/
           # (cd ./AppDir/runtime/compat/lib/ ; ln -rsf ld-linux.so.2 ${GITHUB_WORKSPACE}/AppDir/runtime/default/lib/)
 
           # patchelf --set-interpreter 'lib/ld-linux.so.2' AppDir/opt/wine-devel/bin/wine

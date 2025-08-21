@@ -26,15 +26,15 @@ AppDir:
   apt:
     arch: [amd64]
     sources:
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
-      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse'
         key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
         key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
       # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ jammy main'
         # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
-      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu focal main'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu jammy main'
         key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
 
     include:
@@ -119,6 +119,7 @@ AppDir:
       - libsdl2-2.0-0
       - libtiff5
       - libv4l-0
+      - libwayland-client0
       - libxcomposite1
       - libxcursor1
       - libxfixes3
