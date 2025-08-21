@@ -228,7 +228,6 @@ AppDir:
       APPDIR_LIBRARY_PATH: '$APPDIR/lib/x86_64-linux-gnu:$APPDIR/lib/x86_64-linux-gnu/security:$APPDIR/usr/lib/llvm-12/lib:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu/dri:$APPDIR/usr/lib/x86_64-linux-gnu/gallium-pipe:$APPDIR/usr/lib/x86_64-linux-gnu/krb5/plugins/preauth:$APPDIR/usr/lib/x86_64-linux-gnu/nss:$APPDIR/usr/lib/x86_64-linux-gnu/pulseaudio:$APPDIR/usr/lib/x86_64-linux-gnu/vdpau:$APPDIR/lib/x86_64'
       LIBGL_DRIVERS_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
       LIBVA_DRIVERS_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/dri'
-      APPDIR_LIBC_VERSION: '2.31'
 
     path_mappings:
     - /opt/wine-devel:$APPDIR/opt/wine-devel

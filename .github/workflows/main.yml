@@ -83,7 +83,7 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: test build wine v9.x.x
+          title: test build wine v10.x.x
           automatic_release_tag: test6
           prerelease: false
           draft: false
