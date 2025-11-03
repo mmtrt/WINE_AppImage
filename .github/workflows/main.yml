@@ -32,8 +32,8 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-1.1.1.dev32+g2709a3b-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          sudo wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool && sudo chmod +x /usr/local/bin/appimagetool
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # stable
@@ -42,13 +42,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add custom mksquashfs
-          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
-          # force zstd format in appimagebuilder for appimages
-          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+          squashfs-root/AppRun --skip-appimage --recipe wine-stable.yml
+          export ARCH="$(uname -m)"
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export URUNTIME_PRELOAD=1
+          UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-stable|*$ARCH.AppImage.zsync"
 
-          squashfs-root/AppRun --recipe wine-stable.yml
+          echo "Generating AppImage..."
+          appimagetool --no-appstream -u "$UPINFO" AppDir wine-"$WINE_VER"-"$ARCH".AppImage
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
@@ -72,8 +74,8 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-1.1.1.dev32+g2709a3b-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          sudo wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool && sudo chmod +x /usr/local/bin/appimagetool
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # devel
@@ -82,13 +84,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add custom mksquashfs
-          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
-          # force zstd format in appimagebuilder for appimages
-          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+          squashfs-root/AppRun --skip-appimage --recipe wine-devel.yml
+          export ARCH="$(uname -m)"
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export URUNTIME_PRELOAD=1
+          UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-devel|*$ARCH.AppImage.zsync"
 
-          squashfs-root/AppRun --recipe wine-devel.yml
+          echo "Generating AppImage..."
+          appimagetool --no-appstream -u "$UPINFO" AppDir wine-"$WINE_VER"-"$ARCH".AppImage
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
@@ -112,8 +116,8 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/Continuous/appimage-builder-1.1.1.dev32+g2709a3b-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          sudo wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool && sudo chmod +x /usr/local/bin/appimagetool
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # staging
@@ -122,13 +126,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Build appimage
         run: |
-          # add custom mksquashfs
-          cp runtime/mksquashfs squashfs-root/usr/bin/mksquashfs
 
-          # force zstd format in appimagebuilder for appimages
-          rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
+          squashfs-root/AppRun --skip-appimage --recipe wine-staging.yml
+          export ARCH="$(uname -m)"
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export URUNTIME_PRELOAD=1
+          UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-staging|*$ARCH.AppImage.zsync"
 
-          squashfs-root/AppRun --recipe wine-staging.yml
+          echo "Generating AppImage..."
+          appimagetool --no-appstream -u "$UPINFO" AppDir wine-"$WINE_VER"-"$ARCH".AppImage
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
