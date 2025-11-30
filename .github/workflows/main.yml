@@ -145,3 +145,46 @@ jobs:
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # This workflow contains a single job called "build-proton-exp"
+  build-proton-exp:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Prerequisites
+        run: |
+          wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
+          sudo wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool && sudo chmod +x /usr/local/bin/appimagetool
+          mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
+
+          # proton-exp
+          echo "WINE_VER=proton-exp_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/exp | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
+
+      # Runs a set of commands using the runners shell
+      - name: Build appimage
+        run: |
+
+          squashfs-root/AppRun --skip-appimage --recipe wine-proton-exp.yml
+          export ARCH="$(uname -m)"
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export URUNTIME_PRELOAD=1
+          UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-proton-exp|*$ARCH.AppImage.zsync"
+
+          echo "Generating AppImage..."
+          appimagetool --no-appstream -u "$UPINFO" AppDir wine-"$WINE_VER"-"$ARCH".AppImage
+
+      - name: release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
+        with:
+          title: Continuous build (proton-exp)
+          automatic_release_tag: continuous-proton-exp
+          prerelease: false
+          draft: false
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
