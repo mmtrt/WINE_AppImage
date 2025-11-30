@@ -7,9 +7,7 @@ script:
   # Add winetricks
   - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
   # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
-  - mkdir -p AppDir/usr/share/icons AppDir/usr/lib64 ; cp wine.svg AppDir/usr/share/icons
-  # Add static appimage runtime
-  - cp runtime/runtime-x86_64 appimage-build/prime/runtime-x86_64
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
   # Add config
   - cp -R config AppDir/winedata
 
@@ -105,7 +103,7 @@ AppDir:
       - usr/share/zoneinfo-icu
       - usr/share/zsh
 
-  after_bundle:
+  after_runtime:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
@@ -185,14 +183,7 @@ AppDir:
      # wget -q "$GECKO_URL_x86" -O AppDir/winedata/${GECKO}-x86.msi
      # wget -q "$GECKO_URL_x86_64" -O AppDir/winedata/${GECKO}-x86_64.msi
 
-  after_runtime:
-    # this is executed after the runtime is added
-    - |
-     # Remove runtime info
-     sed -i '/modules_dir/d' AppDir/AppRun.config
-
   runtime:
-    version: v3.0.0-devel-2
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
 
