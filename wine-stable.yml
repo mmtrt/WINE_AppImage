@@ -104,12 +104,6 @@ AppDir:
       - usr/share/zoneinfo
       - usr/share/zoneinfo-icu
       - usr/share/zsh
-      - opt/wine-staging
-      - opt/wine-stable/share/man
-      - opt/wine-stable/share/applications
-      - opt/wine-stable/lib/wine/i386-windows/*.a
-      - opt/wine-stable/lib64/wine/x86_64-unix/*.a
-      - opt/wine-stable/lib64/wine/x86_64-windows/*.a
 
   after_bundle:
     # this is executed after the packages and files are added
@@ -126,10 +120,11 @@ AppDir:
 
      # Cleanup
      rm -rf AppDir/usr/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-stable/include
      rm -rf AppDir/opt/wine-stable/share/{applications,man,doc}
      rm -rf AppDir/opt/wine-stable/lib/wine/i386-windows/*.a
-     rm -rf AppDir/opt/wine-stable/lib64/wine/x86_64-unix/*.a
-     rm -rf AppDir/opt/wine-stable/lib64/wine/x86_64-windows/*.a
+     rm -rf AppDir/opt/wine-stable/lib/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-stable/lib/wine/x86_64-windows/*.a
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-stable/share/wine/wine.inf
