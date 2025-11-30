@@ -1,0 +1,145 @@
+version: 1
+
+script:
+  # Remove any previous build cache data
+  - rm -rf AppDir || true
+  - mkdir -p appimage-build/prime AppDir/winedata && cp wrapper AppDir
+  # Add winetricks
+  - wget -q "https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks" -P ./AppDir/bin && chmod +x ./AppDir/bin/winetricks
+  # Copy App icon to AppDir/usr/share/icons needed prior to appimage-builder ver 1.x.x
+  - mkdir -p AppDir/usr/share/icons ; cp wine.svg AppDir/usr/share/icons
+  # Add config
+  - cp -R config AppDir/winedata
+
+AppDir:
+  path: ./AppDir
+
+  app_info:
+    id: org.winehq.wine
+    name: wine
+    icon: wine
+    version: !ENV ${WINE_VER}
+    exec: bin/bash
+    exec_args: $APPDIR/wrapper $@
+
+  apt:
+    arch: [amd64]
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+        key_url: 'https://dl.winehq.org/wine-builds/winehq.key'
+      # - sourceline: 'deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu/ jammy main'
+        # key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xFCAE110B1118213C'
+      - sourceline: 'deb https://ppa.launchpadcontent.net/kisak/kisak-mesa/ubuntu focal main'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf63f0f2b90935439'
+
+    include:
+      - bash
+      - cabextract
+      - dash
+      - coreutils
+      - mesa-utils
+      - unionfs-fuse
+      - vulkan-tools
+      - libmspack0
+
+  files:
+    exclude:
+      - sbin
+      - var
+      - etc/alternatives
+      - etc/apt
+      - etc/cron.daily
+      - etc/dpkg
+      - etc/mysql
+      - etc/sane.d
+      - etc/sensors.d
+      - etc/skel
+      - etc/snmp
+      - etc/udev
+      - etc/gss
+      - etc/init.d
+      - etc/logrotate.d
+      - lib/modprobe.d
+      - lib/systemd
+      - lib/udev
+      - usr/lib/mime
+      - usr/lib/sasl2
+      - usr/lib/tmpfiles.d
+      - usr/sbin
+      - usr/share/apps
+      - usr/share/man
+      - usr/share/doc
+      - usr/share/adduser
+      - usr/share/apport
+      - usr/share/bash-completion
+      - usr/share/bug
+      - usr/share/debconf
+      - usr/share/doc
+      - usr/share/doc-base
+      - usr/share/dpkg
+      - usr/share/glib-2.0
+      - usr/share/gst-plugins-base
+      - usr/share/hal
+      - usr/share/info
+      - usr/share/initramfs-tools
+      - usr/share/kde4
+      - usr/share/libgphoto2
+      - usr/share/lintian
+      - usr/share/menu
+      - usr/share/metainfo
+      - usr/share/mesa-demos
+      - usr/share/mime
+      - usr/share/misc
+      - usr/share/mysql-common
+      - usr/share/pixmaps
+      - usr/share/pkgconfig
+      - usr/share/polkit-1
+      - usr/share/snmp
+      - usr/share/zoneinfo
+      - usr/share/zoneinfo-icu
+      - usr/share/zsh
+
+  after_runtime:
+    # this is executed after the packages and files are added
+    - |
+     # Patch wrapper script
+     sed -i 's|wine-appimage|wine-proton-appimage|' AppDir/wrapper
+
+     WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '10.0' | tail -1 | cut -d'/' -f3) | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}'| cut -d'-' -f4,5)"
+
+     wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '10.0' | tail -1 | cut -d'/' -f3)/wine-proton-${WINE_VER}-amd64.tar.xz"
+     mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv wine-* wine-proton)
+
+     (cd AppDir/usr/bin; ln -s "../../opt/wine-proton/bin/"* .)
+
+     # Cleanup
+     rm -rf AppDir/usr/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-proton/include
+     rm -rf AppDir/opt/wine-proton/share/{applications,man,doc}
+     rm -rf AppDir/opt/wine-proton/lib/wine/i386-windows/*.a
+     rm -rf AppDir/opt/wine-proton/lib/wine/x86_64-unix/*.a
+     rm -rf AppDir/opt/wine-proton/lib/wine/x86_64-windows/*.a
+
+     # Disable FileOpenAssociations
+     sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-proton/share/wine/wine.inf
+
+     # Disable winemenubuilder
+     sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-proton/share/wine/wine.inf
+     sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-proton/share/wine/wine.inf
+
+     # Pre patch CJK font replacement with Noto Sans CJK by defualt
+     sed -i 's|    DllOverrides|    DllOverrides,\\\n    FontReplacement|g;$a \\n[FontReplacement]\nHKCU,Software\\Wine\\Fonts\\Replacements,"Batang",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"BatangChe",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Dotum",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"DotumChe",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Gulim",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"GulimChe",,"Noto Sans CJK KR"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei Light",,"Noto Sans CJK TC Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei Bold",,"Noto Sans CJK TC Black"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei UI",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei UI Light",,"Noto Sans CJK TC Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft JhengHei UI Bold",,"Noto Sans CJK TC Black"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei Light",,"Noto Sans CJK SC Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei Bold",,"Noto Sans CJK SC Black"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei UI",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei UI Light",,"Noto Sans CJK SC Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Microsoft YaHei UI Bold",,"Noto Sans CJK SC Black"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MingLiU",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MingLiU-ExtB",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MingLiU_HKSCS",,"Noto Sans CJK HK"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MingLiU_HKSCS-ExtB",,"Noto Sans CJK HK"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MS Gothic",,"Noto Sans CJK JP"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MS PGothic",,"Noto Sans CJK JP"\nHKCU,Software\\Wine\\Fonts\\Replacements,"MS UI Gothic",,"Noto Sans CJK JP"\nHKCU,Software\\Wine\\Fonts\\Replacements,"NSimSun",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"PMingLiU",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"PMingLiU-ExtB",,"Noto Sans CJK TC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"SimHei",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"SimSun",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"SimSun-ExtB",,"Noto Sans CJK SC"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic Regular",,"Noto Sans CJK JP"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic Medium",,"Noto Sans CJK JP Medium"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic Light",,"Noto Sans CJK JP Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic Bold",,"Noto Sans CJK JP Black"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic UI Regular",,"Noto Sans CJK JP"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic UI Medium",,"Noto Sans CJK JP Medium"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic UI Semilight",,"Noto Sans CJK JP DemiLight"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic UI Light",,"Noto Sans CJK JP Light"\nHKCU,Software\\Wine\\Fonts\\Replacements,"Yu Gothic UI Bold",,"Noto Sans CJK JP Black"' AppDir/opt/wine-proton/share/wine/wine.inf
+
+  runtime:
+    path_mappings:
+    - /opt/wine-proton:$APPDIR/opt/wine-proton
+
+AppImage:
+  update-information: gh-releases-zsync|mmtrt|WINE_AppImage|continuous-proton|wine-proton*.AppImage.zsync
+  #sign-key: None
+  arch: x86_64
+
