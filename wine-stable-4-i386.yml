@@ -159,7 +159,7 @@ AppDir:
       - opt/wine-stable/lib/wine/*.a
       - opt/wine-stable/lib/wine/*.def
 
-  after_bundle:
+  after_runtime:
     # this is executed after the packages and files are added
     - |
      # Patch wrapper script
@@ -171,6 +171,9 @@ AppDir:
      dpkg -x "wine-stable_${WINE_VER}~focal_i386.deb" AppDir/
      dpkg -x "wine-stable-i386_${WINE_VER}~focal_i386.deb" AppDir/
      (cd AppDir/usr/bin; ln -s "../../opt/wine-stable/bin/"* .)
+
+     patchelf --set-interpreter 'lib/ld-linux.so.2' ./AppDir/opt/wine-stable/bin/wine
+     patchelf --set-interpreter 'lib/ld-linux.so.2' ./AppDir/opt/wine-stable/bin/wineserver
 
      # Cleanup
      rm -rf AppDir/usr/share/{applications,man,doc}
