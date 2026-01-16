@@ -21,28 +21,6 @@ elif [[ $VENDOR == *"Radeon"* ]]; then
   export VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json"
 fi
 
-if [ ! -d "$WINEPREFIX" ]; then
-
- # Better support for CJK fonts.
- if (locale | grep 'LANG=ja_JP') >/dev/null 2>&1; then
-   "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-jp.reg"
-   sleep 1
- elif (locale | grep 'LANG=ko_KR') >/dev/null 2>&1; then
-   "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-kr.reg"
-   sleep 1
- elif (locale | grep -e 'LANG=zh_CN' -e 'LANG=zh_SG') >/dev/null 2>&1; then
-   "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-sc.reg"
-   sleep 1
- elif (locale | grep 'LANG=zh_HK') >/dev/null 2>&1; then
-   "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-hk.reg"
-   sleep 1
- elif (locale | grep -e 'LANG=zh_MO' -e 'LANG=zh_TW') >/dev/null 2>&1; then
-   "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-tc.reg"
-   sleep 1
- fi
-
-fi
-
 # Load winecfg if no arguments given
 APPLICATION=""
 if [ -z "$*" ] ; then
