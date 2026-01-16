@@ -46,7 +46,7 @@ jobs:
           squashfs-root/AppRun --skip-appimage --recipe wine-stable.yml
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export URUNTIME_PRELOAD=1
+          export URUNTIME_PRELOAD=0
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-stable|*$ARCH.AppImage.zsync"
 
           echo "Generating AppImage..."
@@ -88,7 +88,7 @@ jobs:
           squashfs-root/AppRun --skip-appimage --recipe wine-devel.yml
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export URUNTIME_PRELOAD=1
+          export URUNTIME_PRELOAD=0
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-devel|*$ARCH.AppImage.zsync"
 
           echo "Generating AppImage..."
@@ -130,7 +130,7 @@ jobs:
           squashfs-root/AppRun --skip-appimage --recipe wine-staging.yml
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export URUNTIME_PRELOAD=1
+          export URUNTIME_PRELOAD=0
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-staging|*$ARCH.AppImage.zsync"
 
           echo "Generating AppImage..."
@@ -172,7 +172,7 @@ jobs:
           squashfs-root/AppRun --skip-appimage --recipe wine-proton.yml
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export URUNTIME_PRELOAD=1
+          export URUNTIME_PRELOAD=0
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-proton|*$ARCH.AppImage.zsync"
 
           echo "Generating AppImage..."
@@ -215,7 +215,7 @@ jobs:
           squashfs-root/AppRun --skip-appimage --recipe wine-proton-exp.yml
           export ARCH="$(uname -m)"
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export URUNTIME_PRELOAD=1
+          export URUNTIME_PRELOAD=0
           UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|continuous-proton-exp|*$ARCH.AppImage.zsync"
 
           echo "Generating AppImage..."
