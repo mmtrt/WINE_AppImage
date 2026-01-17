@@ -21,7 +21,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build-stable"
-  build-stable:
+  build-stable-i386:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -36,7 +36,7 @@ jobs:
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
-          echo "WINE_VER=stable_8.0.2" >> $GITHUB_ENV
+          echo "WINE_VER=stable_8.0.2-i386" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -48,22 +48,22 @@ jobs:
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
           # pull glibc version from archlinux packages web
-          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-stable.yml
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-stable-i386.yml
 
-          squashfs-root/AppRun --recipe wine-stable.yml
+          squashfs-root/AppRun --recipe wine-stable-i386.yml
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: build (stable) v8
-          automatic_release_tag: stable-v8
+          title: build (stable) v8 i386
+          automatic_release_tag: stable-v8-i386
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   # This workflow contains a single job called "build-devel"
-  build-devel:
+  build-devel-i386:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -78,7 +78,7 @@ jobs:
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # devel
-          echo "WINE_VER=devel_8.21" >> $GITHUB_ENV
+          echo "WINE_VER=devel_8.21-i386" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -90,22 +90,22 @@ jobs:
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
           # pull glibc version from archlinux packages web
-          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-devel.yml
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-devel-i386.yml
 
-          squashfs-root/AppRun --recipe wine-devel.yml
+          squashfs-root/AppRun --recipe wine-devel-i386.yml
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: build (devel) v8
-          automatic_release_tag: devel-v8
+          title: build (devel) v8 i386
+          automatic_release_tag: devel-v8-i386
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   # This workflow contains a single job called "build-staging"
-  build-staging:
+  build-staging-i386:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -120,7 +120,7 @@ jobs:
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
-          echo "WINE_VER=staging_8.21" >> $GITHUB_ENV
+          echo "WINE_VER=staging_8.21-i386" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -132,15 +132,15 @@ jobs:
           rm appimage-builder ; sed -i 's|xz|zstd|' squashfs-root/usr/lib/python3.8/site-packages/appimagebuilder/modules/prime/appimage_primer.py
 
           # pull glibc version from archlinux packages web
-          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-staging.yml
+          sed -i "s|x.xx|$(wget -qO- https://archlinux.org/packages/core/x86_64/glibc/ | grep glibc | awk '{print $5}' | cut -d'+' -f1 | head -1)|" wine-staging-i386.yml
 
-          squashfs-root/AppRun --recipe wine-staging.yml
+          squashfs-root/AppRun --recipe wine-staging-i386.yml
 
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: build (staging) v8
-          automatic_release_tag: staging-v8
+          title: build (staging) v8 i386
+          automatic_release_tag: staging-v8-i386
           prerelease: false
           draft: false
           files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
