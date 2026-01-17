@@ -16,7 +16,9 @@ WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_ass
 
 wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/stable/wine-${WINE_VER}-amd64.tar.xz"
 
-tar xf *.tar.xz /
+tar xf *.tar.xz -C /
+
+rm *.tar.xz
 
 ls /bin
 
