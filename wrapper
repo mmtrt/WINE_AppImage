@@ -21,29 +21,6 @@ fi
 
 if [ ! -d "$WINEPREFIX" ]; then
 
- if [ ! -d "$HOME"/.cache/wine ]; then
-   mkdir -p "$HOME"/.cache/wine
- fi
-
- # Remove old created links
- find "$HOME/.cache/wine/" -type l -delete &>/dev/null
-
- if [ ! -f "$HOME"/.cache/wine/"$(ls $APPDIR/winedata/ | grep mono)" ]; then
-   ln -s $APPDIR/winedata/wine-mono-*.msi "$HOME"/.cache/wine/
- fi
-
- if [ $(ls $APPDIR/winedata/ | grep gecko | head -1 | grep -c "e_g") -eq 1 ]; then
-   GECKO=$(ls $APPDIR/winedata/ | grep gecko | head -1 | cut -d'-' -f2)
- else
-   GECKO=$(ls $APPDIR/winedata/ | grep gecko | head -1 | cut -d'-' -f3)
- fi
-
- for wg in wine-gecko-${GECKO}-x86.msi wine-gecko-${GECKO}-x86_64.msi wine_gecko-${GECKO}-x86.msi wine_gecko-${GECKO}-x86_64.msi ; do
-   if [[ ! -f "$HOME"/.cache/wine/$wg && -f $APPDIR/winedata/$wg ]]; then
-     ln -s $APPDIR/winedata/$wg "$HOME"/.cache/wine/
-   fi
- done
-
  # Better support for CJK fonts.
  if (locale | grep 'LANG=ja_JP') >/dev/null 2>&1; then
    "$APPDIR/usr/bin/wine" regedit "$APPDIR/winedata/config/noto-sans-cjk-jp.reg"
