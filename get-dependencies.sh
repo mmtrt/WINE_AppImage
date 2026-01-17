@@ -1,74 +1,26 @@
 #!/bin/sh
 
-set -ex
+set -eu
 
-sed -i 's/DownloadUser/#DownloadUser/g' /etc/pacman.conf
+ARCH=$(uname -m)
 
-if [ "$(uname -m)" = 'x86_64' ]; then
-	PKG_TYPE='x86_64.pkg.tar.zst'
-else
-	PKG_TYPE='aarch64.pkg.tar.xz'
-fi
-FFMPEG_URL="https://github.com/pkgforge-dev/llvm-libs-debloated/releases/download/continuous/ffmpeg-mini-$PKG_TYPE"
-
-echo "Installing build dependencies..."
+echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-pacman -Syu --noconfirm \
-  alsa-lib \
-  base-devel \
-  desktop-file-utils \
-  ffmpeg \
-  freetype2 \
-  fontconfig \
-  gcc-libs \
-  git \
-  glibc \
-  gnutls \
-  hicolor-icon-theme \
-  jack \
-  lcms2 \
-  libdrm \
-  libegl \
-  libgl \
-  libglvnd \
-  libpulse \
-  libx11 \
-  libpcap \
-  libunwind \
-  libxcursor \
-  libxext \
-  libxi \
-  libxkbcommon \
-  libxpresent \
-  libxrandr \
-  mesa \
-  patchelf \
-  libpipewire \
-  openal \
-  vulkan-headers \
-  vulkan-icd-loader \
-  wayland \
-  wayland-protocols \
-  wget \
-  wine \
-  xorg-server-xvfb \
-  zlib \
-  zsync
+pacman -Syu --noconfirm winetricks patchelf sdl2 pipewire-audio pipewire-jack
 
-#if [ "$(uname -m)" = 'x86_64' ]; then
-#	pacman -Syu --noconfirm vulkan-intel haskell-gnutls gcc13 svt-av1
-#else
-#	pacman -Syu --noconfirm vulkan-freedreno vulkan-panfrost
-#fi
-
-echo "Installing debloated pckages..."
+echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
-wget --retry-connrefused --tries=30 "$FFMPEG_URL" -O ./ffmpeg-mini.pkg.tar.zst
-pacman -U --noconfirm ./*.pkg.tar.zst
-rm -f ./*.pkg.tar.zst
+get-debloated-pkgs --add-common --prefer-nano ffmpeg-mini
 
-# Remove vapoursynth since ffmpeg-mini doesn't link to it
-pacman -Rsndd --noconfirm vapoursynth
+WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
 
-echo "All done!"
-echo "---------------------------------------------------------------"
+wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/stable/wine-${WINE_VER}-amd64.tar.xz"
+
+tar xf *.tar.xz /
+
+ls /bin
+
+# Comment this out if you need an AUR package
+#make-aur-package PACKAGENAME
+
+# If the application needs to be manually built that has to be done down here
