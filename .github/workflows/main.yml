@@ -51,9 +51,9 @@ jobs:
       - name: release
         uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
         with:
-          title: test build wine v10.x.x
+          title: test build wine v11.x.x
           automatic_release_tag: test7
           prerelease: false
           draft: false
-          files: /home/runner/work/WINE_AppImage/*.AppImage*
+          files: /home/runner/work/WINE_AppImage/WINE_AppImage/*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
