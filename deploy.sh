@@ -65,4 +65,6 @@ find ./AppDir/lib/ -type f -name '*.a'
 find ./AppDir/lib/ -type f -name '*.a' -delete
 
 # Turn AppDir into AppImage
-quick-sharun --make-appimage
+wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool ; chmod +x /usr/local/bin/appimagetool
+
+appimagetool --no-appstream -u "$UPINFO" AppDir "$OUTNAME"
