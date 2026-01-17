@@ -32,7 +32,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
+          sudo apt update && sudo apt install libfuse2 binutils-mingw-w64-i686 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # stable
@@ -74,7 +74,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
+          sudo apt update && sudo apt install libfuse2 binutils-mingw-w64-i686 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # devel
@@ -116,7 +116,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update && sudo apt install libfuse2 -y
+          sudo apt update && sudo apt install libfuse2 binutils-mingw-w64-i686 -y
           wget -q "https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.0.3/appimage-builder-1.0.3-x86_64.AppImage" -O appimage-builder ; chmod +x appimage-builder ; ./appimage-builder --appimage-extract &>/dev/null
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
           # staging
