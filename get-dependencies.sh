@@ -16,11 +16,11 @@ WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_ass
 
 wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/stable/wine-${WINE_VER}-amd64.tar.xz"
 
-tar xf *.tar.xz -C /
+tar xf *.tar.xz ; mv wine-*-amd64/* /usr/
 
 rm *.tar.xz
 
-ls /bin
+ls /usr/bin | grep wine
 
 # Comment this out if you need an AUR package
 #make-aur-package PACKAGENAME

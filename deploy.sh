@@ -4,7 +4,7 @@ set -eu
 
 export ARCH="$(uname -m)"
 export VERSION="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)"
-export OUTNAME="$PACKAGE"-"$VERSION"-"$ARCH".AppImage
+export OUTNAME=wine-"$VERSION"-"$ARCH".AppImage
 export OUTPATH=./
 export UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH.AppImage.zsync"
 export ICON=wine.svg
