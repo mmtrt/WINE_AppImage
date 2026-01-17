@@ -18,6 +18,13 @@ wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/stable/wine-${WI
 
 tar xf *.tar.xz ; cp -R wine-*-amd64/* /usr/
 
+# Disable FileOpenAssociations
+sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' /usr/share/wine/wine.inf
+
+# Disable winemenubuilder
+sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' /usr/share/wine/wine.inf
+sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' /usr/share/wine/wine.inf
+
 rm *.tar.xz
 
 ls /usr/bin | grep wine
