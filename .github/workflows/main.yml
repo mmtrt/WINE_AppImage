@@ -32,6 +32,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      - name: Preparing Container
+        uses: pkgforge-dev/anylinux-setup-action@8872fabe63f9a00b35e25b2f46da62a05afc9a7d # v1
+
       - name: Install dependencies
         run: |
           chmod +x ./get-dependencies.sh && ./get-dependencies.sh
