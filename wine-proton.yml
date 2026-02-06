@@ -116,11 +116,7 @@ AppDir:
 
      # Cleanup
      rm -rf AppDir/usr/share/{applications,man,doc}
-     rm -rf AppDir/opt/wine-proton/include
      rm -rf AppDir/opt/wine-proton/share/{applications,man,doc}
-     rm -rf AppDir/opt/wine-proton/lib/wine/i386-windows/*.a
-     rm -rf AppDir/opt/wine-proton/lib/wine/x86_64-unix/*.a
-     rm -rf AppDir/opt/wine-proton/lib/wine/x86_64-windows/*.a
 
      # Disable FileOpenAssociations
      sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' AppDir/opt/wine-proton/share/wine/wine.inf
