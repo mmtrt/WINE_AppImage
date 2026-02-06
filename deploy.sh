@@ -31,6 +31,10 @@ quick-sharun \
 	/usr/lib/libfreetype.so*  \
 	/usr/lib/libavcodec.so*
 
+# Install latest winetricks
+wget --retry-connrefused --tries=30 https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O ./AppDir/bin/winetricks
+chmod +x ./AppDir/bin/winetricks
+
 # alright here the pain starts
 ln -sr ./AppDir/lib/wine/x86_64-unix/*.so* ./AppDir/bin
 
