@@ -1,5 +1,5 @@
 #!/bin/sh
 
 # wine ignores the HOME env var, which means --appimage-portable-home does not work normally
-export WINEPREFIX="${WINEPREFIX:-$HOME/.wine}"
+export WINEPREFIX="${WINEPREFIX:-$HOME/.wine-appimage-staging}"
 export WINE_HOST_XDG_CACHE_HOME="$XDG_CACHE_HOME"
