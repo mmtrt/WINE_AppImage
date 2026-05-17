@@ -163,7 +163,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # proton
-          echo "WINE_VER=proton_$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '10.0' | tail -1 | cut -d'/' -f3)" >> $GITHUB_ENV
+          echo "WINE_VER=proton_$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | tail -1 | cut -d'/' -f3)" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
