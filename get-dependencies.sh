@@ -6,7 +6,7 @@ ARCH=$(uname -m)
 
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-pacman -Syu --noconfirm patchelf sdl2 pipewire-audio pipewire-jack
+pacman -Syu --noconfirm cabextract sdl2 pipewire-audio pipewire-jack harfbuzz gst-plugins-bad gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-ugly gst-libav gstreamer
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
@@ -30,6 +30,6 @@ rm *.tar.xz
 ls /usr/bin | grep wine
 
 # Comment this out if you need an AUR package
-#make-aur-package PACKAGENAME
+make-aur-package zenity-rs-bin
 
 # If the application needs to be manually built that has to be done down here

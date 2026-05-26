@@ -9,27 +9,39 @@ export UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7
 export ICON=wine.svg
 export DESKTOP=/usr/share/applications/wine.desktop
 export APPNAME=wine
-export ANYLINUX_LIB=1
 export DEPLOY_SDL=1
 export DEPLOY_PIPEWIRE=1
+export DEPLOY_GSTREAMER=1
 export DEPLOY_VULKAN=1
 export DEPLOY_OPENGL=1
 
 # Deploy dependencies
-quick-sharun \
-	/usr/bin/wine*            \
-	/usr/lib/wine             \
-	/usr/bin/msidb            \
-	/usr/bin/msiexec          \
-	/usr/bin/notepad          \
-	/usr/bin/regedit          \
-	/usr/bin/regsvr32         \
-	/usr/bin/widl             \
-	/usr/bin/wmc              \
-	/usr/bin/wrc              \
-	/usr/bin/function_grep.pl \
-	/usr/lib/libfreetype.so*  \
-	/usr/lib/libavcodec.so*
+mkdir -p /tmp/wine
+WINEPREFIX=/tmp/wine quick-sharun \
+	/usr/bin/wine*             \
+	/usr/lib/wine              \
+	/usr/bin/msidb             \
+	/usr/bin/msiexec           \
+	/usr/bin/notepad           \
+	/usr/bin/regedit           \
+	/usr/bin/regsvr32          \
+	/usr/bin/widl              \
+	/usr/bin/wmc               \
+	/usr/bin/wrc               \
+	/usr/bin/function_grep.pl  \
+	/usr/bin/cabextract        \
+	/usr/lib/libfreetype.so*   \
+	/usr/lib/libharfbuzz*      \
+	/usr/lib/libgraphite*      \
+	/usr/lib/libavcodec.so*    \
+	/usr/lib/libavdevice.so*   \
+	/usr/lib/libavfilter.so*   \
+	/usr/lib/libavformat.so*   \
+	/usr/lib/libavutil.so*     \
+	/usr/lib/libswresample.so* \
+	/usr/lib/libswscale.so*    \
+	/usr/bin/wget              \
+	/usr/bin/zenity
 
 # Install latest winetricks
 wget --retry-connrefused --tries=30 https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O ./AppDir/bin/winetricks
@@ -43,7 +55,11 @@ kek=.$(tr -dc 'A-Za-z0-9_=-' < /dev/urandom | head -c 10)
 rm -f ./AppDir/lib/wine/x86_64-unix/wine
 cp /usr/lib/wine/x86_64-unix/wine ./AppDir/lib/wine/x86_64-unix/wine
 patchelf --set-interpreter /tmp/"$kek" ./AppDir/lib/wine/x86_64-unix/wine
-patchelf --add-needed anylinux.so ./AppDir/shared/lib/wine/x86_64-unix/wine
+# we used to run patchelf --add-needed anylinux.so on the wine binary
+# but after 11.8 this causes the binary to break horribly:
+# AppDir/lib/wine/x86_64-unix/wine: oops... not enough space for load commands
+# so we will ahve to make sure anylinux.so loads by adding it as a dependency to the libc
+patchelf --add-needed anylinux.so ./AppDir/shared/lib/libc.so.6
 
 cat <<EOF > ./AppDir/bin/random-linker.src.hook
 #!/bin/sh
