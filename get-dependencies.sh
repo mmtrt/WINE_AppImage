@@ -12,7 +12,7 @@ echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
 get-debloated-pkgs --add-common --prefer-nano ffmpeg-mini
 
-WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')"
+WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}')"
 
 wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/latest/wine-${WINE_VER}-staging-amd64.tar.xz"
 
