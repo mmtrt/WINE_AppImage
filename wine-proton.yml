@@ -107,7 +107,7 @@ AppDir:
      # Patch wrapper script
      sed -i 's|wine-appimage|wine-proton-appimage|' AppDir/wrapper
 
-     WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | tail -1 | cut -d'/' -f3) | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}'| cut -d'-' -f4,5)"
+     WINE_VER="$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | tail -1 | cut -d'/' -f3) | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}'| cut -d'-' -f4,5)"
 
      wget -q "https://github.com/mmtrt/Wine-Builds/releases/download/$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | tail -1 | cut -d'/' -f3)/wine-proton-${WINE_VER}-amd64.tar.xz"
      mkdir -p AppDir/opt ; (cd AppDir/opt ; tar -xf ../../*.tar.xz ; mv wine-* wine-proton)

@@ -37,7 +37,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # stable
-          echo "WINE_VER=stable_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
+          echo "WINE_VER=stable_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/stable | grep -Eo '/wine-[0-9].*xz"' | sed -r '/wcp/d' | cut -d'-' -f2 | head -1)" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -79,7 +79,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # devel
-          echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
+          echo "WINE_VER=devel_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -121,7 +121,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # staging
-          echo "WINE_VER=staging_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
+          echo "WINE_VER=staging_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -163,7 +163,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # proton
-          echo "WINE_VER=proton_$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | tail -1 | cut -d'/' -f3)" >> $GITHUB_ENV
+          echo "WINE_VER=proton_$(git ls-remote -t https://github.com/mmtrt/Wine-Builds | grep '11.0' | sed -r '/wcp/d' | tail -1 | cut -d'/' -f3)" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
@@ -206,7 +206,7 @@ jobs:
           mkdir -p /usr/share/icons/hicolor/scalable/ ; cp wine.svg /usr/share/icons/hicolor/scalable/
 
           # proton-exp
-          echo "WINE_VER=proton-exp_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/exp | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
+          echo "WINE_VER=proton-exp_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/exp | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}')" >> $GITHUB_ENV
 
       # Runs a set of commands using the runners shell
       - name: Build appimage
