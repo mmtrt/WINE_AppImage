@@ -5,6 +5,7 @@ set -eu
 export ARCH="$(uname -m)"
 export VERSION="staging_$(wget -qO- https://github.com/mmtrt/Wine-Builds/releases/expanded_assets/latest | grep -Eo '[0-9].*xz"' | sed -r 's|-amd64| |;/wcp/d' | head -1 | awk '{print $1}')"
 export OUTNAME=wine-"$VERSION"-"$ARCH".AppImage
+export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|test7|*$ARCH.AppImage.zsync"
 export ICON=wine.svg
 export DESKTOP=/usr/share/applications/wine.desktop
@@ -81,9 +82,4 @@ if [ -L ./AppDir/lib ]; then
 fi
 
 # Turn AppDir into AppImage
-wget -q https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool ; chmod +x /usr/local/bin/appimagetool
-
-export APPIMAGE_EXTRACT_AND_RUN=1
-sed -i 's|Icon=wine|Icon=wine\nCategories=Utility|' AppDir/wine.desktop
-
-appimagetool --no-appstream -u "$UPINFO" AppDir "$OUTNAME"
+quick-sharun --make-appimage
