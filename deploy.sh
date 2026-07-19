@@ -41,8 +41,12 @@ WINEPREFIX=/tmp/wine quick-sharun \
 	/usr/lib/libavutil.so*     \
 	/usr/lib/libswresample.so* \
 	/usr/lib/libswscale.so*    \
+	/usr/bin/tar               \
 	/usr/bin/wget              \
-	/usr/bin/zenity
+	/usr/bin/zenity            \
+	/usr/bin/unzip             \
+	/usr/lib/7zip/7z           \
+	/usr/lib/7zip/7z.so
 
 # Install latest winetricks
 wget --retry-connrefused --tries=30 https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O ./AppDir/bin/winetricks

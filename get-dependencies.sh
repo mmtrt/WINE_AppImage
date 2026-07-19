@@ -6,7 +6,7 @@ ARCH=$(uname -m)
 
 echo "Installing package dependencies..."
 echo "---------------------------------------------------------------"
-pacman -Syu --noconfirm cabextract sdl2 pipewire-audio pipewire-jack harfbuzz gst-plugins-bad gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-ugly gst-libav gstreamer
+pacman -Syu --noconfirm cabextract sdl2 pipewire-audio pipewire-jack harfbuzz gst-plugins-bad gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-ugly gst-libav gstreamer 7zip unzip
 
 echo "Installing debloated packages..."
 echo "---------------------------------------------------------------"
