@@ -1,0 +1,7 @@
+#!/bin/sh
+# Must sort before self-updater / other hooks.
+# Sourced by AppRun — exit ends the whole AppImage process.
+
+if [ "$1" = "--wine-appimage" ]; then
+	exit 0
+fi
