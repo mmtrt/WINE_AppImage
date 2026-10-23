@@ -125,6 +125,12 @@ AppDir:
      sed -i 's|    FileOpenAssociations|    FileOpenAssociations,\\\n    DllOverrides|;$a \\n[DllOverrides]\nHKCU,Software\\Wine\\DllOverrides,"*winemenubuilder.exe",,""' AppDir/opt/wine-stable/share/wine/wine.inf
      sed -i '/\%11\%\\winemenubuilder.exe -a -r/d' AppDir/opt/wine-stable/share/wine/wine.inf
 
+     # Add MimeType info to .desktop
+     echo "MimeType=application/x-msdownload;" >> AppDir/org.winehq.wine.desktop
+
+     # Add correct executable path
+     sed -i "s/bin\/bash/wine \%F/" AppDir/org.winehq.wine.desktop
+
   runtime:
     path_mappings:
     - /opt/wine-stable:$APPDIR/opt/wine-stable
